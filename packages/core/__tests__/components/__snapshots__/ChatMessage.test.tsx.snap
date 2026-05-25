@@ -23,15 +23,9 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "flex-start",
-            "flex": 1,
-          },
-          Object {
-            "margin": 0,
-          },
-        ]
+        Object {
+          "margin": 0,
+        }
       }
     >
       <View
@@ -41,7 +35,6 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
               "backgroundColor": "#f0f0f0",
               "borderRadius": 15,
               "justifyContent": "flex-end",
-              "marginRight": 60,
               "minHeight": 20,
             },
             null,
@@ -57,7 +50,6 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
         }
       >
         <View
-          accessibilityRole="text"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -67,9 +59,20 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
               "selected": undefined,
             }
           }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
+          collapsable={false}
           focusable={true}
+          onBlur={[Function]}
           onClick={[Function]}
+          onFocus={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -77,55 +80,67 @@ exports[`ChatMessage Credential offer renders correctly 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
         >
-          <View>
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "flex-start",
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "height": 50,
-                  "justifyContent": "center",
-                  "marginBottom": 16,
-                  "width": 50,
-                }
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "alignSelf": "flex-start",
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "height": 50,
+                "justifyContent": "center",
+                "marginBottom": 16,
+                "width": 50,
               }
-            >
-              <
-                height={40}
-                width={40}
-              />
-            </View>
+            }
+          >
+            <
+              height={40}
+              width={40}
+            />
           </View>
           <View
             style={
               Array [
                 Object {
+                  "alignItems": "flex-end",
                   "flexDirection": "row",
-                  "justifyContent": "flex-start",
+                  "justifyContent": "space-between",
+                  "paddingBottom": 5,
+                  "paddingHorizontal": 10,
                 },
                 undefined,
               ]
             }
           >
-            <Text
-              maxFontSizeMultiplier={2}
+            <View
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "color": "#D3D3D3",
-                    "fontSize": 12,
-                    "marginTop": 8,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexGrow": 1,
+                  "justifyContent": "flex-end",
+                }
               }
-            />
+            >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "color": "#D3D3D3",
+                      "fontSize": 12,
+                      "marginTop": 8,
+                    },
+                  ]
+                }
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -229,15 +244,9 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "flex-start",
-            "flex": 1,
-          },
-          Object {
-            "margin": 0,
-          },
-        ]
+        Object {
+          "margin": 0,
+        }
       }
     >
       <View
@@ -247,7 +256,6 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
               "backgroundColor": "#f0f0f0",
               "borderRadius": 15,
               "justifyContent": "flex-end",
-              "marginRight": 60,
               "minHeight": 20,
             },
             null,
@@ -263,7 +271,6 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
         }
       >
         <View
-          accessibilityRole="text"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -273,9 +280,20 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
               "selected": undefined,
             }
           }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
+          collapsable={false}
           focusable={true}
+          onBlur={[Function]}
           onClick={[Function]}
+          onFocus={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -283,55 +301,67 @@ exports[`ChatMessage Proof request renders correctly 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
         >
-          <View>
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "flex-start",
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "height": 50,
-                  "justifyContent": "center",
-                  "marginBottom": 16,
-                  "width": 50,
-                }
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "alignSelf": "flex-start",
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "height": 50,
+                "justifyContent": "center",
+                "marginBottom": 16,
+                "width": 50,
               }
-            >
-              <
-                height={40}
-                width={40}
-              />
-            </View>
+            }
+          >
+            <
+              height={40}
+              width={40}
+            />
           </View>
           <View
             style={
               Array [
                 Object {
+                  "alignItems": "flex-end",
                   "flexDirection": "row",
-                  "justifyContent": "flex-start",
+                  "justifyContent": "space-between",
+                  "paddingBottom": 5,
+                  "paddingHorizontal": 10,
                 },
                 undefined,
               ]
             }
           >
-            <Text
-              maxFontSizeMultiplier={2}
+            <View
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "color": "#D3D3D3",
-                    "fontSize": 12,
-                    "marginTop": 8,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexGrow": 1,
+                  "justifyContent": "flex-end",
+                }
               }
-            />
+            >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "color": "#D3D3D3",
+                      "fontSize": 12,
+                      "marginTop": 8,
+                    },
+                  ]
+                }
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -435,15 +465,9 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "flex-start",
-            "flex": 1,
-          },
-          Object {
-            "margin": 0,
-          },
-        ]
+        Object {
+          "margin": 0,
+        }
       }
     >
       <View
@@ -453,7 +477,6 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
               "backgroundColor": "#f0f0f0",
               "borderRadius": 15,
               "justifyContent": "flex-end",
-              "marginRight": 60,
               "minHeight": 20,
             },
             null,
@@ -469,7 +492,6 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
         }
       >
         <View
-          accessibilityRole="text"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -479,9 +501,20 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
               "selected": undefined,
             }
           }
+          accessibilityValue={
+            Object {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
           accessible={true}
+          collapsable={false}
           focusable={true}
+          onBlur={[Function]}
           onClick={[Function]}
+          onFocus={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -489,55 +522,67 @@ exports[`ChatMessage Sent presentation renders correctly 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
         >
-          <View>
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "alignSelf": "flex-start",
-                  "backgroundColor": "#42803E",
-                  "borderRadius": 4,
-                  "height": 50,
-                  "justifyContent": "center",
-                  "marginBottom": 16,
-                  "width": 50,
-                }
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "alignSelf": "flex-start",
+                "backgroundColor": "#42803E",
+                "borderRadius": 4,
+                "height": 50,
+                "justifyContent": "center",
+                "marginBottom": 16,
+                "width": 50,
               }
-            >
-              <
-                height={40}
-                width={40}
-              />
-            </View>
+            }
+          >
+            <
+              height={40}
+              width={40}
+            />
           </View>
           <View
             style={
               Array [
                 Object {
+                  "alignItems": "flex-end",
                   "flexDirection": "row",
-                  "justifyContent": "flex-start",
+                  "justifyContent": "space-between",
+                  "paddingBottom": 5,
+                  "paddingHorizontal": 10,
                 },
                 undefined,
               ]
             }
           >
-            <Text
-              maxFontSizeMultiplier={2}
+            <View
               style={
-                Array [
-                  Object {
-                    "color": "#FFFFFF",
-                    "fontSize": 18,
-                    "fontWeight": "normal",
-                  },
-                  Object {
-                    "color": "#D3D3D3",
-                    "fontSize": 12,
-                    "marginTop": 8,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexGrow": 1,
+                  "justifyContent": "flex-end",
+                }
               }
-            />
+            >
+              <Text
+                maxFontSizeMultiplier={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 18,
+                      "fontWeight": "normal",
+                    },
+                    Object {
+                      "color": "#D3D3D3",
+                      "fontSize": 12,
+                      "marginTop": 8,
+                    },
+                  ]
+                }
+              />
+            </View>
           </View>
         </View>
       </View>
