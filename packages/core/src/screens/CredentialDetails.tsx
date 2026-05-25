@@ -110,7 +110,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
     metaOverlay: undefined,
     brandingOverlay: undefined,
   })
-  const credentialConnectionLabel = useCredentialConnectionLabel(credential)
+  const credentialConnectionLabel = useCredentialConnectionLabel(credential, overlay)
   const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
   const isBranding11 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding11
 

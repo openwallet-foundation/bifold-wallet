@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity, View } from 'react-native'
-import { Bubble, IMessage, Message } from 'react-native-gifted-chat'
+import { Bubble, IMessage, MessageProps } from 'react-native-gifted-chat'
 
 import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
@@ -16,15 +16,15 @@ export enum CallbackType {
   PresentationSent = 'PresentationSent',
 }
 
-export interface ChatMessageProps {
-  messageProps: React.ComponentProps<typeof Message>
-}
-
 export interface ExtendedChatMessage extends IMessage {
   renderEvent: () => React.ReactElement
   createdAt: Date
   messageOpensCallbackType?: CallbackType
   onDetails?: () => void
+}
+
+export interface ChatMessageProps {
+  messageProps: MessageProps<ExtendedChatMessage>
 }
 
 const MessageTime: React.FC<{ message: ExtendedChatMessage }> = ({ message }) => {
@@ -52,7 +52,7 @@ const MessageIcon: React.FC<{ type: CallbackType }> = ({ type }) => {
 export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
   const { t } = useTranslation()
   const { ChatTheme: theme } = useTheme()
-  const message = useMemo(() => messageProps.currentMessage as ExtendedChatMessage, [messageProps])
+  const message = useMemo(() => messageProps.currentMessage, [messageProps])
 
   const textForCallbackType = (callbackType: CallbackType) => {
     // Receiving a credential offer
@@ -94,8 +94,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ messageProps }) => {
       >
         <Bubble
           {...messageProps}
-          key={messageProps.key}
-          renderUsernameOnMessage={false}
+          isUsernameVisible={false}
           renderMessageText={() => message.renderEvent()}
           containerStyle={{
             left: {

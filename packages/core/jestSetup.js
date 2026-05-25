@@ -61,10 +61,11 @@ jest.mock(refreshOrchestratorPath, () => {
 })
 
 jest.mock('react-native-keyboard-controller', () => {
-  const { ScrollView } = jest.requireActual('react-native')
+  const { ScrollView, View } = jest.requireActual('react-native')
   return {
     KeyboardProvider: ({ children }) => children,
     KeyboardAwareScrollView: ScrollView,
+    KeyboardAvoidingView: View,
   }
 })
 

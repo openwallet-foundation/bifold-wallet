@@ -13,12 +13,10 @@ exports[`Chat Screen Renders correctly 1`] = `
   style={
     Object {
       "flex": 1,
-      "paddingTop": 20,
     }
   }
 >
   <View
-    onLayout={[Function]}
     style={
       Object {
         "flex": 1,
@@ -26,14 +24,50 @@ exports[`Chat Screen Renders correctly 1`] = `
     }
   >
     <View
-      onLayout={[Function]}
       style={
         Object {
           "flex": 1,
         }
       }
-      testID="GC_LOADING_CONTAINER"
-    />
+    >
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flex": 1,
+            },
+            Object {
+              "overflow": "hidden",
+            },
+          ]
+        }
+        testID="GC_WRAPPER"
+      >
+        <View
+          behavior="translate-with-padding"
+          keyboardVerticalOffset={100}
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "flex": 1,
+                },
+                Object {
+                  "opacity": 0,
+                },
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
   </View>
 </RNCSafeAreaView>
 `;

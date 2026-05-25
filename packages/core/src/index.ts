@@ -65,6 +65,7 @@ import Preface from './screens/Preface'
 import Scan from './screens/Scan'
 import Splash from './screens/Splash'
 import Terms from './screens/Terms'
+import RenameWallet from './screens/RenameWallet'
 import UpdateAvailable from './screens/UpdateAvailable'
 import { AbstractBifoldLogger } from './services/AbstractBifoldLogger'
 import { bifoldLoggerInstance } from './services/bifoldLogger'
@@ -98,8 +99,10 @@ export { Screens, Stacks, TabStacks } from './types/navigators'
 export * from './types/version-check'
 export { createLinkSecretIfRequired, getAgentModules } from './utils/agent'
 export { getCredentialIdentifiers, isValidAnonCredsCredential } from './utils/credential'
+export { parsedSchema } from './utils/schema'
 export {
   connectFromScanOrDeepLink,
+  createConnectionInvitation,
   formatTime,
   getConnectionName,
   removeExistingInvitationsById,
@@ -110,6 +113,9 @@ export { statusBarStyleForColor, StatusBarStyles } from './utils/luminance'
 export { migrateToAskar } from './utils/migration'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 export { testIdForAccessabilityLabel, testIdWithKey } from './utils/testable'
+
+export { default as CredentialDetails } from './screens/CredentialDetails'
+export { default as OpenIDCredentialDetails } from './modules/openid/screens/OpenIDCredentialDetails'
 
 export type { AnimatedComponents } from './animated-components'
 export type { ReducerAction } from './contexts/reducers/store'
@@ -235,6 +241,7 @@ export {
   QRRenderer,
   QRScannerTorch,
   Record,
+  RenameWallet,
   SafeAreaModal,
   Scan,
   ScanCamera,
@@ -263,3 +270,27 @@ export {
   AgentBridge,
 }
 export type { BannerMessage, DeepPartial, IButton }
+
+// Reusable screens for embedding in consumer-side nav graphs that don't register
+// Bifold's ConnectionStack / ContactStack hierarchy verbatim.
+export { default as Connection } from './screens/Connection'
+export { default as CredentialOffer } from './screens/CredentialOffer'
+export { default as ProofRequest } from './screens/ProofRequest'
+
+// Loading view used by consumer-side connection-loading screens while a proof
+// or credential-offer notification is awaited.
+export {
+  default as LoadingPlaceholder,
+  LoadingPlaceholderWorkflowType,
+} from './components/views/LoadingPlaceholder'
+
+// Hooks that let consumers detect when a notification (offer / proof) has
+// arrived for a freshly received out-of-band invitation.
+export { useNotifications } from './hooks/notifications'
+export type { NotificationItemType, NotificationReturnType, NotificationsInputProps } from './hooks/notifications'
+export { useConnectionByOutOfBandId, useOutOfBandById, useOutOfBandByConnectionId } from './hooks/connections'
+
+// URL classifiers consumer-side scan dispatchers use to recognize and reject
+// OpenID / mediator URIs before parsing them as DIDComm OOB invitations.
+export { isDidCommInvitation, isOpenIdCredentialOffer, isOpenIdPresentationRequest } from './utils/parsers'
+export { isMediatorInvitation } from './utils/mediatorhelpers'

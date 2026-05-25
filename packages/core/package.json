@@ -1,6 +1,6 @@
 {
   "name": "@bifold/core",
-  "version": "3.0.2",
+  "version": "3.0.9",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
@@ -44,9 +44,9 @@
   "devDependencies": {
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
-    "@bifold/oca": "3.0.2",
-    "@bifold/react-hooks": "3.0.2",
-    "@bifold/verifier": "3.0.2",
+    "@bifold/oca": "3.0.9",
+    "@bifold/react-hooks": "3.0.9",
+    "@bifold/verifier": "3.0.9",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
@@ -124,7 +124,7 @@
     "react-native-fs": "~2.20.0",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-get-random-values": "~1.11.0",
-    "react-native-gifted-chat": "~2.4.1",
+    "react-native-gifted-chat": "~3.3.2",
     "react-native-keyboard-controller": "~1.18.5",
     "react-native-keychain": "~10.0.0",
     "react-native-localize": "~2.2.6",
@@ -153,7 +153,7 @@
     "zustand": "~4.5.4"
   },
   "peerDependencies": {
-    "@bifold/react-hooks": "3.0.2",
+    "@bifold/react-hooks": "3.0.9",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
@@ -203,7 +203,7 @@
     "react-native-fs": "~2.20.0",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-get-random-values": "~1.11.0",
-    "react-native-gifted-chat": "~2.4.1",
+    "react-native-gifted-chat": "~3.3.2",
     "react-native-keychain": "~10.0.0",
     "react-native-localize": "~2.2.6",
     "react-native-logs": "~5.1.0",

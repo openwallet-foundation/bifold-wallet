@@ -1,5 +1,58 @@
 # @bifold/core
 
+## 3.0.9
+
+### Patch Changes
+
+- 0944c44: Update contacts chat screen, with fix for input scroll, text color and spacing.
+  - @bifold/react-hooks@3.0.9
+
+## 3.0.8
+
+### Patch Changes
+
+- 75e0535: updated spacing for svg overlay
+  - @bifold/react-hooks@3.0.8
+
+## 3.0.7
+
+### Patch Changes
+
+- 7cb7ff0: added stroke width to svg overlay
+  - @bifold/react-hooks@3.0.7
+
+## 3.0.6
+
+### Patch Changes
+
+- 8d27002: Export `Connection` screen and URL classifiers (`isDidCommInvitation`, `isOpenIdCredentialOffer`, `isOpenIdPresentationRequest`, `isMediatorInvitation`) for consumer-side reuse — no behavior change.
+  - @bifold/react-hooks@3.0.6
+
+## 3.0.5
+
+### Patch Changes
+
+- 4be9c48: update issuer name helper function
+- cc8ce46: fix camera scan
+- 21d6689: fix proof request screen error handling
+- becac32: additional exports - no behavior change
+  - @bifold/react-hooks@3.0.5
+
+## 3.0.4
+
+### Patch Changes
+
+- d0f1003: added exports for wallet work
+  - @bifold/react-hooks@3.0.4
+
+## 3.0.3
+
+### Patch Changes
+
+- 25146c1: add some additional exports
+- c7b866a: Fix proof screen
+  - @bifold/react-hooks@3.0.3
+
 ## 3.0.2
 
 ### Patch Changes
