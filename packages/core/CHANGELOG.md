@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.10
+
+### Patch Changes
+
+- e3d82d0: fix text color on proof request
+  - @bifold/react-hooks@3.0.10
+
 ## 3.0.9
 
 ### Patch Changes
