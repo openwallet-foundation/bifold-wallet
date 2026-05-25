@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.0.10
+
+### Patch Changes
+
+- 149265d: added a custom log replacer to handle nested error objects
+- Updated dependencies [e3d82d0]
+  - @bifold/core@3.0.10
+
 ## 3.0.9
 
 ### Patch Changes
