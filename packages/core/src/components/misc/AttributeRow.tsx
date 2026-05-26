@@ -3,6 +3,7 @@ import { View, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { ThemedText } from '../texts/ThemedText'
 import type { CardAttribute } from '../../wallet/ui-types'
+import { useTheme } from '../../contexts/theme'
 
 type Props = {
   item: CardAttribute
@@ -17,6 +18,7 @@ function isDataImage(value: unknown): value is string {
 }
 
 export const CredentialAttributeRow: React.FC<Props> = ({ item, textColor, showPiiWarning, isNotInWallet, styles }) => {
+  const { ColorPalette, ListItems } = useTheme()
   const warn = showPiiWarning && (item.isPII ?? false) && !item.predicate?.present
 
   const predicateFailed = item.predicate?.present && item.predicate.satisfied === false
@@ -26,8 +28,8 @@ export const CredentialAttributeRow: React.FC<Props> = ({ item, textColor, showP
     const errorText = isNotInWallet
       ? 'Not available in your wallet'
       : predicateFailed
-      ? 'Predicate not satisfied'
-      : 'Missing attribute'
+        ? 'Predicate not satisfied'
+        : 'Missing attribute'
 
     return (
       <View style={styles.cardAttributeContainer}>
@@ -35,6 +37,7 @@ export const CredentialAttributeRow: React.FC<Props> = ({ item, textColor, showP
           <Icon
             style={{ paddingTop: 2, paddingHorizontal: 2 }}
             name="close"
+            color={ListItems.proofError.color}
             size={styles.recordAttributeText.fontSize}
           />
           <ThemedText variant="labelSubtitle" style={[styles.textContainer, { opacity: 0.8 }]}>
@@ -55,6 +58,7 @@ export const CredentialAttributeRow: React.FC<Props> = ({ item, textColor, showP
           <Icon
             style={{ paddingTop: 2, paddingHorizontal: 2 }}
             name="warning"
+            color={ColorPalette.notification.warnIcon}
             size={styles.recordAttributeText.fontSize}
           />
         )}
