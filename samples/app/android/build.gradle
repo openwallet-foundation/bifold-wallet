@@ -44,6 +44,17 @@ subprojects {
 
     // Fix for NDK 27 C++ compatibility issues with native modules
     afterEvaluate { project ->
+        ["com.android.application", "com.android.library"].each { pluginId ->
+            project.plugins.withId(pluginId) {
+                project.android {
+                    compileOptions {
+                        sourceCompatibility JavaVersion.VERSION_17
+                        targetCompatibility JavaVersion.VERSION_17
+                    }
+                }
+            }
+        }
+
         project.plugins.withId("com.android.library") {
             project.android {
                 if (project.android.hasProperty("externalNativeBuild")) {
@@ -64,4 +75,3 @@ subprojects {
 dependencyLocking {
     lockAllConfigurations()
 }
-
