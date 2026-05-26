@@ -19,6 +19,8 @@ type CredentialBindingResolverOptions = Pick<
   holderBindingKey?: Kms.PublicJwk
 }
 
+const holderBindingKeyIds = new WeakMap<Kms.PublicJwk, string>()
+
 /**
  * Creates a holder-binding key for OpenID4VCI proof signing.
  *
@@ -40,7 +42,10 @@ export const createHolderBindingKey = async ({
       : { algorithm: signatureAlgorithm }
   )
 
-  return Kms.PublicJwk.fromPublicJwk(key.publicJwk)
+  const publicJwk = Kms.PublicJwk.fromPublicJwk(key.publicJwk)
+  holderBindingKeyIds.set(publicJwk, key.keyId)
+
+  return publicJwk
 }
 
 /**
@@ -218,10 +223,12 @@ export const customCredentialBindingResolver = async ({
     }))
 
   if (didMethod) {
+    const keyId = holderBindingKeyIds.get(publicJwk) ?? publicJwk.keyId
+
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({
       method: didMethod,
       options: {
-        keyId: publicJwk.keyId,
+        keyId,
       },
     })
 
