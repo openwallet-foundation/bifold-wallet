@@ -32,6 +32,7 @@ import { AgentSetupReturnType } from './hooks/useBifoldAgentSetup'
 import { OnboardingStackProps } from './navigators/OnboardingStack'
 import { AgentBridge } from './services/AgentBridge'
 import { IRefreshOrchestrator } from './modules/openid/refresh/types'
+import { AttestationJWTResponse } from './hooks/attestation'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -185,7 +186,7 @@ export const TOKENS = {
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
 export type FN_PIN_HASH_ALGORITHM = (PIN: string, salt: string) => Promise<string>
 export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<string>
-export type FN_ATTESTATION_GET_JWT = (attestationResult: string | string[], challenge: string, keyId: string) => Promise<any>
+export type FN_ATTESTATION_GET_JWT = (attestationResult: string | string[], challenge: string, keyId: string) => Promise<AttestationJWTResponse>
 
 export type TokenMapping = {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {
