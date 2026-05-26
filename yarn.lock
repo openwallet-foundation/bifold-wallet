@@ -17,6 +17,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@animo-id/expo-secure-environment@npm:0.1.5":
+  version: 0.1.5
+  resolution: "@animo-id/expo-secure-environment@npm:0.1.5"
+  dependencies:
+    "@peculiar/asn1-ecc": "npm:^2.3.8"
+    "@peculiar/asn1-schema": "npm:^2.3.8"
+    "@peculiar/asn1-x509": "npm:^2.3.8"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/0491bc870a07db23b768f8bcb3c46c3a3db8636c7d245122e48ac20d228c201703a08ec88493b68f722865b66dc4c02fb8bbad9b458cae5768b71e2e0eba9eda
+  languageName: node
+  linkType: hard
+
 "@animo-id/mdoc@npm:^0.5.2":
   version: 0.5.2
   resolution: "@animo-id/mdoc@npm:0.5.2"
@@ -1968,6 +1983,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bifold/core@workspace:packages/core"
   dependencies:
+    "@animo-id/expo-secure-environment": "npm:0.1.5"
     "@babel/core": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
     "@bifold/oca": "npm:3.0.10"
@@ -2028,6 +2044,7 @@ __metadata:
     eslint-plugin-import: "npm:~2.29.1"
     eslint-plugin-prettier: "npm:~5.2.6"
     expo: "npm:*"
+    expo-crypto: "npm:~15.0.8"
     expo-secure-store: "npm:*"
     i18next: "npm:~25.8.0"
     install-peerdeps: "npm:~3.0.7"
@@ -2079,6 +2096,7 @@ __metadata:
     uuid: "npm:~9.0.1"
     zustand: "npm:~4.5.4"
   peerDependencies:
+    "@animo-id/expo-secure-environment": 0.1.5
     "@bifold/react-hooks": 3.0.10
     "@credo-ts/anoncreds": 0.6.3
     "@credo-ts/askar": 0.6.3
@@ -2113,6 +2131,7 @@ __metadata:
     axios: ~1.13.2
     base-64: ~1.0.0
     class-transformer: 0.5.1
+    expo-crypto: ~15.0.8
     i18next: ~21.6.16
     lodash.startcase: ~4.4.0
     moment: ~2.29.4
@@ -2908,6 +2927,25 @@ __metadata:
     "@animo-id/expo-secure-environment":
       optional: true
   checksum: 10c0/73297d185f6dc6bcbade2494a0ad1a2dd4530556a418e635b18519303a2e984ea5677b4f734b00f7b03bd96acc253d35fbda5de80c9ec8fe3d0e39bf6e1e9acd
+  languageName: node
+  linkType: hard
+
+"@credo-ts/react-native@patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch":
+  version: 0.6.3
+  resolution: "@credo-ts/react-native@patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch::version=0.6.3&hash=324d01"
+  dependencies:
+    "@credo-ts/core": "npm:0.6.3"
+    events: "npm:^3.3.0"
+  peerDependencies:
+    "@animo-id/expo-secure-environment": ^0.1.1
+    expo-crypto: ^15.0.7
+    react-native: ">=0.71.4"
+    react-native-fs: ^2.20.0
+    react-native-get-random-values: ">=1.11.0 <3.0.0"
+  peerDependenciesMeta:
+    "@animo-id/expo-secure-environment":
+      optional: true
+  checksum: 10c0/28099216e58067fb5c57f893c1ac82b0edd9ed243b119a0a05521ecbd92b646a8c38be4eff2a901738956a5de4f560465a4caf51e73fd92624d0e4f045974465
   languageName: node
   linkType: hard
 
@@ -4374,6 +4412,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@peculiar/asn1-ecc@npm:^2.3.8":
+  version: 2.7.0
+  resolution: "@peculiar/asn1-ecc@npm:2.7.0"
+  dependencies:
+    "@peculiar/asn1-schema": "npm:^2.7.0"
+    "@peculiar/asn1-x509": "npm:^2.7.0"
+    asn1js: "npm:^3.0.6"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/f720e22e9b689450b786056f00f67141ab9a9edd3620c0f10215b2795c288052521262958ddb6c59608b463a53f3e2960381fa8878eda24f142bf7b385573aea
+  languageName: node
+  linkType: hard
+
 "@peculiar/asn1-ecc@npm:^2.6.0":
   version: 2.6.0
   resolution: "@peculiar/asn1-ecc@npm:2.6.0"
@@ -4451,6 +4501,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@peculiar/asn1-schema@npm:^2.3.8, @peculiar/asn1-schema@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "@peculiar/asn1-schema@npm:2.7.0"
+  dependencies:
+    "@peculiar/utils": "npm:^2.0.2"
+    asn1js: "npm:^3.0.6"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/6d799b62e8e9d7eed63a3044201ced4efef923011216c17da017a568bdb3c0f56abcea24d41df24916d1731e4a6920f8d84176f3e044f44f6541c83ae31fe670
+  languageName: node
+  linkType: hard
+
 "@peculiar/asn1-x509-attr@npm:^2.6.0":
   version: 2.6.0
   resolution: "@peculiar/asn1-x509-attr@npm:2.6.0"
@@ -4460,6 +4521,18 @@ __metadata:
     asn1js: "npm:^3.0.6"
     tslib: "npm:^2.8.1"
   checksum: 10c0/599ec61a8f193eed0653e19172c7c627485f0311d50b82524530a555b7f237a8547f50ec5ffdcdafa2756f0df24125fcb754fd4b66ad8eb67b3e7017652668a6
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-x509@npm:^2.3.8, @peculiar/asn1-x509@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "@peculiar/asn1-x509@npm:2.7.0"
+  dependencies:
+    "@peculiar/asn1-schema": "npm:^2.7.0"
+    "@peculiar/utils": "npm:^2.0.2"
+    asn1js: "npm:^3.0.6"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/095d1b5fd0dfb9ba9cffe5ce9fad31173f5184896d7d51270bc174745c5c6720f37ec83c8ac7b1b6db7100a94c550045d9ad37ce8f162d19cc93ebce6620f625
   languageName: node
   linkType: hard
 
@@ -4481,6 +4554,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.0.0"
   checksum: 10c0/202132c66dcc6b6aca5d0af971c015be2e163da2f7f992910783c5d39c8a7db59b6ec4f4ce419459a1f954b7e1d17b6b253f0e60072c1b3d254079f4eaebc311
+  languageName: node
+  linkType: hard
+
+"@peculiar/utils@npm:^2.0.2":
+  version: 2.0.3
+  resolution: "@peculiar/utils@npm:2.0.3"
+  dependencies:
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/e111a51c83334d6ff3c96b993ed0d718210620f3ad176853a4bf229f1cf4cd14e9388075318351b188862d34d2192d80f206f6bea53aa1459df3ec638cbcdbd5
   languageName: node
   linkType: hard
 
@@ -7198,6 +7280,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bifold-app@workspace:samples/app"
   dependencies:
+    "@animo-id/expo-secure-environment": "npm:0.1.5"
     "@babel/core": "npm:~7.28.6"
     "@babel/preset-env": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
@@ -7252,7 +7335,7 @@ __metadata:
     eslint-import-resolver-typescript: "npm:~3.6.3"
     expo: "npm:*"
     expo-application: "npm:~7.0.8"
-    expo-crypto: "npm:~14.1.5"
+    expo-crypto: "npm:~15.0.8"
     expo-secure-store: "npm:*"
     fast-text-encoding: "npm:~1.0.6"
     i18next: "npm:~21.6.16"
@@ -9748,14 +9831,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-crypto@npm:~14.1.5":
-  version: 14.1.5
-  resolution: "expo-crypto@npm:14.1.5"
+"expo-crypto@npm:~15.0.8":
+  version: 15.0.9
+  resolution: "expo-crypto@npm:15.0.9"
   dependencies:
     base64-js: "npm:^1.3.0"
   peerDependencies:
     expo: "*"
-  checksum: 10c0/f49cdbdbe6875bd4c81d43160b727c3e82fbd0ad8a4b2e0a8dde175c86ea970c36fd40dbb904272a41c8130c112473929bd9205c10a12002910991d9a89e65ab
+  checksum: 10c0/fc0646231a57a4b58554734ead9be0a3bd2829900888926e8af94355fcf06632b846507553534ab8a04b52d268ec5bdb49100002105f91c1aae033384dfc56bc
   languageName: node
   linkType: hard
 

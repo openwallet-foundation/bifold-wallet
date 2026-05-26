@@ -113,8 +113,8 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        compile-sdk: [33]
-        build-tools: [33.0.2]
+        compile-sdk: [36]
+        build-tools: [36.0.0]
         sdk-tools: [4333796]
     env:
       GRADLE_USER_HOME: /mnt/gradle-cache
@@ -152,6 +152,8 @@ jobs:
           echo y | sdkmanager "platforms;android-${{ matrix.compile-sdk }}" >/dev/null
           echo y | sdkmanager "platform-tools" >/dev/null
           echo y | sdkmanager "build-tools;${{ matrix.build-tools }}" >/dev/null
+          echo y | sdkmanager "ndk;27.1.12297006" >/dev/null
+          echo y | sdkmanager "cmake;3.22.1" >/dev/null
           find $ANDROID_HOME -type f -executable -print
 
           chmod +x ./gradlew
