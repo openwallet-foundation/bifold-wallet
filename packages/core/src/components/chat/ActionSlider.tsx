@@ -67,7 +67,7 @@ const ActionSlider: React.FC<Props> = ({ actions, onDismiss }) => {
 
   return (
     <SafeAreaModal animationType="slide" transparent={true} onRequestClose={onDismiss}>
-      <TouchableOpacity style={styles.outsideListener} onPress={onDismiss} />
+      <TouchableOpacity accessible={false} style={styles.outsideListener} onPress={onDismiss} />
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity

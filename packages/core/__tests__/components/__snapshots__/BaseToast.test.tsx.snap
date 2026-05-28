@@ -2,6 +2,8 @@
 
 exports[`BaseToast Component Error renders correctly 1`] = `
 <View
+  accessibilityLabel="Hello World"
+  accessibilityRole="alert"
   accessibilityState={
     Object {
       "busy": undefined,
@@ -34,6 +36,7 @@ exports[`BaseToast Component Error renders correctly 1`] = `
       "opacity": 1,
     }
   }
+  testID="com.ariesbifold:id/Toast"
 >
   <View
     style={
@@ -145,6 +148,8 @@ exports[`BaseToast Component Error renders correctly 1`] = `
     </View>
     <View>
       <View
+        accessibilityLabel="Global.CloseNotification"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -165,6 +170,14 @@ exports[`BaseToast Component Error renders correctly 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -177,6 +190,7 @@ exports[`BaseToast Component Error renders correctly 1`] = `
             "opacity": 1,
           }
         }
+        testID="com.ariesbifold:id/ToastClose"
       >
         <Text
           allowFontScaling={false}
@@ -210,6 +224,8 @@ exports[`BaseToast Component Error renders correctly 1`] = `
 
 exports[`BaseToast Component Info renders correctly 1`] = `
 <View
+  accessibilityLabel="Hello World"
+  accessibilityRole="alert"
   accessibilityState={
     Object {
       "busy": undefined,
@@ -242,6 +258,7 @@ exports[`BaseToast Component Info renders correctly 1`] = `
       "opacity": 1,
     }
   }
+  testID="com.ariesbifold:id/Toast"
 >
   <View
     style={
@@ -353,6 +370,8 @@ exports[`BaseToast Component Info renders correctly 1`] = `
     </View>
     <View>
       <View
+        accessibilityLabel="Global.CloseNotification"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -373,6 +392,14 @@ exports[`BaseToast Component Info renders correctly 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -385,6 +412,7 @@ exports[`BaseToast Component Info renders correctly 1`] = `
             "opacity": 1,
           }
         }
+        testID="com.ariesbifold:id/ToastClose"
       >
         <Text
           allowFontScaling={false}
@@ -418,6 +446,8 @@ exports[`BaseToast Component Info renders correctly 1`] = `
 
 exports[`BaseToast Component Success renders correctly 1`] = `
 <View
+  accessibilityLabel="Hello World"
+  accessibilityRole="alert"
   accessibilityState={
     Object {
       "busy": undefined,
@@ -450,6 +480,7 @@ exports[`BaseToast Component Success renders correctly 1`] = `
       "opacity": 1,
     }
   }
+  testID="com.ariesbifold:id/Toast"
 >
   <View
     style={
@@ -561,6 +592,8 @@ exports[`BaseToast Component Success renders correctly 1`] = `
     </View>
     <View>
       <View
+        accessibilityLabel="Global.CloseNotification"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -581,6 +614,14 @@ exports[`BaseToast Component Success renders correctly 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -593,6 +634,7 @@ exports[`BaseToast Component Success renders correctly 1`] = `
             "opacity": 1,
           }
         }
+        testID="com.ariesbifold:id/ToastClose"
       >
         <Text
           allowFontScaling={false}
@@ -626,6 +668,8 @@ exports[`BaseToast Component Success renders correctly 1`] = `
 
 exports[`BaseToast Component Warn renders correctly 1`] = `
 <View
+  accessibilityLabel="Hello World"
+  accessibilityRole="alert"
   accessibilityState={
     Object {
       "busy": undefined,
@@ -658,6 +702,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
       "opacity": 1,
     }
   }
+  testID="com.ariesbifold:id/Toast"
 >
   <View
     style={
@@ -769,6 +814,8 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
     </View>
     <View>
       <View
+        accessibilityLabel="Global.CloseNotification"
+        accessibilityRole="button"
         accessibilityState={
           Object {
             "busy": undefined,
@@ -789,6 +836,14 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 44,
+            "left": 44,
+            "right": 44,
+            "top": 44,
+          }
+        }
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -801,6 +856,7 @@ exports[`BaseToast Component Warn renders correctly 1`] = `
             "opacity": 1,
           }
         }
+        testID="com.ariesbifold:id/ToastClose"
       >
         <Text
           allowFontScaling={false}
