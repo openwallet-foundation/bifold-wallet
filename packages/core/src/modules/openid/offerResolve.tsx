@@ -4,6 +4,11 @@ import {
   OpenId4VciCredentialFormatProfile,
   OpenId4VciRequestTokenResponse,
   OpenId4VciResolvedCredentialOffer,
+  OpenId4VciAuthCodeFlowOptions,
+  OpenId4VciResolvedAuthorizationRequest,
+  OpenId4VciAuthorizationFlow,
+  OpenId4VciDpopRequestOptions,
+  OpenId4VciCredentialConfigurationsSupportedWithFormats
 } from '@credo-ts/openid4vc'
 import { Agent, DidJwk, DidKey, JwkDidCreateOptions, KeyDidCreateOptions, Kms } from '@credo-ts/core'
 import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
@@ -46,14 +51,11 @@ export const resolveOpenId4VciOffer = async ({
   agent,
   data,
   uri,
-  authorization,
 }: {
   agent: Agent
   // Either data itself (the offer) or uri can be passed
   data?: unknown
   uri?: string
-  fetchAuthorization?: boolean
-  authorization?: { clientId: string; redirectUri: string }
 }): Promise<OpenId4VciResolvedCredentialOffer> => {
   let offerUri = uri
 
@@ -73,11 +75,44 @@ export const resolveOpenId4VciOffer = async ({
 
   const resolvedCredentialOffer = await agent.openid4vc.holder.resolveCredentialOffer(offerUri)
 
-  if (authorization) {
-    throw new Error('Authorization code flow is not implemented in this OpenID credential offer flow.')
-  }
-
   return resolvedCredentialOffer
+}
+
+
+interface ResolvedOpenId4VciAuthorizationRequest {
+  openid4vpRequestUrl: string
+  authorizationFlow: OpenId4VciAuthorizationFlow.Oauth2Redirect
+  authSession: string
+  dpop?: OpenId4VciDpopRequestOptions | undefined
+}
+
+export const resolveOpenId4VciAuthorizationRequest = async ({
+  agent,
+  authFlowOptions,
+  resolvedCredentialOffer,
+  credentialsToRequest,
+}: {
+  agent: Agent
+  authFlowOptions: OpenId4VciAuthCodeFlowOptions,
+  resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer,
+  credentialsToRequest: OpenId4VciCredentialConfigurationsSupportedWithFormats
+}): Promise<ResolvedOpenId4VciAuthorizationRequest> => {
+    console.log(credentialsToRequest)
+    if (resolvedCredentialOffer.credentialOfferPayload.grants?.["authorizationCodeGrantIdentifier"]) {
+      return await agent.openid4vc.holder.resolveOpenId4VciAuthorizationRequest(
+        resolvedCredentialOffer,
+        {
+          clientId: authFlowOptions.clientId,
+          redirectUri: authFlowOptions.redirectUri,
+          // scope: Object.entries(resolvedCredentialOffer.offeredCredentialConfigurations)
+          //   .map(([id, value]) => (credentialsToRequest.includes(id) ? value.scope : undefined))
+          //   .filter((v): v is string => Boolean(v)),
+        }
+      )
+    } else {
+      throw new Error('No authorization code grant identifier')
+    }
+
 }
 
 export async function acquirePreAuthorizedAccessToken({
@@ -210,6 +245,11 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
         supportsJwk,
         credentialFormat,
       })
+    },
+    dPop: {
+      jwk: '',
+      alg: '',
+      nonce: '',
     },
   })
 

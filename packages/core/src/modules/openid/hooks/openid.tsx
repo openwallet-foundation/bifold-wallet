@@ -8,6 +8,7 @@ import {
   acquirePreAuthorizedAccessToken,
   receiveCredentialFromOpenId4VciOffer,
   resolveOpenId4VciOffer,
+  resolveOpenId4VciAuthorizationRequest,
 } from '../offerResolve'
 import { getCredentialsForProofRequest } from '../resolverProof'
 import { OpenId4VPRequestRecord } from '../types'
@@ -16,6 +17,7 @@ import { setRefreshCredentialMetadata } from '../metadata'
 import { RefreshStatus } from '../refresh/types'
 import { temporaryMetaVanillaObject } from '../metadata'
 import { OpenIDCredentialRecord } from '../credentialRecord'
+import { useServices, TOKENS } from '../../../container-api'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -30,6 +32,9 @@ export const useOpenID = ({
 
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [{ enableAttestation }] = useServices([
+    TOKENS.CONFIG,
+  ])
 
   const resolveOpenIDCredential = useCallback(
     async (uri: string) => {
@@ -41,6 +46,19 @@ export const useOpenID = ({
           agent: agent,
           uri: uri,
         })
+
+        if (enableAttestation) {
+          const authorizationResponse = await resolveOpenId4VciAuthorizationRequest({
+            agent: agent,
+            authFlowOptions: {
+              clientId: '',
+              redirectUri: '',
+            },
+            credentialsToRequest: resolvedCredentialOffer.offeredCredentialConfigurations,
+            resolvedCredentialOffer,
+          })
+          console.log(authorizationResponse)
+        }
 
         const authServers = resolvedCredentialOffer.metadata.credentialIssuer.authorization_servers
         const authServer = resolvedCredentialOffer.metadata.authorizationServers[0]

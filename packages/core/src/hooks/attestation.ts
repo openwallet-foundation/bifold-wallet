@@ -9,6 +9,7 @@ import {
 } from '@expo/app-integrity'
 import uuid from 'react-native-uuid'
 import { useAgent } from '@bifold/react-hooks'
+import { Kms } from '@credo-ts/core'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
@@ -17,7 +18,7 @@ import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import { withRetry } from '../utils/network'
 
-export interface AttestationJWTResponse {
+export interface AttestationJWTData {
   jwt: string,
   transactionId: string,
 }
@@ -52,27 +53,37 @@ export const useAttestation = () => {
         },
         id: ATTESTATION_JWT_RECORD_ID,
       })
-        .then(async () => {
+        .then(() => {
           PersistentStorage.storeValueForKey(LocalStorageKeys.AttestationConfigured, true)
             .then(() => {
               dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
             })
             .catch((err) => {
-              logger.error(err?.message ?? 'Error storing attestation result status')
-              throw new Error('Error storing attestation result status')
+              logger.error(err?.message ?? 'Error storing attestation result status in async storage')
+              throw new Error('Error storing attestation result status in async storage')
             })
         })
         .catch((err) => {
-          logger.error(err?.message ?? 'Error storing attestation result')
-          throw new Error('Error storing attestation result')
+          logger.error(err?.message ?? 'Error storing attestation result in agent generic records')
+          throw new Error('Error storing attestation result in agent generic records')
         })
     })
   }, [agentBridge, dispatch, logger])
 
-  const retrieveAttestationJWT = useCallback(async () => {
+  const retrieveAttestationJWT = useCallback(async (): Promise<AttestationJWTData> => {
     try {
+
       const storedAttestationData = await agent.genericRecords.findById(ATTESTATION_JWT_RECORD_ID)
-      return storedAttestationData?.content
+
+      if (!storedAttestationData?.content)
+        throw new Error('No stored attestation data')
+
+      const JWT = {
+        jwt: storedAttestationData.content["jwt"] as string,
+        transactionId: storedAttestationData.content["transactionId"] as string
+      }
+      return new Promise<AttestationJWTData>(() => JWT)
+
     } catch (err: any) {
       logger.error(err?.message ?? 'Error retrieving attestation JWT')
       throw new Error('Error retrieving attestation JWT')
@@ -100,7 +111,12 @@ export const useAttestation = () => {
         if (!isDeviceAttestationSupported) throw new Error('iOS device not supported')
 
         const keyID = await generateKeyAsync()
-        const attestationResult = await withRetry(attestKeyAsync, [keyID, challenge])
+        const secondaryKey = await agent.kms.createKeyForSignatureAlgorithm({
+          algorithm: 'EdDSA',
+          keyId: keyID,
+        })
+        const publicKey = Kms.PublicJwk.fromPublicJwk(secondaryKey.publicJwk)
+        const attestationResult = await withRetry(attestKeyAsync, [keyID, (challenge+publicKey)])
         const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyID)
         await storeAttestationJWT(attestationJWT.jwt, keyID)
 

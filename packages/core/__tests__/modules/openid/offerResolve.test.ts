@@ -80,23 +80,6 @@ describe('customCredentialBindingResolver', () => {
     await expect(resolveOpenId4VciOffer({ agent: agent as any })).rejects.toThrow('either data or uri must be provided')
   })
 
-  test('throws when authorization code flow is requested', async () => {
-    const agent = createAgentMock()
-
-    agent.openid4vc.holder.resolveCredentialOffer.mockResolvedValue({ id: 'resolved-offer' })
-
-    await expect(
-      resolveOpenId4VciOffer({
-        agent: agent as any,
-        uri: 'openid-credential-offer://credential_offer=%7B%7D',
-        authorization: {
-          clientId: 'client-id',
-          redirectUri: 'https://wallet.example/callback',
-        },
-      })
-    ).rejects.toThrow('Authorization code flow is not implemented in this OpenID credential offer flow.')
-  })
-
   test('acquires a pre-authorized access token with the provided tx code', async () => {
     const agent = createAgentMock()
     const resolvedCredentialOffer = { id: 'resolved-offer' }
