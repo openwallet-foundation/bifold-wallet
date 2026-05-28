@@ -34,10 +34,11 @@ export interface RefreshCredentialMetadata {
   refreshToken: string
   credentialIssuer: string
   credentialConfigurationId: string
+  authorizationServer?: string
   issuerMetadataCache: IssuerMetadataCache
   clientId?: string
   tokenBinding?: 'DPoP' | 'Bearer'
-  dpop?: { alg: KnownJwaSignatureAlgorithm; jwk: Jwk }
+  dpop?: { alg: KnownJwaSignatureAlgorithm; jwk: Jwk; nonce?: string }
 
   // refresh lifecycle
   lastCheckedAt?: number
