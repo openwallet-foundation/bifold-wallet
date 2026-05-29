@@ -18,7 +18,7 @@ import { RefreshCredentialMetadata, RefreshStatus } from './refresh/types'
 import { CredentialDisplay, CredentialSubjectRecord } from './types'
 import { OpenIDCredentialRecord } from './credentialRecord'
 
-export const openId4VcCredentialMetadataKey = '_bifold/openId4VcCredentialMetadata'
+export const openID4VcCredentialMetadataKey = '_bifold/openID4VcCredentialMetadata'
 export const refreshCredentialMetadataKey = '_bifold/refreshCredentialMetadata'
 export interface OpenId4VcCredentialMetadata {
   credential: {
@@ -177,7 +177,7 @@ export function extractOpenId4VcCredentialMetadata(
 export function getOpenId4VcCredentialMetadata(
   credentialRecord: OpenIDCredentialRecord
 ): OpenId4VcCredentialMetadata | null {
-  return credentialRecord.metadata.get(openId4VcCredentialMetadataKey)
+  return credentialRecord.metadata.get(openID4VcCredentialMetadataKey)
 }
 
 /**
@@ -189,7 +189,7 @@ export function setOpenId4VcCredentialMetadata(
   credentialRecord: OpenIDCredentialRecord,
   metadata: OpenId4VcCredentialMetadata
 ) {
-  credentialRecord.metadata.set(openId4VcCredentialMetadataKey, metadata)
+  credentialRecord.metadata.set(openID4VcCredentialMetadataKey, metadata)
 }
 
 /**
