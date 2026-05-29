@@ -32,9 +32,30 @@ export interface OpenId4VcCredentialMetadata {
   }
 }
 
+type CredentialMetadataImage = {
+  uri?: string
+  url?: string
+  altText?: string
+  alt_text?: string
+}
+
+type CredentialMetadataDisplay = {
+  name: string
+  locale?: string
+  description?: string
+  textColor?: string
+  text_color?: string
+  backgroundColor?: string
+  background_color?: string
+  backgroundImage?: CredentialMetadataImage
+  background_image?: CredentialMetadataImage
+  logo?: CredentialMetadataImage
+  primary_overlay_attribute?: string
+}
+
 type CredentialSupported = {
   credential_metadata?: {
-    display?: Array<Record<string, any>>
+    display?: CredentialMetadataDisplay[]
     claims?: Array<{
       path?: Array<string | number>
       display?: Array<{
@@ -46,16 +67,12 @@ type CredentialSupported = {
   format?: string
 }
 
-export type OpenId4VcCredentialMetadataExtended = Partial<
-  CredentialSupported & { credential_subject: CredentialSubjectRecord }
->
-
 export type OpenIDCredentialNotificationMetadata = {
   notificationMetadata?: OpenId4VciMetadata
   tokenResponse?: OpenId4VciRequestTokenResponse
 }
 
-const normalizeImage = (image?: Record<string, any>) => {
+const normalizeImage = (image?: CredentialMetadataImage) => {
   if (!image) return undefined
 
   const uri = image.uri ?? image.url
@@ -67,7 +84,7 @@ const normalizeImage = (image?: Record<string, any>) => {
   }
 }
 
-const normalizeCredentialDisplay = (display: Record<string, any>): CredentialDisplay => ({
+const normalizeCredentialDisplay = (display: CredentialMetadataDisplay): CredentialDisplay => ({
   locale: display.locale,
   name: display.name,
   description: display.description,
@@ -81,7 +98,7 @@ const normalizeCredentialDisplay = (display: Record<string, any>): CredentialDis
 const normalizeIssuerDisplay = (display: OpenId4VciCredentialIssuerMetadataDisplay): OpenId4VciCredentialIssuerMetadataDisplay => {
   const normalized = {
     ...display,
-    logo: normalizeImage((display as any).logo),
+    logo: normalizeImage(display.logo),
   }
 
   return normalized as OpenId4VciCredentialIssuerMetadataDisplay
