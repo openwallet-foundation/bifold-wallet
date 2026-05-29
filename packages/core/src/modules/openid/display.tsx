@@ -323,6 +323,10 @@ export function filterAndMapSdJwtKeys(sdJwtVcPayload: Record<string, unknown>) {
   }
 }
 
+function getCredentialAttributeOrder(openId4VcMetadata?: OpenId4VcCredentialMetadata | null): string[] | undefined {
+  return openId4VcMetadata?.credential.order
+}
+
 export function getCredentialForDisplay(credentialRecord: OpenIDCredentialRecord): W3cCredentialDisplay {
   if (credentialRecord instanceof SdJwtVcRecord) {
     const { disclosures, jwt } = decodeSdJwtSync(credentialRecord.firstCredential.compact, (data, alg) =>
@@ -351,6 +355,7 @@ export function getCredentialForDisplay(credentialRecord: OpenIDCredentialRecord
       validUntil: mapped.raw.validUntil,
       validFrom: mapped.raw.validFrom,
       credentialSubject: openId4VcMetadata?.credential.credential_subject,
+      attributeOrder: getCredentialAttributeOrder(openId4VcMetadata),
     }
   }
 
@@ -384,6 +389,7 @@ export function getCredentialForDisplay(credentialRecord: OpenIDCredentialRecord
       validUntil: mdocInstance.validityInfo.validUntil,
       validFrom: mdocInstance.validityInfo.validFrom,
       credentialSubject: openId4VcMetadata?.credential.credential_subject,
+      attributeOrder: getCredentialAttributeOrder(openId4VcMetadata),
     }
   }
 
@@ -431,6 +437,7 @@ export function getCredentialForDisplay(credentialRecord: OpenIDCredentialRecord
     validUntil: credential.expiryDate ? new Date(credential.expiryDate) : undefined,
     validFrom: credential.issuanceDate ? new Date(credential.issuanceDate) : undefined,
     credentialSubject: openId4VcMetadata?.credential.credential_subject,
+    attributeOrder: getCredentialAttributeOrder(openId4VcMetadata),
   }
 }
 

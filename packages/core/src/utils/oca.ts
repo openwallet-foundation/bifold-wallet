@@ -64,9 +64,17 @@ export const buildFieldsFromW3cCredsCredential = (
   display: W3cCredentialDisplay,
   filterByAttributes?: string[]
 ): Array<Field> => {
+  const entries = Object.entries(display.attributes).filter(([key]) => key !== 'id' && key !== 'sub' && key !== 'status')
+  const entryByKey = new Map(entries)
+  const orderedKeys = display.attributeOrder?.filter((key) => entryByKey.has(key)) ?? []
+  const orderedKeySet = new Set(orderedKeys)
+  const orderedEntries = [
+    ...orderedKeys.map((key) => [key, entryByKey.get(key)] as const),
+    ...entries.filter(([key]) => !orderedKeySet.has(key)),
+  ]
+
   return (
-    Object.entries(display.attributes)
-      .filter(([key]) => key !== 'id' && key !== 'sub' && key !== 'status')
+    orderedEntries
       .map(([key]) => getAttributeField(display, key))
       .filter((field) => field !== undefined)
       .filter((field: FieldExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
