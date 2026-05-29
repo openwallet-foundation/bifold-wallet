@@ -15,23 +15,14 @@ import { detectImageMimeType, formatDate, getHostNameFromUrl, isDateString, sani
 import { getOpenId4VcCredentialMetadata } from './metadata'
 import { Jwk } from '@credo-ts/core/build/modules/kms/jwk/jwk.mjs'
 import { OpenIDCredentialRecord } from './credentialRecord'
-
-function findDisplay<Display extends { locale?: string }>(display?: Display[]): Display | undefined {
-  if (!display) return undefined
-
-  let item = display.find((d) => d.locale?.startsWith('en-'))
-  if (!item) item = display.find((d) => !d.locale)
-  if (!item) item = display[0]
-
-  return item
-}
+import { findLocalizedDisplay } from '../../utils/localizedDisplay'
 
 function getOpenId4VcIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetadata | null): CredentialIssuerDisplay {
   const issuerDisplay: Partial<CredentialIssuerDisplay> = {}
 
   // Try to extract from openid metadata first
   if (openId4VcMetadata) {
-    const openidIssuerDisplay = findDisplay(openId4VcMetadata.issuer.display)
+    const openidIssuerDisplay = findLocalizedDisplay(openId4VcMetadata.issuer.display)
 
     if (openidIssuerDisplay) {
       issuerDisplay.name = openidIssuerDisplay.name
@@ -45,7 +36,7 @@ function getOpenId4VcIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetada
     }
 
     // If the credentialDisplay contains a logo, and the issuerDisplay does not, use the logo from the credentialDisplay
-    const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
+    const openidCredentialDisplay = findLocalizedDisplay(openId4VcMetadata.credential.display)
     if (openidCredentialDisplay && !issuerDisplay.logo && openidCredentialDisplay.logo) {
       issuerDisplay.logo = {
         uri: openidCredentialDisplay.logo?.uri,
@@ -72,7 +63,7 @@ function getOpenId4VcIssuerDisplay(openId4VcMetadata?: OpenId4VcCredentialMetada
 function getIssuerDisplay(metadata: OpenId4VcCredentialMetadata | null | undefined): Partial<CredentialIssuerDisplay> {
   const issuerDisplay: Partial<CredentialIssuerDisplay> = {}
   // Try to extract from openid metadata first
-  const openidIssuerDisplay = findDisplay(metadata?.issuer.display)
+  const openidIssuerDisplay = findLocalizedDisplay(metadata?.issuer.display)
   issuerDisplay.name = openidIssuerDisplay?.name
   issuerDisplay.logo = openidIssuerDisplay?.logo
     ? {
@@ -82,7 +73,7 @@ function getIssuerDisplay(metadata: OpenId4VcCredentialMetadata | null | undefin
     : undefined
 
   // If the credentialDisplay contains a logo, and the issuerDisplay does not, use the logo from the credentialDisplay
-  const openidCredentialDisplay = findDisplay(metadata?.credential.display)
+  const openidCredentialDisplay = findLocalizedDisplay(metadata?.credential.display)
   if (openidCredentialDisplay && !issuerDisplay.logo && openidCredentialDisplay.logo) {
     issuerDisplay.logo = {
       uri: openidCredentialDisplay.logo?.uri,
@@ -142,7 +133,7 @@ function getCredentialDisplay(
   const credentialDisplay: Partial<CredentialDisplay> = {}
 
   if (openId4VcMetadata) {
-    const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
+    const openidCredentialDisplay = findLocalizedDisplay(openId4VcMetadata.credential.display)
     credentialDisplay.name = openidCredentialDisplay?.name
     credentialDisplay.description = openidCredentialDisplay?.description
     credentialDisplay.textColor = openidCredentialDisplay?.textColor
@@ -217,7 +208,7 @@ function getMdocCredentialDisplay(
   const credentialDisplay: Partial<CredentialDisplay> = {}
 
   if (openId4VcMetadata) {
-    const openidCredentialDisplay = findDisplay(openId4VcMetadata.credential.display)
+    const openidCredentialDisplay = findLocalizedDisplay(openId4VcMetadata.credential.display)
 
     if (openidCredentialDisplay) {
       credentialDisplay.name = openidCredentialDisplay.name

@@ -96,17 +96,22 @@ describe('OpenID metadata', () => {
       validUntil: undefined,
       validFrom: undefined,
       credentialSubject: {
-        given_name: { display: [{ name: 'Given Name' }] },
+        given_name: {
+          display: [
+            { name: 'Given Name', locale: 'en-US' },
+            { name: 'Prenom', locale: 'fr-CA' },
+          ],
+        },
         family_name: { display: [{ name: 'Family Name' }] },
         age_is_over_16: { display: [{ name: 'Age 16 or Over' }] },
       },
       attributeOrder: ['given_name', 'family_name', 'age_is_over_16'],
     }
 
-    const fields = buildFieldsFromW3cCredsCredential(display) as Attribute[]
+    const fields = buildFieldsFromW3cCredsCredential(display, undefined, 'fr') as Attribute[]
 
     expect(fields.map((field) => field.name)).toEqual([
-      'Given Name',
+      'Prenom',
       'Family Name',
       'Age 16 or Over',
       'something_nested',

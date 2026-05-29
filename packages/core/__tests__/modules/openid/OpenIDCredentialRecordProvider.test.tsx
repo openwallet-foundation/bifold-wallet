@@ -234,7 +234,7 @@ describe('OpenIDCredentialRecordProvider', () => {
     const bundle = await result.current.resolveBundleForCredential(w3cRecord)
 
     expect(mockGetCredentialForDisplay).toHaveBeenCalledWith(w3cRecord)
-    expect(mockBuildFieldsFromW3cCredsCredential).toHaveBeenCalledWith(display)
+    expect(mockBuildFieldsFromW3cCredsCredential).toHaveBeenCalledWith(display, undefined, 'en')
     expect(bundleResolver.resolveAllBundles).toHaveBeenCalledWith({
       identifiers: {
         schemaId: '',
