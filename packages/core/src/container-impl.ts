@@ -157,6 +157,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.UTIL_PROOF_TEMPLATE, getProofRequestTemplates)
     this._container.registerInstance(TOKENS.UTIL_ATTESTATION_MONITOR, { useValue: undefined })
     this._container.registerInstance(TOKENS.UTIL_APP_VERSION_MONITOR, { useValue: undefined })
+    this._container.registerInstance(TOKENS.UTIL_CREDENTIAL_PROVISIONING_MONITOR, { useValue: undefined })
     this._container.registerInstance(TOKENS.NOTIFICATIONS, {
       useNotifications,
     })
