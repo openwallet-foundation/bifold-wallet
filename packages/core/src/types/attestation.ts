@@ -15,3 +15,19 @@ export interface AttestationMonitor {
   stop(): void
   requestAttestationCredential(): Promise<void>
 }
+
+export interface GetAttestationChallengeData {
+  challenge: string
+}
+
+export interface GetAttestationJWTData {
+  jwt: string,
+  transactionId: string,
+}
+
+export interface GetAttestationJWTPayload {
+  attestationResult: string | string[]
+  challenge: string
+  keyId: string
+  secondaryKeyThumbprint: string
+}

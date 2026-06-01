@@ -5,11 +5,6 @@ import {
   OpenId4VciCredentialFormatProfile,
   OpenId4VciRequestTokenResponse,
   OpenId4VciResolvedCredentialOffer,
-  OpenId4VciAuthCodeFlowOptions,
-  OpenId4VciResolvedAuthorizationRequest,
-  OpenId4VciAuthorizationFlow,
-  OpenId4VciDpopRequestOptions,
-  OpenId4VciCredentialConfigurationsSupportedWithFormats
 } from '@credo-ts/openid4vc'
 import { Agent, DidJwk, DidKey, JwkDidCreateOptions, KeyDidCreateOptions, Kms } from '@credo-ts/core'
 import { extractOpenId4VcCredentialMetadata, setOpenId4VcCredentialMetadata } from './metadata'
@@ -152,43 +147,6 @@ export const resolveOpenId4VciOffer = async ({
   return resolvedCredentialOffer
 }
 
-
-interface ResolvedOpenId4VciAuthorizationRequest {
-  openid4vpRequestUrl: string
-  authorizationFlow: OpenId4VciAuthorizationFlow.Oauth2Redirect
-  authSession: string
-  dpop?: OpenId4VciDpopRequestOptions | undefined
-}
-
-export const resolveOpenId4VciAuthorizationRequest = async ({
-  agent,
-  authFlowOptions,
-  resolvedCredentialOffer,
-  credentialsToRequest,
-}: {
-  agent: Agent
-  authFlowOptions: OpenId4VciAuthCodeFlowOptions,
-  resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer,
-  credentialsToRequest: OpenId4VciCredentialConfigurationsSupportedWithFormats
-}): Promise<ResolvedOpenId4VciAuthorizationRequest> => {
-    console.log(credentialsToRequest)
-    if (resolvedCredentialOffer.credentialOfferPayload.grants?.["authorizationCodeGrantIdentifier"]) {
-      return await agent.openid4vc.holder.resolveOpenId4VciAuthorizationRequest(
-        resolvedCredentialOffer,
-        {
-          clientId: authFlowOptions.clientId,
-          redirectUri: authFlowOptions.redirectUri,
-          // scope: Object.entries(resolvedCredentialOffer.offeredCredentialConfigurations)
-          //   .map(([id, value]) => (credentialsToRequest.includes(id) ? value.scope : undefined))
-          //   .filter((v): v is string => Boolean(v)),
-        }
-      )
-    } else {
-      throw new Error('No authorization code grant identifier')
-    }
-
-}
-
 /**
  * Requests an access token for a pre-authorized OpenID4VCI offer.
  *
@@ -200,16 +158,19 @@ export async function acquirePreAuthorizedAccessToken({
   resolvedCredentialOffer,
   txCode,
   dpop,
+  walletAttestationJWT,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   txCode?: string
   dpop?: OpenId4VciDpopRequestOptions
+  walletAttestationJWT?: string
 }): Promise<OpenId4VciRequestTokenResponse> {
   return await agent.openid4vc.holder.requestToken({
     resolvedCredentialOffer,
     txCode,
     dpop,
+    walletAttestationJWT,
   })
 }
 

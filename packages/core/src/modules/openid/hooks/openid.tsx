@@ -11,7 +11,6 @@ import {
   getDpopSignatureAlgorithm,
   receiveCredentialFromOpenId4VciOffer,
   resolveOpenId4VciOffer,
-  resolveOpenId4VciAuthorizationRequest,
 } from '../offerResolve'
 import { getCredentialsForProofRequest } from '../resolverProof'
 import { OpenId4VPRequestRecord } from '../types'
@@ -20,7 +19,7 @@ import { setRefreshCredentialMetadata } from '../metadata'
 import { RefreshStatus } from '../refresh/types'
 import { temporaryMetaVanillaObject } from '../metadata'
 import { OpenIDCredentialRecord } from '../credentialRecord'
-import { useServices, TOKENS } from '../../../container-api'
+import { useAttestation } from '../../../hooks/attestation'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -38,6 +37,7 @@ export const useOpenID = ({
   const [{ enableAttestation, enableHardwareBackedHolderBinding }] = useServices([
     TOKENS.CONFIG,
   ])
+  const { retrieveAttestationJWT } = useAttestation()
 
   const resolveOpenIDCredential = useCallback(
     async (uri: string) => {
@@ -45,23 +45,15 @@ export const useOpenID = ({
         return
       }
       try {
+
         const resolvedCredentialOffer = await resolveOpenId4VciOffer({
           agent: agent,
           uri: uri,
         })
 
-        if (enableAttestation) {
-          const authorizationResponse = await resolveOpenId4VciAuthorizationRequest({
-            agent: agent,
-            authFlowOptions: {
-              clientId: '',
-              redirectUri: '',
-            },
-            credentialsToRequest: resolvedCredentialOffer.offeredCredentialConfigurations,
-            resolvedCredentialOffer,
-          })
-          console.log(authorizationResponse)
-        }
+        let walletAttestationJWT;
+        if (enableAttestation)
+          walletAttestationJWT = await retrieveAttestationJWT()
 
         const authServers = resolvedCredentialOffer.metadata.credentialIssuer.authorization_servers
         const authServer = resolvedCredentialOffer.metadata.authorizationServers[0]
@@ -105,6 +97,7 @@ export const useOpenID = ({
                 alg: dpopSignatureAlgorithm,
               }
             : undefined,
+          ...(enableAttestation ? { walletAttestationJWT } : {}),
         })
         const refreshToken = tokenResponse.refreshToken
 

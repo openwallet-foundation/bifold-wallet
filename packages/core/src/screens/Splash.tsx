@@ -30,7 +30,7 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
   const { LoadingIndicator } = useAnimatedComponents()
   const initializing = useRef(false)
   const [logger, ocaBundleResolver, { enableAttestation }] = useServices([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER, TOKENS.CONFIG])
-  const { setupAttestation } = useAttestation()
+  const { initAttestation } = useAttestation()
 
   const styles = StyleSheet.create({
     container: {
@@ -72,16 +72,16 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
 
     initAgentAsyncEffect()
 
-  }, [initializeAgent, ocaBundleResolver, logger, walletSecret, t, store.authentication.didAuthenticate, setupAttestation])
+  }, [initializeAgent, ocaBundleResolver, logger, walletSecret, t, store.authentication.didAuthenticate, initAttestation])
 
   useEffect(() => {
 
     if (!store.authentication.didAuthenticate)
       return
 
-    const initAttestation = async (): Promise<void> => {
+    const initializeAttestation = async (): Promise<void> => {
       try {
-        await setupAttestation()
+        await initAttestation()
       } catch (err) {
         const error = new BifoldError(
           t('Error.GenericError.Title'),
@@ -94,9 +94,9 @@ const Splash: React.FC<SplashProps> = ({ initializeAgent }) => {
       }
     }
 
-    initAttestation()
+    initializeAttestation()
 
-  }, [setupAttestation, enableAttestation, logger, store.authentication.didAuthenticate, t])
+  }, [initAttestation, enableAttestation, logger, store.authentication.didAuthenticate, t])
 
   return (
     <SafeAreaView style={styles.container}>

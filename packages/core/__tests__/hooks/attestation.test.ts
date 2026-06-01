@@ -112,9 +112,9 @@ describe('useAttestation', () => {
   })
 
   describe('hook interface', () => {
-    it('returns setupAttestation function', () => {
+    it('returns initAttestation function', () => {
       const { result } = renderHook(() => useAttestation())
-      expect(result.current.setupAttestation).toBeInstanceOf(Function)
+      expect(result.current.initAttestation).toBeInstanceOf(Function)
     })
   })
 
@@ -123,7 +123,7 @@ describe('useAttestation', () => {
       setupDefaultMocks({ enableAttestation: false })
       const { result } = renderHook(() => useAttestation())
 
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: DispatchAction.SET_ATTESTATION_COMPLETED,
@@ -136,7 +136,7 @@ describe('useAttestation', () => {
       setupDefaultMocks({ isAttestationConfigured: true })
       const { result } = renderHook(() => useAttestation())
 
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: DispatchAction.SET_ATTESTATION_COMPLETED,
@@ -149,7 +149,7 @@ describe('useAttestation', () => {
       setupDefaultMocks({ isAttestationConfigured: true })
       const { result } = renderHook(() => useAttestation())
 
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(PersistentStorage.fetchValueForKey).toHaveBeenCalledWith(
         LocalStorageKeys.AttestationConfigured
@@ -168,7 +168,7 @@ describe('useAttestation', () => {
 
     it('generates a key and attests it', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(generateKeyAsync).toHaveBeenCalled()
       expect(withRetry).toHaveBeenCalledWith(attestKeyAsync, [mockKeyID, mockChallenge])
@@ -176,14 +176,14 @@ describe('useAttestation', () => {
 
     it('fetches an attestation JWT using the result and challenge', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, mockKeyID)
     })
 
     it('saves the attestation JWT via the agent bridge', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockAgentBridge.onReady).toHaveBeenCalled()
       expect(mockAgent.genericRecords.save).toHaveBeenCalledWith({
@@ -194,7 +194,7 @@ describe('useAttestation', () => {
 
     it('persists the configured flag and key ID in storage', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(PersistentStorage.storeValueForKey).toHaveBeenCalledWith(
         LocalStorageKeys.AttestationConfigured,
@@ -208,7 +208,7 @@ describe('useAttestation', () => {
 
     it('dispatches SET_ATTESTATION_COMPLETED after storing', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: DispatchAction.SET_ATTESTATION_COMPLETED,
@@ -220,7 +220,7 @@ describe('useAttestation', () => {
       (generateKeyAsync as jest.Mock).mockRejectedValue(new Error('key gen failed'))
 
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
@@ -229,7 +229,7 @@ describe('useAttestation', () => {
       (withRetry as jest.Mock).mockRejectedValue(new Error('attest failed'))
 
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
@@ -238,7 +238,7 @@ describe('useAttestation', () => {
       mockGetJWT.mockRejectedValueOnce(new Error('jwt fetch failed'))
 
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
@@ -257,28 +257,28 @@ describe('useAttestation', () => {
 
     it('generates a hardware attested key with the correct key ID', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(generateHardwareAttestedKeyAsync).toHaveBeenCalledWith(androidKeyID, mockChallenge)
     })
 
     it('retrieves the certificate chain via withRetry', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(withRetry).toHaveBeenCalledWith(getAttestationCertificateChainAsync, [androidKeyID])
     })
 
     it('fetches an attestation JWT using the certificate chain', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, androidKeyID)
     })
 
     it('saves the attestation JWT and persists state', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockAgent.genericRecords.save).toHaveBeenCalledWith({
         content: mockAttestationJWT,
@@ -292,7 +292,7 @@ describe('useAttestation', () => {
 
     it('dispatches SET_ATTESTATION_COMPLETED', async () => {
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: DispatchAction.SET_ATTESTATION_COMPLETED,
@@ -306,7 +306,7 @@ describe('useAttestation', () => {
       )
 
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
@@ -315,7 +315,7 @@ describe('useAttestation', () => {
       (withRetry as jest.Mock).mockRejectedValue(new Error('cert chain failed'))
 
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
@@ -328,7 +328,7 @@ describe('useAttestation', () => {
       Object.defineProperty(Platform, 'OS', { value: 'web', configurable: true })
 
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
@@ -349,8 +349,8 @@ describe('useAttestation', () => {
       })
 
       const { result } = renderHook(() => useAttestation())
-      // The store error is caught by setupAttestation's catch block
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      // The store error is caught by initAttestation's catch block
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
@@ -378,7 +378,7 @@ describe('useAttestation', () => {
       })
 
       const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.setupAttestation())
+      await act(() => result.current.initAttestation())
 
       expect(callOrder[0]).toBe('challenge')
       expect(callOrder[1]).toBe('generateKey')
@@ -388,7 +388,7 @@ describe('useAttestation', () => {
       mockGetChallenge.mockRejectedValueOnce(new Error('challenge fetch failed'))
 
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.setupAttestation())).rejects.toThrow(
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
