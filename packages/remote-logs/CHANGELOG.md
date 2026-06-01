@@ -1,5 +1,12 @@
 # Change Log
 
+## 3.0.11
+
+### Patch Changes
+
+- 178d2f8: logging change had strange side effects
+  - @bifold/core@3.0.11
+
 ## 3.0.10
 
 ### Patch Changes
