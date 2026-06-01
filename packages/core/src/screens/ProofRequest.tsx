@@ -19,7 +19,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   DeviceEventEmitter,
-  EmitterSubscription,
   FlatList,
   ScrollView,
   StyleSheet,
@@ -205,14 +204,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
 
-    const subscriptions = Array<EmitterSubscription>()
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
-    subscriptions.push(
-      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
-    )
+    const subscriptions = [
+      DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation),
+      DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted),
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation),
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation),
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation),
+    ]
 
     return () => {
       subscriptions.forEach((subscription) => subscription.remove())
@@ -236,15 +234,13 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       setCredentialProvisioningLoading(false)
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
-    // setup listeners for all the credential provisioning event types
-    const subscriptions = Array<EmitterSubscription>()
-    subscriptions.push(DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.Started, handleStarted))
-    subscriptions.push(DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.Completed, handleCompleted))
-    subscriptions.push(DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedHandleProof, handleFailed))
-    subscriptions.push(DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedHandleOffer, handleFailed))
-    subscriptions.push(
-      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedRequestCredential, handleFailed)
-    )
+    const subscriptions = [
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.Started, handleStarted),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.Completed, handleCompleted),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedHandleProof, handleFailed),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedHandleOffer, handleFailed),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedRequestCredential, handleFailed),
+    ]
 
     // clean up
     return () => {
