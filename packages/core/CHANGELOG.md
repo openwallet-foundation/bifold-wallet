@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.12
+
+### Patch Changes
+
+- dd22c43: Added new monitor system for proof requests
+  - @bifold/react-hooks@3.0.12
+
 ## 3.0.11
 
 ### Patch Changes
