@@ -15,16 +15,9 @@ import {
 } from '@credo-ts/didcomm'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  DeviceEventEmitter,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { DeviceEventEmitter, FlatList, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -112,6 +105,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [credentialProvisioningLoading, setCredentialProvisioningLoading] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [showErrorModal, setShowErrorModal] = useState(false)
+  const isHandlingLocalProofExit = useRef(false)
 
   const [store, dispatch] = useStore()
   const credProofPromise = useAllCredentialsForProof(proofId)
@@ -182,10 +176,24 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   })
 
   useEffect(() => {
-    if (proof && proof?.state !== DidCommProofState.RequestReceived) {
-      setShowErrorModal(true)
+    if (!proof) {
+      return
     }
-  }, [t, proof])
+    if (proof.state === DidCommProofState.RequestReceived) {
+      setShowErrorModal(false)
+      isHandlingLocalProofExit.current = false
+      return
+    }
+
+    if (proof.state === DidCommProofState.Declined || proof.state === DidCommProofState.Abandoned) {
+      if (!isHandlingLocalProofExit.current) {
+        navigation.getParent()?.navigate(TabStacks.HomeStack, { screen: Screens.Home })
+      }
+      return
+    }
+
+    setShowErrorModal(true)
+  }, [navigation, proof])
 
   useEffect(() => {
     if (!attestationMonitor) {
@@ -626,6 +634,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   ])
 
   const handleDeclineTouched = useCallback(async () => {
+    isHandlingLocalProofExit.current = true
     try {
       if (agent && proof) {
         const connectionId = proof.connectionId ?? ''
@@ -667,6 +676,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   ])
 
   const handleCancelTouched = useCallback(async () => {
+    isHandlingLocalProofExit.current = true
     try {
       toggleCancelModalVisible()
 
