@@ -1,7 +1,7 @@
 import type { CredentialFormatData } from './CredentialFormatDataProvider'
 import type { ProofFormatData } from './ProofFormatDataProvider'
 
-import AgentProvider, { useAgent } from './AgentProvider'
+import AgentProvider, { useAgent, useOptionalAgent } from './AgentProvider'
 import { useBasicMessages, useBasicMessagesByConnectionId } from './BasicMessageProvider'
 import { useConnections, useConnectionById } from './ConnectionProvider'
 import { useCredentialsFormatData, useCredentialFormatDataById } from './CredentialFormatDataProvider'
@@ -21,6 +21,7 @@ export type { ProofFormatData, CredentialFormatData }
 
 export {
   useAgent,
+  useOptionalAgent,
   useBasicMessages,
   useBasicMessagesByConnectionId,
   useConnections,
