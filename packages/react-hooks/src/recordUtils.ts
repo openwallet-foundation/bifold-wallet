@@ -109,10 +109,8 @@ export const recordsRemovedByType = <R extends BaseRecordAny>(
     .pipe(filterByType(recordClass))
 }
 
-export const isModuleRegistered = (agent: Agent, ModuleClass: Constructor) => {
-  if (!agent) {
-    throw new Error('Agent is required to check if a module is enabled')
-  }
+export const isModuleRegistered = (agent: Agent | undefined, ModuleClass: Constructor) => {
+  if (!agent) return false
 
   const foundModule = Object.values(agent.dependencyManager.registeredModules).find(
     (module: unknown) => module instanceof ModuleClass,
@@ -121,6 +119,6 @@ export const isModuleRegistered = (agent: Agent, ModuleClass: Constructor) => {
   return foundModule !== undefined
 }
 
-export const useIsModuleRegistered = (agent: Agent, ModuleClass: Constructor) => {
+export const useIsModuleRegistered = (agent: Agent | undefined, ModuleClass: Constructor) => {
   return useMemo(() => isModuleRegistered(agent, ModuleClass), [agent, ModuleClass])
 }

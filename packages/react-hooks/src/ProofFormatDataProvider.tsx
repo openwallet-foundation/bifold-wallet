@@ -67,7 +67,7 @@ export const useProofFormatDataById = (id: string): ProofFormatData | undefined 
 }
 
 interface Props {
-  agent: Agent
+  agent: Agent | undefined
 }
 
 const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
@@ -80,6 +80,10 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
   })
 
   const setInitialState = useCallback(async () => {
+    if (!agent) {
+      setState({ formattedData: [], loading: true })
+      return
+    }
     const records = await agent.modules.didcomm.proofs.getAll()
     const formattedData: Array<ProofFormatData> = []
     for (const record of records) {
@@ -94,7 +98,7 @@ const ProofFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, ch
   }, [setInitialState])
 
   useEffect(() => {
-    if (state.loading) return
+    if (!agent || state.loading) return
 
     const proofAdded$ = recordsAddedByType(agent, DidCommProofExchangeRecord).subscribe(async (record) => {
       const formatData = await agent.modules.didcomm.proofs.getFormatData(record.id)
