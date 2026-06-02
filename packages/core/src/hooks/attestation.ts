@@ -7,11 +7,10 @@ import {
   getAttestationCertificateChainAsync,
   isSupported as isAttestationSupportediOS,
   isHardwareAttestationSupportedAsync as isAttestationSupportedAndroid,
-
 } from '@expo/app-integrity'
 import uuid from 'react-native-uuid'
 import { useAgent } from '@bifold/react-hooks'
-import { calculateJwkThumbprint } from 'jose'
+import * as jose from 'jose'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
@@ -104,7 +103,7 @@ export const useAttestation = () => {
       const secondaryKey = await agent.kms.createKeyForSignatureAlgorithm(
         { algorithm: 'ES256', backend: 'secureEnvironment' }
       )
-      const secondaryKeyThumbprint = await calculateJwkThumbprint(secondaryKey.publicJwk)
+      const secondaryKeyThumbprint = await jose.calculateJwkThumbprint(secondaryKey.publicJwk)
 
       if (Platform.OS === 'ios') {
 
@@ -138,7 +137,7 @@ export const useAttestation = () => {
         await storeAttestationJWT(keyId, attestationJWT.jwt)
 
       } else throw new Error('Platform not supported')
-      
+
     } catch(err: any) {
       logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error initializing attestation')
