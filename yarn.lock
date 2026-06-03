@@ -32,6 +32,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@animo-id/expo-secure-environment@patch:@animo-id/expo-secure-environment@npm%3A0.1.5#~/.yarn/patches/@animo-id-expo-secure-environment-npm-0.1.5-3c2a8f1b94.patch":
+  version: 0.1.5
+  resolution: "@animo-id/expo-secure-environment@patch:@animo-id/expo-secure-environment@npm%3A0.1.5#~/.yarn/patches/@animo-id-expo-secure-environment-npm-0.1.5-3c2a8f1b94.patch::version=0.1.5&hash=3aa128"
+  dependencies:
+    "@peculiar/asn1-ecc": "npm:^2.3.8"
+    "@peculiar/asn1-schema": "npm:^2.3.8"
+    "@peculiar/asn1-x509": "npm:^2.3.8"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/72e061d84419b8ce4f6e7a9c0f83904ed98b9ac8825fed835b764060d3c725c8a839fe82937a244fe8b2be6ffbebfc83a4fcab5d90d60d19e51b528cd3643295
+  languageName: node
+  linkType: hard
+
 "@animo-id/mdoc@npm:^0.5.2":
   version: 0.5.2
   resolution: "@animo-id/mdoc@npm:0.5.2"
