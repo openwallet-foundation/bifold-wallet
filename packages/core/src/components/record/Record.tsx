@@ -19,9 +19,18 @@ export interface RecordProps {
   hideFieldValues?: boolean
   field?: (field: Field, index: number, fields: Field[]) => React.ReactElement | null
   scrollEnabled?: boolean
+  isProofRequest?: boolean
 }
 
-const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues = false, field = null, scrollEnabled = true }) => {
+const Record: React.FC<RecordProps> = ({
+  header,
+  footer,
+  fields,
+  hideFieldValues = false,
+  field = null,
+  scrollEnabled = true,
+  isProofRequest = false,
+}) => {
   const { t } = useTranslation()
   const [shown, setShown] = useState<boolean[]>([])
   const { ListItems, TextTheme, Spacing } = useTheme()
@@ -79,7 +88,7 @@ const Record: React.FC<RecordProps> = ({ header, footer, fields, hideFieldValues
             {header()}
             {hideFieldValues ? (
               <View style={styles.linkContainer}>
-                <Text style={TextTheme.headingFour}>{t('ProofRequest.DetailsHeader')}</Text>
+                {isProofRequest && <Text style={TextTheme.headingFour}>{t('ProofRequest.DetailsHeader')}</Text>}
                 <TouchableOpacity
                   style={styles.link}
                   activeOpacity={1}
