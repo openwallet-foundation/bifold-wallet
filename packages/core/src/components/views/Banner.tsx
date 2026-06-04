@@ -150,6 +150,8 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
     <TouchableOpacity
       style={{ ...styles.container, backgroundColor: bannerColor(type) }}
       testID={testIdWithKey(`button-${type}`)}
+      accessibilityLabel={title}
+      accessibilityRole="button"
       onPress={() => {
         if (variant === 'summary' && onToggle) {
           onToggle()

@@ -3,8 +3,25 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../../../contexts/theme'
+import { testIdWithKey } from '../../../../utils/testable'
 import { CustomRecord, HistoryCardType } from '../../types'
 import { ThemedText } from '../../../../components/texts/ThemedText'
+
+const cardTitleKeys: Record<HistoryCardType, string> = {
+  [HistoryCardType.CardAccepted]: 'History.CardTitle.CardAccepted',
+  [HistoryCardType.CardDeclined]: 'History.CardTitle.CardDeclined',
+  [HistoryCardType.CardExpired]: 'History.CardTitle.CardExpired',
+  [HistoryCardType.CardRemoved]: 'History.CardTitle.CardRemoved',
+  [HistoryCardType.CardRevoked]: 'History.CardTitle.CardRevoked',
+  [HistoryCardType.CardUpdates]: 'History.CardTitle.CardUpdates',
+  [HistoryCardType.PinChanged]: 'History.CardTitle.WalletPinUpdated',
+  [HistoryCardType.InformationSent]: 'History.CardTitle.InformationSent',
+  [HistoryCardType.InformationNotSent]: 'History.CardTitle.InformationNotSent',
+  [HistoryCardType.Connection]: 'History.CardTitle.Connection',
+  [HistoryCardType.ConnectionRemoved]: 'History.CardTitle.ConnectionRemoved',
+  [HistoryCardType.ActivateBiometry]: 'History.CardTitle.ActivateBiometry',
+  [HistoryCardType.DeactivateBiometry]: 'History.CardTitle.DeactivateBiometry',
+}
 
 interface Props {
   item: CustomRecord
@@ -58,7 +75,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
       case HistoryCardType.CardAccepted: {
         return {
           icon: <Assets.svg.historyCardAcceptedIcon />,
-          title: <ThemedText variant="headingThree">{t('History.CardTitle.CardAccepted')}</ThemedText>,
+          title: <ThemedText variant="headingThree">{t(cardTitleKeys[HistoryCardType.CardAccepted])}</ThemedText>,
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
         }
       }
@@ -67,7 +84,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyCardDeclinedIcon />,
           title: (
             <ThemedText variant="headerTitle" style={{ color: styles.historyCardRevoked.color }}>
-              {t('History.CardTitle.CardDeclined')}
+              {t(cardTitleKeys[HistoryCardType.CardDeclined])}
             </ThemedText>
           ),
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
@@ -76,7 +93,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
       case HistoryCardType.CardExpired: {
         return {
           icon: <Assets.svg.historyCardExpiredIcon />,
-          title: <ThemedText variant="headerTitle">{t('History.CardTitle.CardExpired')}</ThemedText>,
+          title: <ThemedText variant="headerTitle">{t(cardTitleKeys[HistoryCardType.CardExpired])}</ThemedText>,
           description: (
             <ThemedText>
               {t('History.CardDescription.CardExpired', { cardName: item.content.correspondenceName })}
@@ -89,7 +106,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyCardRemovedIcon />,
           title: (
             <ThemedText variant="headerTitle" style={{ color: styles.historyCardRevoked.color }}>
-              {t('History.CardTitle.CardRemoved')}
+              {t(cardTitleKeys[HistoryCardType.CardRemoved])}
             </ThemedText>
           ),
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
@@ -100,7 +117,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyCardRevokedIcon />,
           title: (
             <ThemedText variant="headerTitle" style={{ color: styles.historyCardRevoked.color }}>
-              {t('History.CardTitle.CardRevoked')}
+              {t(cardTitleKeys[HistoryCardType.CardRevoked])}
             </ThemedText>
           ),
           description: (
@@ -113,7 +130,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
       case HistoryCardType.CardUpdates: {
         return {
           icon: <Assets.svg.historyCardUpdatesIcon />,
-          title: <ThemedText variant="headingThree">{t('History.CardTitle.CardUpdates')}</ThemedText>,
+          title: <ThemedText variant="headingThree">{t(cardTitleKeys[HistoryCardType.CardUpdates])}</ThemedText>,
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
         }
       }
@@ -122,7 +139,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyPinUpdatedIcon />,
           title: (
             <ThemedText variant="headerTitle" style={{ color: styles.infoBox.color }}>
-              {t('History.CardTitle.WalletPinUpdated')}
+              {t(cardTitleKeys[HistoryCardType.PinChanged])}
             </ThemedText>
           ),
           description: <ThemedText>{t('History.CardDescription.WalletPinUpdated')}</ThemedText>,
@@ -133,7 +150,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyInformationSentIcon />,
           title: (
             <ThemedText variant="headingThree" style={{ color: styles.successColor.color }}>
-              {t('History.CardTitle.InformationSent')}
+              {t(cardTitleKeys[HistoryCardType.InformationSent])}
             </ThemedText>
           ),
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
@@ -144,7 +161,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyInformationNotSentIcon />,
           title: (
             <ThemedText variant="headerTitle" style={{ color: styles.historyCardRevoked.color }}>
-              {t('History.CardTitle.InformationNotSent')}
+              {t(cardTitleKeys[HistoryCardType.InformationNotSent])}
             </ThemedText>
           ),
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
@@ -153,7 +170,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
       case HistoryCardType.Connection: {
         return {
           icon: <Assets.svg.historyConnectionIcon />,
-          title: <ThemedText variant="headingThree">{t('History.CardTitle.Connection')}</ThemedText>,
+          title: <ThemedText variant="headingThree">{t(cardTitleKeys[HistoryCardType.Connection])}</ThemedText>,
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
         }
       }
@@ -162,7 +179,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyConnectionRemovedIcon />,
           title: (
             <ThemedText variant="headingThree" style={{ color: styles.historyCardRevoked.color }}>
-              {t('History.CardTitle.ConnectionRemoved')}
+              {t(cardTitleKeys[HistoryCardType.ConnectionRemoved])}
             </ThemedText>
           ),
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
@@ -171,7 +188,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
       case HistoryCardType.ActivateBiometry: {
         return {
           icon: <Assets.svg.historyActivateBiometryIcon />,
-          title: <ThemedText variant="headingThree">{t('History.CardTitle.ActivateBiometry')}</ThemedText>,
+          title: <ThemedText variant="headingThree">{t(cardTitleKeys[HistoryCardType.ActivateBiometry])}</ThemedText>,
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
         }
       }
@@ -180,7 +197,7 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
           icon: <Assets.svg.historyDeactivateBiometryIcon />,
           title: (
             <ThemedText variant="headingThree" style={{ color: styles.historyCardRevoked.color }}>
-              {t('History.CardTitle.DeactivateBiometry')}
+              {t(cardTitleKeys[HistoryCardType.DeactivateBiometry])}
             </ThemedText>
           ),
           description: <ThemedText>{item.content.correspondenceName}</ThemedText>,
@@ -242,6 +259,9 @@ const HistoryListItem: React.FC<Props> = ({ item }) => {
       onPress={() => {
         //TODO: navigate to history details
       }}
+      accessibilityLabel={`${item.content.type && item.content.type in cardTitleKeys ? t(cardTitleKeys[item.content.type as HistoryCardType]) : ''} ${'correspondenceName' in item.content ? (item.content.correspondenceName ?? '') : ''}`.trim()}
+      accessibilityRole="button"
+      testID={testIdWithKey('HistoryItem')}
     >
       {renderCard(item)}
     </TouchableOpacity>

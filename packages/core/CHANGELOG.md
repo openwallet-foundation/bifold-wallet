@@ -1,5 +1,34 @@
 # @bifold/core
 
+## 3.0.14
+
+### Patch Changes
+
+- c70df9d: fix: add prop for displaying proof request header in record component
+- 4704ce3: Fix header icon on onboarding screens set to white
+  - @bifold/react-hooks@3.0.14
+
+## 3.0.13
+
+### Patch Changes
+
+- f813512: fix watermark missing
+  - @bifold/react-hooks@3.0.13
+
+## 3.0.12
+
+### Patch Changes
+
+- dd22c43: Added new monitor system for proof requests
+  - @bifold/react-hooks@3.0.12
+
+## 3.0.11
+
+### Patch Changes
+
+- Updated dependencies [e99b6d9]
+  - @bifold/react-hooks@3.0.11
+
 ## 3.0.10
 
 ### Patch Changes

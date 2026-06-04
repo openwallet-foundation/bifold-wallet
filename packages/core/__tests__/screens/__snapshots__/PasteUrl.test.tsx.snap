@@ -44,6 +44,7 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
           PasteUrl.PasteUrlDescription
         </Text>
         <TextInput
+          accessibilityLabel="PasteUrl.PasteUrlInput"
           multiline={true}
           numberOfLines={15}
           onChangeText={[Function]}
@@ -71,6 +72,8 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
         }
       >
         <View
+          accessibilityLabel="PasteUrl.ScanDisabled"
+          accessibilityRole="button"
           accessibilityState={
             Object {
               "busy": undefined,
@@ -91,6 +94,14 @@ exports[`PasteUrl Screen Paste URL renders correctly 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
+          hitSlop={
+            Object {
+              "bottom": 44,
+              "left": 44,
+              "right": 44,
+              "top": 44,
+            }
+          }
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
