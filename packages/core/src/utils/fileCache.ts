@@ -5,7 +5,7 @@ import { BifoldLogger } from '../services/logger'
 
 export type CacheDataFile = {
   fileEtag: string
-  updatedAt: Date
+  updatedAt: string
 }
 
 export class FileCache {
@@ -33,7 +33,7 @@ export class FileCache {
     this._fileEtag = value
     this.saveCacheData({
       fileEtag: value,
-      updatedAt: new Date(),
+      updatedAt: new Date().toISOString(),
     }).catch((error) => {
       this.log?.error(`Failed to save cache data, ${error}`)
     })
