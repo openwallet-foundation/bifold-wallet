@@ -1,5 +1,11 @@
 # @bifold/verifier
 
+## 3.0.14
+
+### Patch Changes
+
+- @bifold/react-hooks@3.0.14
+
 ## 3.0.13
 
 ### Patch Changes

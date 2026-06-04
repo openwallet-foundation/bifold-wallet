@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.14
+
+### Patch Changes
+
+- c70df9d: fix: add prop for displaying proof request header in record component
+- 4704ce3: Fix header icon on onboarding screens set to white
+  - @bifold/react-hooks@3.0.14
+
 ## 3.0.13
 
 ### Patch Changes
