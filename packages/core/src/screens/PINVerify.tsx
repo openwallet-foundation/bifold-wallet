@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, View } from 'react-native'
 
@@ -54,15 +54,14 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
     verifyPIN(userPinInput ? userPinInput : PIN).then((isPINVerified) => {
       if (isPINVerified) {
         setAuthenticated(usage === PINEntryUsage.ChangePIN ? userPinInput : true)
-      } else {
-        if (inlineMessages.enabled || PINScreensConfig.useNewPINDesign) {
-          setInlineMessageField({
-            message: t('PINEnter.IncorrectPIN'),
-            inlineType: InlineErrorType.error,
-            config: inlineMessages,
-          })
-        } else setAlertModalVisible(true)
-      }
+      } 
+      else if (inlineMessages.enabled || PINScreensConfig.useNewPINDesign) {
+        setInlineMessageField({
+          message: t('PINEnter.IncorrectPIN'),
+          inlineType: InlineErrorType.error,
+          config: inlineMessages,
+        })
+      } else setAlertModalVisible(true)
       setLoading(false)
       setContinueDisabled(false)
     })
