@@ -52,7 +52,6 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
     async (userPinInput?: string) => {
       setLoading(true)
       setContinueDisabled(true)
-      setInlineMessageField(undefined)
       const isPINVerified = await verifyPIN(userPinInput ? userPinInput : PIN)
       if (isPINVerified) {
         setAuthenticated(usage === PINEntryUsage.ChangePIN ? userPinInput : true)
@@ -158,6 +157,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
           </ThemedText>
           <PINInput
             onPINChanged={async (userPinInput: string) => {
+              setInlineMessageField(undefined)
               setPIN(userPinInput)
               if (userPinInput.length === minPINLength) {
                 Keyboard.dismiss()
