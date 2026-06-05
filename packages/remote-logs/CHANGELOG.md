@@ -1,5 +1,49 @@
 # Change Log
 
+## 3.0.14
+
+### Patch Changes
+
+- Updated dependencies [c70df9d]
+- Updated dependencies [4704ce3]
+  - @bifold/core@3.0.14
+
+## 3.0.13
+
+### Patch Changes
+
+- Updated dependencies [f813512]
+  - @bifold/core@3.0.13
+
+## 3.0.12
+
+### Patch Changes
+
+- Updated dependencies [dd22c43]
+  - @bifold/core@3.0.12
+
+## 3.0.11
+
+### Patch Changes
+
+- 178d2f8: logging change had strange side effects
+  - @bifold/core@3.0.11
+
+## 3.0.10
+
+### Patch Changes
+
+- 149265d: added a custom log replacer to handle nested error objects
+- Updated dependencies [e3d82d0]
+  - @bifold/core@3.0.10
+
+## 3.0.9
+
+### Patch Changes
+
+- Updated dependencies [0944c44]
+  - @bifold/core@3.0.9
+
 ## 3.0.8
 
 ### Patch Changes

@@ -17,6 +17,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@animo-id/expo-secure-environment@npm:0.1.5":
+  version: 0.1.5
+  resolution: "@animo-id/expo-secure-environment@npm:0.1.5"
+  dependencies:
+    "@peculiar/asn1-ecc": "npm:^2.3.8"
+    "@peculiar/asn1-schema": "npm:^2.3.8"
+    "@peculiar/asn1-x509": "npm:^2.3.8"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/0491bc870a07db23b768f8bcb3c46c3a3db8636c7d245122e48ac20d228c201703a08ec88493b68f722865b66dc4c02fb8bbad9b458cae5768b71e2e0eba9eda
+  languageName: node
+  linkType: hard
+
+"@animo-id/expo-secure-environment@patch:@animo-id/expo-secure-environment@npm%3A0.1.5#~/.yarn/patches/@animo-id-expo-secure-environment-npm-0.1.5-3c2a8f1b94.patch":
+  version: 0.1.5
+  resolution: "@animo-id/expo-secure-environment@patch:@animo-id/expo-secure-environment@npm%3A0.1.5#~/.yarn/patches/@animo-id-expo-secure-environment-npm-0.1.5-3c2a8f1b94.patch::version=0.1.5&hash=3aa128"
+  dependencies:
+    "@peculiar/asn1-ecc": "npm:^2.3.8"
+    "@peculiar/asn1-schema": "npm:^2.3.8"
+    "@peculiar/asn1-x509": "npm:^2.3.8"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/72e061d84419b8ce4f6e7a9c0f83904ed98b9ac8825fed835b764060d3c725c8a839fe82937a244fe8b2be6ffbebfc83a4fcab5d90d60d19e51b528cd3643295
+  languageName: node
+  linkType: hard
+
 "@animo-id/mdoc@npm:^0.5.2":
   version: 0.5.2
   resolution: "@animo-id/mdoc@npm:0.5.2"
@@ -1964,15 +1994,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bifold/core@npm:3.0.8, @bifold/core@workspace:packages/core":
+"@bifold/core@npm:3.0.14, @bifold/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@bifold/core@workspace:packages/core"
   dependencies:
+    "@animo-id/expo-secure-environment": "npm:0.1.5"
     "@babel/core": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/oca": "npm:3.0.8"
-    "@bifold/react-hooks": "npm:3.0.8"
-    "@bifold/verifier": "npm:3.0.8"
+    "@bifold/oca": "npm:3.0.14"
+    "@bifold/react-hooks": "npm:3.0.14"
+    "@bifold/verifier": "npm:3.0.14"
     "@credo-ts/anoncreds": "npm:0.6.3"
     "@credo-ts/askar": "npm:0.6.3"
     "@credo-ts/core": "npm:0.6.3"
@@ -2028,6 +2059,7 @@ __metadata:
     eslint-plugin-import: "npm:~2.29.1"
     eslint-plugin-prettier: "npm:~5.2.6"
     expo: "npm:*"
+    expo-crypto: "npm:~15.0.8"
     expo-secure-store: "npm:*"
     i18next: "npm:~25.8.0"
     install-peerdeps: "npm:~3.0.7"
@@ -2051,7 +2083,7 @@ __metadata:
     react-native-fs: "npm:~2.20.0"
     react-native-gesture-handler: "npm:~2.28.0"
     react-native-get-random-values: "npm:~1.11.0"
-    react-native-gifted-chat: "npm:~2.4.1"
+    react-native-gifted-chat: "npm:~3.3.2"
     react-native-keyboard-controller: "npm:~1.18.5"
     react-native-keychain: "npm:~10.0.0"
     react-native-localize: "npm:~2.2.6"
@@ -2079,7 +2111,8 @@ __metadata:
     uuid: "npm:~9.0.1"
     zustand: "npm:~4.5.4"
   peerDependencies:
-    "@bifold/react-hooks": 3.0.8
+    "@animo-id/expo-secure-environment": 0.1.5
+    "@bifold/react-hooks": 3.0.14
     "@credo-ts/anoncreds": 0.6.3
     "@credo-ts/askar": 0.6.3
     "@credo-ts/core": 0.6.3
@@ -2113,6 +2146,7 @@ __metadata:
     axios: ~1.13.2
     base-64: ~1.0.0
     class-transformer: 0.5.1
+    expo-crypto: ~15.0.8
     i18next: ~21.6.16
     lodash.startcase: ~4.4.0
     moment: ~2.29.4
@@ -2129,7 +2163,7 @@ __metadata:
     react-native-fs: ~2.20.0
     react-native-gesture-handler: ~2.28.0
     react-native-get-random-values: ~1.11.0
-    react-native-gifted-chat: ~2.4.1
+    react-native-gifted-chat: ~3.3.2
     react-native-keychain: ~10.0.0
     react-native-localize: ~2.2.6
     react-native-logs: ~5.1.0
@@ -2154,7 +2188,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/oca@npm:3.0.8, @bifold/oca@workspace:packages/oca":
+"@bifold/oca@npm:3.0.14, @bifold/oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
@@ -2177,7 +2211,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/react-hooks@npm:3.0.8, @bifold/react-hooks@workspace:packages/react-hooks":
+"@bifold/react-hooks@npm:3.0.14, @bifold/react-hooks@workspace:packages/react-hooks":
   version: 0.0.0-use.local
   resolution: "@bifold/react-hooks@workspace:packages/react-hooks"
   dependencies:
@@ -2244,7 +2278,7 @@ __metadata:
     "@babel/preset-flow": "npm:~7.27.1"
     "@babel/preset-typescript": "npm:~7.28.5"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/core": "npm:3.0.8"
+    "@bifold/core": "npm:3.0.14"
     "@credo-ts/core": "npm:0.6.3"
     "@types/jest": "npm:~29.5.12"
     "@typescript-eslint/parser": "npm:~7.18.0"
@@ -2270,12 +2304,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/verifier@npm:3.0.8, @bifold/verifier@workspace:packages/verifier":
+"@bifold/verifier@npm:3.0.14, @bifold/verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
     "@babel/core": "npm:~7.28.6"
-    "@bifold/react-hooks": "npm:3.0.8"
+    "@bifold/react-hooks": "npm:3.0.14"
     "@credo-ts/anoncreds": "npm:0.6.3"
     "@credo-ts/core": "npm:0.6.3"
     "@credo-ts/didcomm": "npm:0.6.3"
@@ -2291,7 +2325,7 @@ __metadata:
     rimraf: "npm:~5.0.10"
     typescript: "npm:~5.9.2"
   peerDependencies:
-    "@bifold/react-hooks": 3.0.8
+    "@bifold/react-hooks": 3.0.14
     "@credo-ts/anoncreds": 0.6.3
     "@credo-ts/core": 0.6.3
     "@hyperledger/anoncreds-shared": 0.3.4
@@ -2911,6 +2945,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@credo-ts/react-native@patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch":
+  version: 0.6.3
+  resolution: "@credo-ts/react-native@patch:@credo-ts/react-native@npm%3A0.6.3#~/.yarn/patches/@credo-ts-react-native-npm-0.6.3-secure-environment-biometrics.patch::version=0.6.3&hash=324d01"
+  dependencies:
+    "@credo-ts/core": "npm:0.6.3"
+    events: "npm:^3.3.0"
+  peerDependencies:
+    "@animo-id/expo-secure-environment": ^0.1.1
+    expo-crypto: ^15.0.7
+    react-native: ">=0.71.4"
+    react-native-fs: ^2.20.0
+    react-native-get-random-values: ">=1.11.0 <3.0.0"
+  peerDependenciesMeta:
+    "@animo-id/expo-secure-environment":
+      optional: true
+  checksum: 10c0/28099216e58067fb5c57f893c1ac82b0edd9ed243b119a0a05521ecbd92b646a8c38be4eff2a901738956a5de4f560465a4caf51e73fd92624d0e4f045974465
+  languageName: node
+  linkType: hard
+
 "@credo-ts/webvh@npm:0.6.3":
   version: 0.6.3
   resolution: "@credo-ts/webvh@npm:0.6.3"
@@ -3422,6 +3475,18 @@ __metadata:
   peerDependencies:
     react: ">=16.3.0"
   checksum: 10c0/e26146045f0e5d33c62f00a83651b6ce7af3511d90f7956c324763d481e6503a744d0faba52db6959b573e00221dd2a87a2d936a313208478ef4d5bc6300f437
+  languageName: node
+  linkType: hard
+
+"@expo/react-native-action-sheet@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "@expo/react-native-action-sheet@npm:4.1.1"
+  dependencies:
+    "@types/hoist-non-react-statics": "npm:^3.3.1"
+    hoist-non-react-statics: "npm:^3.3.0"
+  peerDependencies:
+    react: ">=18.0.0"
+  checksum: 10c0/65a3ec63509c64aefaee4cc128f8b2e897a0a3f04702a0f22ba82bbd9c3fa1873ecc2f39ade44e089d6a209385b59c4af10389a097739c0eeea7c091bd95b4a2
   languageName: node
   linkType: hard
 
@@ -4362,6 +4427,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@peculiar/asn1-ecc@npm:^2.3.8":
+  version: 2.7.0
+  resolution: "@peculiar/asn1-ecc@npm:2.7.0"
+  dependencies:
+    "@peculiar/asn1-schema": "npm:^2.7.0"
+    "@peculiar/asn1-x509": "npm:^2.7.0"
+    asn1js: "npm:^3.0.6"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/f720e22e9b689450b786056f00f67141ab9a9edd3620c0f10215b2795c288052521262958ddb6c59608b463a53f3e2960381fa8878eda24f142bf7b385573aea
+  languageName: node
+  linkType: hard
+
 "@peculiar/asn1-ecc@npm:^2.6.0":
   version: 2.6.0
   resolution: "@peculiar/asn1-ecc@npm:2.6.0"
@@ -4439,6 +4516,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@peculiar/asn1-schema@npm:^2.3.8, @peculiar/asn1-schema@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "@peculiar/asn1-schema@npm:2.7.0"
+  dependencies:
+    "@peculiar/utils": "npm:^2.0.2"
+    asn1js: "npm:^3.0.6"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/6d799b62e8e9d7eed63a3044201ced4efef923011216c17da017a568bdb3c0f56abcea24d41df24916d1731e4a6920f8d84176f3e044f44f6541c83ae31fe670
+  languageName: node
+  linkType: hard
+
 "@peculiar/asn1-x509-attr@npm:^2.6.0":
   version: 2.6.0
   resolution: "@peculiar/asn1-x509-attr@npm:2.6.0"
@@ -4448,6 +4536,18 @@ __metadata:
     asn1js: "npm:^3.0.6"
     tslib: "npm:^2.8.1"
   checksum: 10c0/599ec61a8f193eed0653e19172c7c627485f0311d50b82524530a555b7f237a8547f50ec5ffdcdafa2756f0df24125fcb754fd4b66ad8eb67b3e7017652668a6
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-x509@npm:^2.3.8, @peculiar/asn1-x509@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "@peculiar/asn1-x509@npm:2.7.0"
+  dependencies:
+    "@peculiar/asn1-schema": "npm:^2.7.0"
+    "@peculiar/utils": "npm:^2.0.2"
+    asn1js: "npm:^3.0.6"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/095d1b5fd0dfb9ba9cffe5ce9fad31173f5184896d7d51270bc174745c5c6720f37ec83c8ac7b1b6db7100a94c550045d9ad37ce8f162d19cc93ebce6620f625
   languageName: node
   linkType: hard
 
@@ -4469,6 +4569,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.0.0"
   checksum: 10c0/202132c66dcc6b6aca5d0af971c015be2e163da2f7f992910783c5d39c8a7db59b6ec4f4ce419459a1f954b7e1d17b6b253f0e60072c1b3d254079f4eaebc311
+  languageName: node
+  linkType: hard
+
+"@peculiar/utils@npm:^2.0.2":
+  version: 2.0.3
+  resolution: "@peculiar/utils@npm:2.0.3"
+  dependencies:
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/e111a51c83334d6ff3c96b993ed0d718210620f3ad176853a4bf229f1cf4cd14e9388075318351b188862d34d2192d80f206f6bea53aa1459df3ec638cbcdbd5
   languageName: node
   linkType: hard
 
@@ -5798,6 +5907,15 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: 10c0/6bf5337bc447b706bb5b4431d37686aa2ea6d07cfd6f79cc31de80170d6ff9b1c7384a9c0ccbc45b3f512bae9e9f75c2e12109806a15331dc94e8a8db6dbb4ac
+  languageName: node
+  linkType: hard
+
+"@types/lodash.isequal@npm:^4.5.8":
+  version: 4.5.8
+  resolution: "@types/lodash.isequal@npm:4.5.8"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 10c0/6db28cacf165d55421fbf2970ccfb1682a7b82b743bb7aba4398fa8ab98f1711fca2fe4afa1aa2b7b4afb3eff76c8aca13b22206f5efeb038d99e41300589bca
   languageName: node
   linkType: hard
 
@@ -7177,12 +7295,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bifold-app@workspace:samples/app"
   dependencies:
+    "@animo-id/expo-secure-environment": "npm:0.1.5"
     "@babel/core": "npm:~7.28.6"
     "@babel/preset-env": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/core": "npm:3.0.8"
-    "@bifold/oca": "npm:3.0.8"
-    "@bifold/react-hooks": "npm:3.0.8"
+    "@bifold/core": "npm:3.0.14"
+    "@bifold/oca": "npm:3.0.14"
+    "@bifold/react-hooks": "npm:3.0.14"
     "@credo-ts/anoncreds": "npm:0.6.3"
     "@credo-ts/askar": "npm:0.6.3"
     "@credo-ts/core": "npm:0.6.3"
@@ -7231,7 +7350,7 @@ __metadata:
     eslint-import-resolver-typescript: "npm:~3.6.3"
     expo: "npm:*"
     expo-application: "npm:~7.0.8"
-    expo-crypto: "npm:~14.1.5"
+    expo-crypto: "npm:~15.0.8"
     expo-secure-store: "npm:*"
     fast-text-encoding: "npm:~1.0.6"
     i18next: "npm:~21.6.16"
@@ -8325,6 +8444,13 @@ __metadata:
   version: 1.8.26
   resolution: "dayjs@npm:1.8.26"
   checksum: 10c0/a098898c5093e563e4b759d5b9dd45ec43d19491556d1740e2924d9655573269453c7abe7b98c5b9854a77d7933699374278a3cf3db20795357ed768f2013655
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.19":
+  version: 1.11.20
+  resolution: "dayjs@npm:1.11.20"
+  checksum: 10c0/8af525e2aa100c8db9923d706c42b2b2d30579faf89456619413a5c10916efc92c2b166e193c27c02eb3174b30aa440ee1e7b72b0a2876b3da651d204db848a0
   languageName: node
   linkType: hard
 
@@ -9720,14 +9846,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-crypto@npm:~14.1.5":
-  version: 14.1.5
-  resolution: "expo-crypto@npm:14.1.5"
+"expo-crypto@npm:~15.0.8":
+  version: 15.0.9
+  resolution: "expo-crypto@npm:15.0.9"
   dependencies:
     base64-js: "npm:^1.3.0"
   peerDependencies:
     expo: "*"
-  checksum: 10c0/f49cdbdbe6875bd4c81d43160b727c3e82fbd0ad8a4b2e0a8dde175c86ea970c36fd40dbb904272a41c8130c112473929bd9205c10a12002910991d9a89e65ab
+  checksum: 10c0/fc0646231a57a4b58554734ead9be0a3bd2829900888926e8af94355fcf06632b846507553534ab8a04b52d268ec5bdb49100002105f91c1aae033384dfc56bc
   languageName: node
   linkType: hard
 
@@ -12581,6 +12707,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.isequal@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.isequal@npm:4.5.0"
+  checksum: 10c0/dfdb2356db19631a4b445d5f37868a095e2402292d59539a987f134a8778c62a2810c2452d11ae9e6dcac71fc9de40a6fedcb20e2952a15b431ad8b29e50e28f
+  languageName: node
+  linkType: hard
+
 "lodash.isfunction@npm:^3.0.9":
   version: 3.0.9
   resolution: "lodash.isfunction@npm:3.0.9"
@@ -14922,6 +15055,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-gifted-chat@npm:~3.3.2":
+  version: 3.3.3
+  resolution: "react-native-gifted-chat@npm:3.3.3"
+  dependencies:
+    "@expo/react-native-action-sheet": "npm:^4.1.1"
+    "@types/lodash.isequal": "npm:^4.5.8"
+    dayjs: "npm:^1.11.19"
+    lodash.isequal: "npm:^4.5.0"
+    react-native-zoom-reanimated: "npm:^1.5.2"
+  peerDependencies:
+    react: ">=18.0.0"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.0.0"
+    react-native-keyboard-controller: ">=1.0.0"
+    react-native-reanimated: ">=3.0.0 || ^4.0.0"
+    react-native-safe-area-context: ">=5.0.0"
+  checksum: 10c0/17ac8009bf2d015dcb05288d968f51e736c4b905651fdc228854ff6a4813031f505bd0000bcfbe1b176823620203e9bae775662cf4c5c293023ad199d084b7fb
+  languageName: node
+  linkType: hard
+
 "react-native-iphone-x-helper@npm:1.3.1":
   version: 1.3.1
   resolution: "react-native-iphone-x-helper@npm:1.3.1"
@@ -15274,6 +15427,16 @@ __metadata:
     react-native-worklets-core:
       optional: true
   checksum: 10c0/46001037f4f9a85e75c023e5082b137c179fd520741e088009d217f0a6eaf3a819b9784ae68aced95fa70c3345346c79dd2ee70bc04cfd811c7eefeda675cab2
+  languageName: node
+  linkType: hard
+
+"react-native-zoom-reanimated@npm:^1.5.2":
+  version: 1.5.3
+  resolution: "react-native-zoom-reanimated@npm:1.5.3"
+  peerDependencies:
+    react-native-gesture-handler: ">= 2.0.0"
+    react-native-reanimated: ">=3.0.0"
+  checksum: 10c0/c354165b69225b98e758ad9f4810d7ae9f469d4d430c16d46c51d0096d7e9734ae312535f0e417f28fbbe6d2f10e25bf4970d224b97228ef1acabffeb5d7a896
   languageName: node
   linkType: hard
 

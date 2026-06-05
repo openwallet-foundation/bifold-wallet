@@ -1,31 +1,23 @@
+import { Attribute, Predicate } from '@bifold/oca/build/legacy'
+import { useConnectionById, useProofById } from '@bifold/react-hooks'
 import {
   AnonCredsCredentialsForProofRequest,
   AnonCredsRequestedAttributeMatch,
   AnonCredsRequestedPredicateMatch,
   DidCommRequestPresentationV1Message,
 } from '@credo-ts/anoncreds'
-import { DifPexInputDescriptorToCredentials, CredoError, SubmissionEntryCredential, ClaimFormat } from '@credo-ts/core'
-import { useConnectionById, useProofById } from '@bifold/react-hooks'
+import { ClaimFormat, CredoError, DifPexInputDescriptorToCredentials, SubmissionEntryCredential } from '@credo-ts/core'
 import {
-  DidCommCredentialExchangeRecord,
   CredentialRecordBinding,
-  DidCommRequestPresentationV2Message,
+  DidCommCredentialExchangeRecord,
   DidCommProofState,
+  DidCommRequestPresentationV2Message,
 } from '@credo-ts/didcomm'
-import { Attribute, Predicate } from '@bifold/oca/build/legacy'
 import { useIsFocused } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  DeviceEventEmitter,
-  EmitterSubscription,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+import { DeviceEventEmitter, FlatList, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
@@ -34,6 +26,7 @@ import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import CommonRemoveModal from '../components/modals/CommonRemoveModal'
 import ProofCancelModal from '../components/modals/ProofCancelModal'
 import InfoTextBox from '../components/texts/InfoTextBox'
+import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 import { EventTypes } from '../constants'
 import { TOKENS, useServices } from '../container-api'
 import { useNetwork } from '../contexts/network'
@@ -45,6 +38,7 @@ import { useOutOfBandByConnectionId } from '../hooks/connections'
 import { useOutOfBandByReceivedInvitationId } from '../hooks/oob'
 import { useAllCredentialsForProof } from '../hooks/proofs'
 import { AttestationEventTypes } from '../types/attestation'
+import { CredentialProvisioningEventTypes } from '../types/auto-credential'
 import { BifoldError } from '../types/error'
 import { Screens, Stacks, TabStacks } from '../types/navigators'
 import {
@@ -57,21 +51,20 @@ import { ModalUsage } from '../types/remove'
 import { useAppAgent } from '../utils/agent'
 import { DescriptorMetadata } from '../utils/anonCredsProofRequestMapper'
 import {
-  Fields,
   evaluatePredicates,
+  Fields,
   getConnectionName,
   getCredentialDefinitionIdForRecord,
   getCredentialSchemaIdForRecord,
 } from '../utils/helpers'
 import { testIdWithKey } from '../utils/testable'
-import LoadingPlaceholder, { LoadingPlaceholderWorkflowType } from '../components/views/LoadingPlaceholder'
 
-import ProofRequestAccept from './ProofRequestAccept'
-import { HistoryCardType, HistoryRecord } from '../modules/history/types'
-import { BaseTourID } from '../types/tour'
-import { ThemedText } from '../components/texts/ThemedText'
-import { CredentialErrors } from '../types/credentials'
 import CredentialCardGen from '../components/misc/CredentialCardGen'
+import { ThemedText } from '../components/texts/ThemedText'
+import { HistoryCardType, HistoryRecord } from '../modules/history/types'
+import { CredentialErrors } from '../types/credentials'
+import { BaseTourID } from '../types/tour'
+import ProofRequestAccept from './ProofRequestAccept'
 
 type ProofRequestProps = {
   navigation: any
@@ -109,6 +102,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [activeCreds, setActiveCreds] = useState<ProofCredentialItems[]>([])
   const [selectedCredentials, setSelectedCredentials] = useState<string[]>([])
   const [attestationLoading, setAttestationLoading] = useState(false)
+  const [credentialProvisioningLoading, setCredentialProvisioningLoading] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [showErrorModal, setShowErrorModal] = useState(false)
   const isHandlingLocalProofExit = useRef(false)
@@ -125,6 +119,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const [
     bundleResolver,
     attestationMonitor,
+    credentialProvisioningMonitor,
     { enableTours: enableToursConfig },
     logger,
     historyManagerCurried,
@@ -133,6 +128,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   ] = useServices([
     TOKENS.UTIL_OCA_RESOLVER,
     TOKENS.UTIL_ATTESTATION_MONITOR,
+    TOKENS.UTIL_CREDENTIAL_PROVISIONING_MONITOR,
     TOKENS.CONFIG,
     TOKENS.UTIL_LOGGER,
     TOKENS.FN_LOAD_HISTORY,
@@ -216,19 +212,49 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
       DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
     }
 
-    const subscriptions = Array<EmitterSubscription>()
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation))
-    subscriptions.push(DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation))
-    subscriptions.push(
-      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation)
-    )
+    const subscriptions = [
+      DeviceEventEmitter.addListener(AttestationEventTypes.Started, handleStartedAttestation),
+      DeviceEventEmitter.addListener(AttestationEventTypes.Completed, handleStartedCompleted),
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleProof, handleFailedAttestation),
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedHandleOffer, handleFailedAttestation),
+      DeviceEventEmitter.addListener(AttestationEventTypes.FailedRequestCredential, handleFailedAttestation),
+    ]
 
     return () => {
       subscriptions.forEach((subscription) => subscription.remove())
     }
   }, [attestationMonitor])
+
+  useEffect(() => {
+    if (!credentialProvisioningMonitor) {
+      return
+    }
+
+    const handleStarted = () => {
+      setCredentialProvisioningLoading(true)
+    }
+
+    const handleCompleted = () => {
+      setCredentialProvisioningLoading(false)
+    }
+
+    const handleFailed = (error: BifoldError) => {
+      setCredentialProvisioningLoading(false)
+      DeviceEventEmitter.emit(EventTypes.ERROR_ADDED, error)
+    }
+    const subscriptions = [
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.Started, handleStarted),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.Completed, handleCompleted),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedHandleProof, handleFailed),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedHandleOffer, handleFailed),
+      DeviceEventEmitter.addListener(CredentialProvisioningEventTypes.FailedRequestCredential, handleFailed),
+    ]
+
+    // clean up
+    return () => {
+      subscriptions.forEach((subscription) => subscription.remove())
+    }
+  }, [credentialProvisioningMonitor])
 
   useEffect(() => {
     const shouldShowTour = enableToursConfig && store.tours.enableTours && !store.tours.seenProofRequestTour
@@ -701,15 +727,20 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
     return Object.values(shareDisabledErrors).some((value) => value)
   }, [shareDisabledErrors])
 
+  // True while any background credential workflow (attestation or just-in-time
+  // provisioning) is in progress — used to show the loading overlay and hide
+  // interactive UI elements that require credentials to be ready.
+  const isCredentialLoading = attestationLoading || credentialProvisioningLoading
+
   const proofPageHeader = () => {
     return (
       <>
-        {attestationLoading && (
+        {isCredentialLoading && (
           <View style={{ padding: 20 }}>
             <InfoTextBox>{t('ProofRequest.JustAMoment')}</InfoTextBox>
           </View>
         )}
-        {loading || attestationLoading ? (
+        {loading || isCredentialLoading ? (
           <LoadingPlaceholder
             workflowType={LoadingPlaceholderWorkflowType.ProofRequested}
             timeoutDurationInMs={10000}
@@ -888,7 +919,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
           !hasSatisfiedPredicates(getCredentialsFields(), item.credId) && errors.push(CredentialErrors.PredicateError)
           return (
             <View>
-              {loading || attestationLoading ? null : (
+              {loading || isCredentialLoading ? null : (
                 <View style={{ marginVertical: 10, marginHorizontal: 20 }}>
                   {/*  Use for new arch CredentialCardGen */}
                   <CredentialCardGen
@@ -923,7 +954,7 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const credentialListHeader = (headerText: string) => {
     return (
       <View style={styles.pageMargin}>
-        {!(loading || attestationLoading) && (
+        {!(loading || isCredentialLoading) && (
           <ThemedText
             variant="title"
             testID={testIdWithKey('ProofRequestHeaderText')}

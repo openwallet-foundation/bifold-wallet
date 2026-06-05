@@ -70,7 +70,7 @@ export const useProofNotInState = (state: DidCommProofState | DidCommProofState[
 }
 
 interface Props {
-  agent: BifoldAgent
+  agent: BifoldAgent | undefined
 }
 
 const ProofProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
@@ -80,6 +80,10 @@ const ProofProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) 
   })
 
   const setInitialState = useCallback(async () => {
+    if (!agent) {
+      setState({ records: [], loading: true })
+      return
+    }
     const records = await agent.modules.didcomm.proofs.getAll()
     setState({ records, loading: false })
   }, [agent])
@@ -89,7 +93,7 @@ const ProofProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) 
   }, [setInitialState])
 
   useEffect(() => {
-    if (state.loading) return
+    if (!agent || state.loading) return
 
     const proofAdded$ = recordsAddedByType(agent, DidCommProofExchangeRecord).subscribe((record) =>
       setState(addRecord(record, state))

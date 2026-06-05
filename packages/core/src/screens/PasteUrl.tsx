@@ -6,6 +6,7 @@ import { StyleSheet, View, TextInput, ScrollView, TouchableOpacity } from 'react
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Button, { ButtonType } from '../components/buttons/Button'
+import { hitSlop } from '../constants'
 import InfoBox, { InfoBoxType } from '../components/misc/InfoBox'
 import SafeAreaModal from '../components/modals/SafeAreaModal'
 import { TOKENS, useServices } from '../container-api'
@@ -93,6 +94,7 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
           <ThemedText style={styles.description}>{t('PasteUrl.PasteUrlDescription')}</ThemedText>
           <TextInput
             testID={testIdWithKey('PastedUrl')}
+            accessibilityLabel={t('PasteUrl.PasteUrlInput')}
             style={styles.textBox}
             numberOfLines={15}
             multiline
@@ -103,6 +105,9 @@ const PasteUrl: React.FC<PasteProps> = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             testID={testIdWithKey('ScanPastedUrlDisabled')}
+            accessibilityLabel={t('PasteUrl.ScanDisabled')}
+            accessibilityRole="button"
+            hitSlop={hitSlop}
             disabled={pastedContent.length > 0}
             onPress={() => {
               setErrorMessage({

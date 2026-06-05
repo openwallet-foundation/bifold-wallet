@@ -35,7 +35,7 @@ export const useBasicMessagesByConnectionId = (connectionId: string): DidCommBas
 }
 
 interface Props {
-  agent: BifoldAgent
+  agent: BifoldAgent | undefined
 }
 
 const BasicMessageProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
@@ -45,6 +45,10 @@ const BasicMessageProvider: React.FC<PropsWithChildren<Props>> = ({ agent, child
   })
 
   const setInitialState = useCallback(async () => {
+    if (!agent) {
+      setState({ records: [], loading: true })
+      return
+    }
     const records = await agent.modules.didcomm.basicMessages.findAllByQuery({})
     setState({ records, loading: false })
   }, [agent])
@@ -54,7 +58,7 @@ const BasicMessageProvider: React.FC<PropsWithChildren<Props>> = ({ agent, child
   }, [setInitialState])
 
   useEffect(() => {
-    if (state.loading) return
+    if (!agent || state.loading) return
 
     const basicMessageAdded$ = recordsAddedByType(agent, DidCommBasicMessageRecord).subscribe((record) =>
       setState(addRecord(record, state)),
