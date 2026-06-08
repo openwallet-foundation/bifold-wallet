@@ -1,5 +1,7 @@
-import { BifoldLogger, Container, TokenMapping } from '@bifold/core'
+import { BifoldLogger, Container, TokenMapping, TOKENS } from '@bifold/core'
+import { Platform } from 'react-native'
 import { DependencyContainer } from 'tsyringe'
+import axios from 'axios'
 
 export class AppContainer implements Container {
   private _container: DependencyContainer
@@ -56,6 +58,41 @@ export class AppContainer implements Container {
       }
     })
     */ 
+
+      this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async () => {
+
+      const response = await axios.post(
+        '',
+      )
+
+      if (response.status !== 200)
+        throw new Error(`Failed to register attestation: ${response.status}`)
+      
+      return response.data?.attestation_challenge
+
+    })
+
+    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationResult: string | string[], challenge: string, keyID: string) => {
+
+      const payload: any = {
+        attestation: Array.isArray(attestationResult) ? attestationResult.join(',') : attestationResult,
+        challenge,
+        platform: Platform.OS,
+        ...(Platform.OS === 'ios' ? { keyId: keyID } : {})
+      }
+
+      const response = await axios.post(
+        '', 
+        JSON.stringify(payload),
+      )
+
+      if (response.status !== 200) 
+        throw new Error(`Failed to register attestation: ${response.status}`)
+
+      return response.data
+      
+    })
+
     return this
   }
 
