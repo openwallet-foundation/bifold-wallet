@@ -161,7 +161,7 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
             <CardWatermark
               width={dimensions.cardWidth}
               height={dimensions.cardHeight}
-              style={{ color: branding.primaryBg }}
+              style={{ color: textColor }}
               watermark={branding.watermark}
             />
           )}

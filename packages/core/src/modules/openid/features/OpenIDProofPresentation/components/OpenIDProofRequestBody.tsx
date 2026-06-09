@@ -102,7 +102,7 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
               )}
             </View>
             <View style={styles.detailContainer}>
-              <Record fields={fields} hideFieldValues header={() => <></>} scrollEnabled={false} />
+              <Record fields={fields} hideFieldValues header={() => <></>} scrollEnabled={false} isProofRequest />
             </View>
           </View>
         )

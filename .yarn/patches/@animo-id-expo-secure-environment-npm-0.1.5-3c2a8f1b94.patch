@@ -1,0 +1,18 @@
+diff --git a/android/build.gradle b/android/build.gradle
+index cde6a970a43cc930546e59a80e8716a0980bc503..f7dc11cd461beedda314f3700dc42623d82a4029 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -40,6 +40,13 @@
+     lintOptions {
+         abortOnError false
+     }
++    compileOptions {
++        sourceCompatibility JavaVersion.VERSION_17
++        targetCompatibility JavaVersion.VERSION_17
++    }
++    kotlinOptions {
++        jvmTarget = "17"
++    }
+ }
+
+ dependencies {

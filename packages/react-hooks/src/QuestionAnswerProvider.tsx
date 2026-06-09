@@ -2,9 +2,11 @@ import type { Agent } from '@credo-ts/core'
 import type { QuestionAnswerRecord, QuestionAnswerStateChangedEvent } from '@credo-ts/question-answer'
 import type { PropsWithChildren } from 'react'
 
-import { QuestionAnswerApi, QuestionAnswerEventTypes } from '@credo-ts/question-answer'
+import { QuestionAnswerApi, QuestionAnswerEventTypes, QuestionAnswerModule } from '@credo-ts/question-answer'
 import { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react'
 import * as React from 'react'
+
+import { useIsModuleRegistered } from './recordUtils'
 
 interface QuestionAnswerContextInterface {
   loading: boolean
@@ -36,28 +38,33 @@ export const useQuestionAnswerById = (id: string): QuestionAnswerRecord | undefi
 }
 
 interface Props {
-  agent: Agent
+  agent: Agent | undefined
 }
 
 const QuestionAnswerProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
+  const isRegistered = useIsModuleRegistered(agent, QuestionAnswerModule)
   const [questionAnswerState, setQuestionAnswerState] = useState<QuestionAnswerContextInterface>({
     questionAnswerMessages: [],
     loading: true,
   })
 
   const setInitialState = useCallback(async () => {
+    if (!agent || !isRegistered) {
+      setQuestionAnswerState({ questionAnswerMessages: [], loading: true })
+      return
+    }
     const questAnswerApi = agent.dependencyManager.resolve(QuestionAnswerApi)
     const questionAnswerMessages = await questAnswerApi.getAll()
 
     setQuestionAnswerState({ questionAnswerMessages, loading: false })
-  }, [agent])
+  }, [agent, isRegistered])
 
   useEffect(() => {
     setInitialState()
   }, [setInitialState])
 
   useEffect(() => {
-    if (questionAnswerState.loading) return
+    if (!agent || !isRegistered || questionAnswerState.loading) return
 
     const listener = (event: QuestionAnswerStateChangedEvent) => {
       const newQuestionAnswerState = [...questionAnswerState.questionAnswerMessages]
@@ -81,7 +88,7 @@ const QuestionAnswerProvider: React.FC<PropsWithChildren<Props>> = ({ agent, chi
     return () => {
       agent.events.off(QuestionAnswerEventTypes.QuestionAnswerStateChanged, listener)
     }
-  }, [questionAnswerState, agent])
+  }, [questionAnswerState, agent, isRegistered])
 
   return <QuestionAnswerContext.Provider value={questionAnswerState}>{children}</QuestionAnswerContext.Provider>
 }
