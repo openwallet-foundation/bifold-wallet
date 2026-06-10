@@ -12,6 +12,11 @@
       "require": "./lib/commonjs/index.js",
       "types": "./lib/typescript/src/index.d.ts"
     },
+    "./utils/file-cache": {
+      "import": "./lib/module/utils/fileCache.js",
+      "require": "./lib/commonjs/utils/fileCache.js",
+      "types": "./lib/typescript/src/utils/fileCache.d.ts"
+    },
     "./utils/ledger": {
       "import": "./lib/module/utils/ledger.js",
       "require": "./lib/commonjs/utils/ledger.js",

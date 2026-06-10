@@ -10,6 +10,7 @@ import {
 } from '@bifold/oca/build/legacy'
 import { W3cCredentialDisplay } from '../modules/openid/types'
 import { BrandingOverlay } from '@bifold/oca'
+import { findLocalizedDisplay } from './localizedDisplay'
 
 export type FieldExt = {
   field: Attribute
@@ -18,7 +19,11 @@ export type FieldExt = {
 
 type AttributeFieldValue = string | number | null
 
-export const getAttributeField = (display: W3cCredentialDisplay, searchKey: string): FieldExt | undefined => {
+export const getAttributeField = (
+  display: W3cCredentialDisplay,
+  searchKey: string,
+  language?: string
+): FieldExt | undefined => {
   let attributeName: string = 'Unknown'
   let attributeValue: AttributeFieldValue = 'Unknown'
 
@@ -44,9 +49,8 @@ export const getAttributeField = (display: W3cCredentialDisplay, searchKey: stri
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [key, value] of Object.entries(credentialSubject)) {
       if (key !== searchKey || !value) continue
-      const { display } = value
-      const { name } = display[0]
-      attributeName = name
+      const localizedDisplay = findLocalizedDisplay(value.display, language)
+      attributeName = localizedDisplay?.name ?? attributeName
     }
   }
 
@@ -62,12 +66,21 @@ export const getAttributeField = (display: W3cCredentialDisplay, searchKey: stri
 
 export const buildFieldsFromW3cCredsCredential = (
   display: W3cCredentialDisplay,
-  filterByAttributes?: string[]
+  filterByAttributes?: string[],
+  language?: string
 ): Array<Field> => {
+  const entries = Object.entries(display.attributes).filter(([key]) => key !== 'id' && key !== 'sub' && key !== 'status')
+  const entryByKey = new Map(entries)
+  const orderedKeys = display.attributeOrder?.filter((key) => entryByKey.has(key)) ?? []
+  const orderedKeySet = new Set(orderedKeys)
+  const orderedEntries = [
+    ...orderedKeys.map((key) => [key, entryByKey.get(key)] as const),
+    ...entries.filter(([key]) => !orderedKeySet.has(key)),
+  ]
+
   return (
-    Object.entries(display.attributes)
-      .filter(([key]) => key !== 'id' && key !== 'sub' && key !== 'status')
-      .map(([key]) => getAttributeField(display, key))
+    orderedEntries
+      .map(([key]) => getAttributeField(display, key, language))
       .filter((field) => field !== undefined)
       .filter((field: FieldExt) => (filterByAttributes ? filterByAttributes.includes(field.attribute_name) : true))
       .map((fld) => fld.field) || []
@@ -160,7 +173,7 @@ export const buildOverlayFromW3cCredential = async ({
       credConnectionId: undefined,
       credName: credentialDisplay.display.name,
     },
-    attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
+    attributes: buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, language),
     language,
   }
 
@@ -168,6 +181,6 @@ export const buildOverlayFromW3cCredential = async ({
 
   return {
     ...(bundle as CredentialOverlay<BrandingOverlay>),
-    presentationFields: buildFieldsFromW3cCredsCredential(credentialDisplay),
+    presentationFields: buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, language),
   }
 }

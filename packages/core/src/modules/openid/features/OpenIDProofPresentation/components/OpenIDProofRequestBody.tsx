@@ -29,7 +29,7 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
   verifierName,
 }) => {
   const { ColorPalette, Spacing, ListItems } = useTheme()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const styles = StyleSheet.create({
     cardContainer: {
@@ -83,7 +83,7 @@ const OpenIDProofRequestBody: React.FC<OpenIDProofRequestBodyProps> = ({
         }
 
         const credentialDisplay = getCredentialForDisplay(credential)
-        const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes)
+        const fields = buildFieldsFromW3cCredsCredential(credentialDisplay, requestedAttributes, i18n.language)
 
         return (
           <View key={credentialSimplified.id}>

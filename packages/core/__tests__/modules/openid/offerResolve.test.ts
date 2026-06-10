@@ -390,6 +390,69 @@ describe('customCredentialBindingResolver', () => {
     })
   })
 
+  test('passes token response DPoP to credential acquisition without reusing it for holder binding', async () => {
+    const agent = createAgentMock()
+    const record = { id: 'record-1' }
+    const resolvedCredentialOffer = {
+      offeredCredentialConfigurations: {
+        employee_card: {
+          display: [{ name: 'Employee Card' }],
+        },
+      },
+      metadata: {
+        credentialIssuer: {
+          credential_issuer: 'https://issuer.example',
+          display: [{ name: 'Issuer Example' }],
+        },
+      },
+    }
+    const tokenResponseDpop = {
+      alg: 'EdDSA',
+      jwk: Kms.PublicJwk.fromUnknown({
+        kty: 'OKP',
+        crv: 'Ed25519',
+        x: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      }),
+      nonce: 'token-response-nonce',
+    }
+
+    ;(extractOpenId4VcCredentialMetadata as jest.Mock).mockReturnValue({
+      credential: {},
+      issuer: { id: 'https://issuer.example' },
+    })
+    agent.openid4vc.holder.requestCredentials.mockResolvedValue({
+      credentials: [{ record }],
+    })
+
+    await receiveCredentialFromOpenId4VciOffer({
+      agent: agent as any,
+      resolvedCredentialOffer: resolvedCredentialOffer as any,
+      tokenResponse: { accessToken: 'token', cNonce: 'c-nonce', dpop: tokenResponseDpop } as any,
+    })
+
+    const requestCredentialsOptions = agent.openid4vc.holder.requestCredentials.mock.calls[0][0]
+    expect(requestCredentialsOptions).toEqual(
+      expect.objectContaining({
+        accessToken: 'token',
+        cNonce: 'c-nonce',
+        dpop: tokenResponseDpop,
+      })
+    )
+
+    const credentialBinding = await requestCredentialsOptions.credentialBindingResolver({
+      supportedDidMethods: [],
+      proofTypes,
+      supportsAllDidMethods: false,
+      supportsJwk: true,
+      credentialFormat: OpenId4VciCredentialFormatProfile.SdJwtVc,
+    })
+
+    expect(credentialBinding).toEqual({
+      method: 'jwk',
+      keys: [publicJwk],
+    })
+  })
+
   test('throws when the requested credential configuration id does not exist in the offer', async () => {
     const agent = createAgentMock()
     const resolvedCredentialOffer = {
