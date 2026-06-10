@@ -215,7 +215,7 @@ export const OpenIDCredentialRecordProvider: React.FC<PropsWithChildren<OpenIDCr
         credConnectionId: undefined,
         credName: credentialDisplay.display.name,
       },
-      attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
+      attributes: buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, i18n.language),
       language: i18n.language,
     }
 

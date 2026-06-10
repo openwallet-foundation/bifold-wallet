@@ -18,12 +18,12 @@ import { RefreshCredentialMetadata, RefreshStatus } from './refresh/types'
 import { CredentialDisplay, CredentialSubjectRecord } from './types'
 import { OpenIDCredentialRecord } from './credentialRecord'
 
-export const openId4VcCredentialMetadataKey = '_bifold/openId4VcCredentialMetadata'
+export const openID4VcCredentialMetadataKey = '_bifold/openID4VcCredentialMetadata'
 export const refreshCredentialMetadataKey = '_bifold/refreshCredentialMetadata'
 export interface OpenId4VcCredentialMetadata {
   credential: {
     display?: CredentialDisplay[]
-    order?: unknown
+    order?: string[]
     credential_subject?: CredentialSubjectRecord
   }
   issuer: {
@@ -32,32 +32,140 @@ export interface OpenId4VcCredentialMetadata {
   }
 }
 
-type CredentialSupported = {
-  display: CredentialDisplay[]
-  order?: unknown
+type CredentialMetadataImage = {
+  uri?: string
+  url?: string
+  altText?: string
+  alt_text?: string
 }
 
-export type OpenId4VcCredentialMetadataExtended = Partial<
-  CredentialSupported & { credential_subject: CredentialSubjectRecord }
->
+type CredentialMetadataDisplay = {
+  name: string
+  locale?: string
+  description?: string
+  textColor?: string
+  text_color?: string
+  backgroundColor?: string
+  background_color?: string
+  backgroundImage?: CredentialMetadataImage
+  background_image?: CredentialMetadataImage
+  logo?: CredentialMetadataImage
+  primary_overlay_attribute?: string
+}
+
+type CredentialSupported = {
+  credential_metadata?: {
+    display?: CredentialMetadataDisplay[]
+    claims?: Array<{
+      path?: Array<string | number>
+      display?: Array<{
+        name: string
+        locale?: string
+      }>
+    }>
+  }
+  format?: string
+}
 
 export type OpenIDCredentialNotificationMetadata = {
   notificationMetadata?: OpenId4VciMetadata
   tokenResponse?: OpenId4VciRequestTokenResponse
 }
 
+const normalizeImage = (image?: CredentialMetadataImage) => {
+  if (!image) return undefined
+
+  const uri = image.uri ?? image.url
+  if (!uri) return undefined
+
+  return {
+    uri,
+    altText: image.altText ?? image.alt_text,
+  }
+}
+
+const normalizeCredentialDisplay = (display: CredentialMetadataDisplay): CredentialDisplay => ({
+  locale: display.locale,
+  name: display.name,
+  description: display.description,
+  textColor: display.textColor ?? display.text_color,
+  backgroundColor: display.backgroundColor ?? display.background_color,
+  backgroundImage: normalizeImage(display.backgroundImage ?? display.background_image),
+  logo: normalizeImage(display.logo),
+  primary_overlay_attribute: display.primary_overlay_attribute,
+} as CredentialDisplay)
+
+const normalizeIssuerDisplay = (display: OpenId4VciCredentialIssuerMetadataDisplay): OpenId4VciCredentialIssuerMetadataDisplay => {
+  const normalized = {
+    ...display,
+    logo: normalizeImage(display.logo),
+  }
+
+  return normalized as OpenId4VciCredentialIssuerMetadataDisplay
+}
+
+const getClaimDisplayKey = (claimPath: Array<string | number> | undefined, format?: string): string | undefined => {
+  if (!claimPath?.length) return undefined
+
+  if (format === 'mso_mdoc' && claimPath.length > 1) {
+    return String(claimPath[claimPath.length - 1])
+  }
+
+  return String(claimPath[0])
+}
+
+const claimsToCredentialSubject = (
+  claims: NonNullable<CredentialSupported['credential_metadata']>['claims'],
+  format?: string
+): CredentialSubjectRecord | undefined => {
+  if (!claims?.length) return undefined
+
+  const credentialSubject: CredentialSubjectRecord = {}
+  for (const claim of claims) {
+    const key = getClaimDisplayKey(claim.path, format)
+    if (!key || !claim.display?.length || credentialSubject[key]) continue
+
+    credentialSubject[key] = {
+      display: claim.display,
+    }
+  }
+
+  return Object.keys(credentialSubject).length ? credentialSubject : undefined
+}
+
+const claimsToOrder = (
+  claims: NonNullable<CredentialSupported['credential_metadata']>['claims'],
+  format?: string
+): string[] | undefined => {
+  if (!claims?.length) return undefined
+
+  const order: string[] = []
+  const seen = new Set<string>()
+  for (const claim of claims) {
+    const key = getClaimDisplayKey(claim.path, format)
+    if (!key || seen.has(key)) continue
+
+    seen.add(key)
+    order.push(key)
+  }
+
+  return order.length ? order : undefined
+}
+
 export function extractOpenId4VcCredentialMetadata(
-  credentialMetadata: Partial<CredentialSupported & { credential_subject: CredentialSubjectRecord }>,
+  credentialMetadata: Partial<CredentialSupported>,
   serverMetadata: { display?: OpenId4VciCredentialIssuerMetadataDisplay[]; id: string }
 ): OpenId4VcCredentialMetadata {
+  const metadata = credentialMetadata.credential_metadata
+
   return {
     credential: {
-      display: credentialMetadata.display,
-      order: credentialMetadata.order,
-      credential_subject: credentialMetadata.credential_subject,
+      display: metadata?.display?.map(normalizeCredentialDisplay),
+      order: claimsToOrder(metadata?.claims, credentialMetadata.format),
+      credential_subject: claimsToCredentialSubject(metadata?.claims, credentialMetadata.format),
     },
     issuer: {
-      display: serverMetadata.display,
+      display: serverMetadata.display?.map(normalizeIssuerDisplay),
       id: serverMetadata.id,
     },
   }
@@ -69,7 +177,7 @@ export function extractOpenId4VcCredentialMetadata(
 export function getOpenId4VcCredentialMetadata(
   credentialRecord: OpenIDCredentialRecord
 ): OpenId4VcCredentialMetadata | null {
-  return credentialRecord.metadata.get(openId4VcCredentialMetadataKey)
+  return credentialRecord.metadata.get(openID4VcCredentialMetadataKey)
 }
 
 /**
@@ -81,7 +189,7 @@ export function setOpenId4VcCredentialMetadata(
   credentialRecord: OpenIDCredentialRecord,
   metadata: OpenId4VcCredentialMetadata
 ) {
-  credentialRecord.metadata.set(openId4VcCredentialMetadataKey, metadata)
+  credentialRecord.metadata.set(openID4VcCredentialMetadataKey, metadata)
 }
 
 /**
