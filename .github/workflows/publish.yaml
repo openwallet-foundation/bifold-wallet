@@ -1,5 +1,6 @@
 name: Update Release PR or Publish
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
