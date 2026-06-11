@@ -9,7 +9,7 @@ import {
   isHardwareAttestationSupportedAsync as isAttestationSupportedAndroid,
 } from '@expo/app-integrity'
 import uuid from 'react-native-uuid'
-import { CryptoDigestAlgorithm, digest } from 'expo-crypto'
+import { CryptoDigestAlgorithm, CryptoEncoding, digest, digestStringAsync } from 'expo-crypto'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
@@ -19,7 +19,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { withRetry } from '../utils/network'
 import type { GetAttestationJWTPayload } from '../types/attestation'
 import { Agent, Kms } from '@credo-ts/core'
-import { encodeToBase64Url } from '@openid4vc/utils'
+import { encodeToBase64, encodeToBase64Url } from '@openid4vc/utils'
 
 const WALLET_ATTEST_STORAGE_KEY = 'walletAttestStorage'
 
@@ -46,18 +46,20 @@ export const useAttestation = () => {
     TOKENS.UTIL_AGENT_BRIDGE,
   ])
 
-  const storeAttestationJWT = useCallback(async (keyId: string, secondaryKeyId: string, attestationJWT: string, agent: Agent) => {
+  const storeAttestationJWT = useCallback(async (attestationKeyId: string, secondaryKeyId: string, attestationJWT: string, agent: Agent) => {
     try {
 
       await agent.genericRecords.save({
         content: {
-          attestationKeyId: keyId,
+          attestationKeyId,
           secondaryKeyId,
-          attestationJWT: attestationJWT,
+          attestationJWT,
         },
         id: WALLET_ATTEST_STORAGE_KEY,
       })
+
       await PersistentStorage.storeValueForKey(LocalStorageKeys.AttestationConfigured, true)
+
       dispatch({ type: DispatchAction.SET_ATTESTATION_COMPLETED, payload: [true] })
 
     } catch (err: any) {
@@ -90,12 +92,6 @@ export const useAttestation = () => {
     }
   }, [logger])
 
-  // Computes the bound challenge: base64url(SHA-256(challenge_utf8 + jwk_thumbprint)).
-  const computeBoundChallenge = useCallback(async (challenge: string, thumbprint: string): Promise<string> => {
-    const hashBuffer = await digest(CryptoDigestAlgorithm.SHA256, new TextEncoder().encode(challenge + thumbprint))
-    return encodeToBase64Url(new Uint8Array(hashBuffer))
-  }, [])
-
   const initAttestation = useCallback(async (): Promise<void> => {
     try {
 
@@ -112,28 +108,21 @@ export const useAttestation = () => {
       }
 
       agentBridge.onReady(async (agent) => {
-        const { challenge } = await getAttestationChallenge()
+
+        const challenge = await getAttestationChallenge()
         const secondaryKey = await agent.kms.createKeyForSignatureAlgorithm(
           { algorithm: 'ES256', backend: 'secureEnvironment' }
         )
         const signingKey = Kms.PublicJwk.fromPublicJwk(secondaryKey.publicJwk)
-        const encodedThumbprint = encodeToBase64Url(signingKey.getJwkThumbprint())
-
-        const boundChallenge = await computeBoundChallenge(challenge, encodedThumbprint)
+        const thumbprint = encodeToBase64Url(signingKey.getJwkThumbprint())
 
         if (Platform.OS === 'ios') {
 
           if (!isAttestationSupportediOS) throw new Error('iOS device not supported')
 
           const keyId = await generateKeyAsync()
-          const attestationResult = await withRetry(attestKeyAsync, [keyId, boundChallenge])
-          const getAttestationJwtPayload: GetAttestationJWTPayload = {
-            challenge,
-            keyId,
-            attestationResult,
-            signingKey,
-          }
-          const attestationJWT = await getAttestationJWT(getAttestationJwtPayload)
+          const attestationResult = await withRetry(attestKeyAsync, [keyId, challenge + thumbprint])
+          const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
           await storeAttestationJWT(keyId, signingKey.keyId, attestationJWT.jwt, agent)
 
         } else if (Platform.OS === 'android') {
@@ -141,26 +130,17 @@ export const useAttestation = () => {
           if (!isAttestationSupportedAndroid) throw new Error('Android device not supported')
 
           const keyId = uuid.v4().toString()
-          await generateHardwareAttestedKeyAsync(keyId, boundChallenge)
-          const attestationResult = (await withRetry(getAttestationCertificateChainAsync, [keyId])).join(',')
-          const getAttestationJwtPayload: GetAttestationJWTPayload = {
-            challenge,
-            keyId,
-            attestationResult,
-            signingKey,
-          }
-          const attestationJWT = await getAttestationJWT(getAttestationJwtPayload)
+          await generateHardwareAttestedKeyAsync(keyId, challenge + thumbprint)
+          const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyId])
+          const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
           await storeAttestationJWT(keyId, secondaryKey.keyId, attestationJWT.jwt, agent)
 
         } else throw new Error('Platform not supported')
-
       })
-
     } catch(err: any) {
       logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error initializing attestation')
     }
-
   }, [enableAttestation, getAttestationChallenge, getAttestationJWT, dispatch, logger, storeAttestationJWT])
 
   return {
