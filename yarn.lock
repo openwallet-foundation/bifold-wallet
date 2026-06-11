@@ -2049,7 +2049,6 @@ __metadata:
     i18next: "npm:~25.8.0"
     install-peerdeps: "npm:~3.0.7"
     jest: "npm:~29.6.4"
-    jose: "npm:^6.2.3"
     lodash.startcase: "npm:~4.4.0"
     mockdate: "npm:~3.0.5"
     moment: "npm:~2.29.4"
@@ -12294,13 +12293,6 @@ __metadata:
     "@sideway/formula": "npm:^3.0.1"
     "@sideway/pinpoint": "npm:^2.0.0"
   checksum: 10c0/9262aef1da3f1bec5b03caf50c46368899fe03b8ff26cbe3d53af4584dd1049079fc97230bbf1500b6149db7cc765b9ee45f0deb24bb6fc3fa06229d7148c17f
-  languageName: node
-  linkType: hard
-
-"jose@npm:^6.2.3":
-  version: 6.2.3
-  resolution: "jose@npm:6.2.3"
-  checksum: 10c0/aa91bccba22cc84d86308f833749bcb0b00441e35c24e0ac79abeac5f76dc62d47bdef9c1da6a0c609f5da6478595f52b252085888b89dbdb163861e40ea4188
   languageName: node
   linkType: hard
 

@@ -94,7 +94,7 @@ export const defaultConfig: Config = {
   showGenericErrors: false,
   enableFullScreenErrorModal: false,
   enableHardwareBackedHolderBinding: true,
-  enableAttestation: false,
+  enableAttestation: true,
 }
 
 export const defaultHistoryEventsLogger: HistoryEventsLoggerConfig = {

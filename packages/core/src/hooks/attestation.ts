@@ -9,7 +9,6 @@ import {
   isHardwareAttestationSupportedAsync as isAttestationSupportedAndroid,
 } from '@expo/app-integrity'
 import uuid from 'react-native-uuid'
-import * as jose from 'jose'
 import { CryptoDigestAlgorithm, digest } from 'expo-crypto'
 
 import { PersistentStorage } from '../services/storage'
@@ -20,6 +19,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { withRetry } from '../utils/network'
 import type { GetAttestationJWTPayload } from '../types/attestation'
 import { Agent, Kms } from '@credo-ts/core'
+import { encodeToBase64Url } from '@openid4vc/utils'
 
 const WALLET_ATTEST_STORAGE_KEY = 'walletAttestStorage'
 
@@ -90,21 +90,10 @@ export const useAttestation = () => {
     }
   }, [logger])
 
-  // Helper function to base64url-encode a Uint8Array, used for JWT construction
-  const b64url = useCallback((data: Uint8Array): string => {
-    return btoa(String.fromCharCode(...data))
-      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-  }, [])
-
-  // Computes the bound challenge: base64url(SHA-256(challenge_utf8 || jwk_thumbprint)).
+  // Computes the bound challenge: base64url(SHA-256(challenge_utf8 + jwk_thumbprint)).
   const computeBoundChallenge = useCallback(async (challenge: string, thumbprint: string): Promise<string> => {
-    const challengeBytes = new TextEncoder().encode(challenge)
-    const thumbprintBytes = new TextEncoder().encode(thumbprint)
-    const combined = new Uint8Array(challengeBytes.length + thumbprintBytes.length);
-    combined.set(challengeBytes)
-    combined.set(thumbprintBytes, challengeBytes.length)
-    const hashBuffer = await digest(CryptoDigestAlgorithm.SHA256, combined);
-    return b64url(new Uint8Array(hashBuffer));
+    const hashBuffer = await digest(CryptoDigestAlgorithm.SHA256, new TextEncoder().encode(challenge + thumbprint))
+    return encodeToBase64Url(new Uint8Array(hashBuffer))
   }, [])
 
   const initAttestation = useCallback(async (): Promise<void> => {
@@ -127,9 +116,10 @@ export const useAttestation = () => {
         const secondaryKey = await agent.kms.createKeyForSignatureAlgorithm(
           { algorithm: 'ES256', backend: 'secureEnvironment' }
         )
-        const secondaryKeyThumbprint = await jose.calculateJwkThumbprint(secondaryKey.publicJwk)
         const signingKey = Kms.PublicJwk.fromPublicJwk(secondaryKey.publicJwk)
-        const boundChallenge = await computeBoundChallenge(challenge, secondaryKeyThumbprint)
+        const encodedThumbprint = encodeToBase64Url(signingKey.getJwkThumbprint())
+
+        const boundChallenge = await computeBoundChallenge(challenge, encodedThumbprint)
 
         if (Platform.OS === 'ios') {
 
@@ -144,7 +134,7 @@ export const useAttestation = () => {
             signingKey,
           }
           const attestationJWT = await getAttestationJWT(getAttestationJwtPayload)
-          await storeAttestationJWT(keyId, secondaryKey.keyId, attestationJWT.jwt, agent)
+          await storeAttestationJWT(keyId, signingKey.keyId, attestationJWT.jwt, agent)
 
         } else if (Platform.OS === 'android') {
 
@@ -152,7 +142,7 @@ export const useAttestation = () => {
 
           const keyId = uuid.v4().toString()
           await generateHardwareAttestedKeyAsync(keyId, boundChallenge)
-          const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyId])
+          const attestationResult = (await withRetry(getAttestationCertificateChainAsync, [keyId])).join(',')
           const getAttestationJwtPayload: GetAttestationJWTPayload = {
             challenge,
             keyId,
