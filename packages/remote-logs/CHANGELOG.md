@@ -1,5 +1,14 @@
 # Change Log
 
+## 3.0.15
+
+### Patch Changes
+
+- Updated dependencies [9ed3b0f]
+- Updated dependencies [fc4eeb1]
+- Updated dependencies [7fce466]
+  - @bifold/core@3.0.15
+
 ## 3.0.14
 
 ### Patch Changes

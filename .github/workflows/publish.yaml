@@ -1,5 +1,6 @@
 name: Update Release PR or Publish
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -10,6 +11,7 @@ on:
       - 'packages/**'
       - 'package.json'
       - 'yarn.lock'
+      - '.changeset/**'
 
 permissions:
   pull-requests: write

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Keyboard, StyleSheet, View } from 'react-native'
 
@@ -42,10 +42,6 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
   const [inlineMessageField, setInlineMessageField] = useState<InlineMessageProps>()
   const [{ preventScreenCapture }, inlineMessages] = useServices([TOKENS.CONFIG, TOKENS.INLINE_ERRORS])
   usePreventScreenCapture(preventScreenCapture)
-
-  useEffect(() => {
-    setInlineMessageField(undefined)
-  }, [PIN])
 
   const clearAlertModal = useCallback(() => {
     setAlertModalVisible(false)
@@ -161,6 +157,7 @@ const PINVerify: React.FC<PINVerifyProps> = ({ setAuthenticated, usage = PINEntr
           </ThemedText>
           <PINInput
             onPINChanged={async (userPinInput: string) => {
+              setInlineMessageField(undefined)
               setPIN(userPinInput)
               if (userPinInput.length === minPINLength) {
                 Keyboard.dismiss()

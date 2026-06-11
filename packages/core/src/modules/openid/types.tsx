@@ -10,7 +10,8 @@ export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${s
 export interface OpenId4VcCredentialMetadata {
   credential: {
     display?: CredentialDisplay[]
-    order?: unknown
+    order?: string[]
+    credential_subject?: CredentialSubjectRecord
   }
   issuer: {
     display?: OpenId4VciCredentialIssuerMetadataDisplay[]
@@ -87,6 +88,7 @@ export interface W3cCredentialDisplay {
   validUntil: Date | undefined
   validFrom: Date | undefined
   credentialSubject: CredentialSubjectRecord | undefined
+  attributeOrder?: string[]
 }
 
 export interface OpenId4VPRequestRecord extends OpenId4VpResolvedAuthorizationRequest {

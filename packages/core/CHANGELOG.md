@@ -1,5 +1,17 @@
 # @bifold/core
 
+## 3.0.15
+
+### Patch Changes
+
+- 9ed3b0f: Fix DPop
+- fc4eeb1: Export `FileCache` and `CacheDataFile` from `@bifold/core` so downstream packages can subclass `FileCache` without duplicating the implementation.
+
+  Also corrects `CacheDataFile.updatedAt` from `Date` to `string` — `JSON.parse` returns a string and the previous type was inaccurate.
+
+- 7fce466: Fix incorrect pin error not appearing in new pin design on Android
+  - @bifold/react-hooks@3.0.15
+
 ## 3.0.14
 
 ### Patch Changes
