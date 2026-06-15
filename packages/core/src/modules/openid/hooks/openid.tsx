@@ -51,9 +51,8 @@ export const useOpenID = ({
           uri: uri,
         })
 
-        let walletAttestationJWT;
-        if (enableAttestation)
-          walletAttestationJWT = await retrieveAttestationJWT(agent)
+        let walletAttestationJwt
+        if (enableAttestation) walletAttestationJwt = await retrieveAttestationJWT(agent)
 
         const authServers = resolvedCredentialOffer.metadata.credentialIssuer.authorization_servers
         const authServer = resolvedCredentialOffer.metadata.authorizationServers[0]
@@ -97,7 +96,7 @@ export const useOpenID = ({
                 alg: dpopSignatureAlgorithm,
               }
             : undefined,
-          ...(enableAttestation ? { walletAttestationJWT: walletAttestationJWT?.jwt } : {}),
+          ...(enableAttestation ? { walletAttestationJwt: walletAttestationJwt?.jwt } : {}),
         })
         const refreshToken = tokenResponse.refreshToken
 

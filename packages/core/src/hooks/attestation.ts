@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { Platform } from 'react-native'
 import {
   attestKeyAsync,
@@ -9,7 +9,7 @@ import {
   isHardwareAttestationSupportedAsync as isAttestationSupportedAndroid,
 } from '@expo/app-integrity'
 import uuid from 'react-native-uuid'
-import { CryptoDigestAlgorithm, CryptoEncoding, digest, digestStringAsync } from 'expo-crypto'
+import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
@@ -17,16 +17,15 @@ import { useServices, TOKENS } from '../container-api'
 import { useStore } from '../contexts/store'
 import { DispatchAction } from '../contexts/reducers/store'
 import { withRetry } from '../utils/network'
-import type { GetAttestationJWTPayload } from '../types/attestation'
 import { Agent, Kms } from '@credo-ts/core'
-import { encodeToBase64, encodeToBase64Url } from '@openid4vc/utils'
+import { encodeToBase64Url } from '@openid4vc/utils'
 
 const WALLET_ATTEST_STORAGE_KEY = 'walletAttestStorage'
 
 interface AttestationJwt {
   jwt: string,
   keyId: string,
-  secondaryKeyId: string,
+  signingKeyId: string,
 }
 
 export const useAttestation = () => {
@@ -46,14 +45,14 @@ export const useAttestation = () => {
     TOKENS.UTIL_AGENT_BRIDGE,
   ])
 
-  const storeAttestationJWT = useCallback(async (attestationKeyId: string, secondaryKeyId: string, attestationJWT: string, agent: Agent) => {
+  const storeAttestationJWT = useCallback(async (attestationKeyId: string, signingKeyId: string, attestationJwt: string, agent: Agent) => {
     try {
 
       await agent.genericRecords.save({
         content: {
           attestationKeyId,
-          secondaryKeyId,
-          attestationJWT,
+          signingKeyId,
+          attestationJwt,
         },
         id: WALLET_ATTEST_STORAGE_KEY,
       })
@@ -72,16 +71,16 @@ export const useAttestation = () => {
     try {
       const attestationKeyData = await agent.genericRecords.findById(WALLET_ATTEST_STORAGE_KEY)
       const keyId = attestationKeyData?.content?.["attestationKeyId"] as string ?? null
-      const jwt = attestationKeyData?.content?.["attestationJWT"] as string ?? null
-      const secondaryKeyId = attestationKeyData?.content?.["secondaryKeyId"] as string ?? null
+      const jwt = attestationKeyData?.content?.["attestationJwt"] as string ?? null
+      const signingKeyId = attestationKeyData?.content?.["signingKeyId"] as string ?? null
 
-      if (!keyId || !jwt || !secondaryKeyId)
+      if (!keyId || !jwt || !signingKeyId)
         throw new Error('No stored attestation data')
 
       const attestationJwt: AttestationJwt = {
         keyId,
         jwt,
-        secondaryKeyId
+        signingKeyId
       }
 
       return new Promise<AttestationJwt>(() => attestationJwt)
@@ -110,30 +109,37 @@ export const useAttestation = () => {
       agentBridge.onReady(async (agent) => {
 
         const challenge = await getAttestationChallenge()
+        console.log('SERVER CHALLENGE: ', challenge)
         const secondaryKey = await agent.kms.createKeyForSignatureAlgorithm(
           { algorithm: 'ES256', backend: 'secureEnvironment' }
         )
         const signingKey = Kms.PublicJwk.fromPublicJwk(secondaryKey.publicJwk)
         const thumbprint = encodeToBase64Url(signingKey.getJwkThumbprint())
+        console.log('SIGNING KEY THUMBPRINT: ', thumbprint)
 
         if (Platform.OS === 'ios') {
 
           if (!isAttestationSupportediOS) throw new Error('iOS device not supported')
 
           const keyId = await generateKeyAsync()
+          // No need to SHA256 encode the challenge on iOS as that is handled by the OS
           const attestationResult = await withRetry(attestKeyAsync, [keyId, challenge + thumbprint])
+          console.log('APPLE ATTESTATION RESULT: ', attestationResult)
           const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
-          await storeAttestationJWT(keyId, signingKey.keyId, attestationJWT.jwt, agent)
+          console.log('ATTESTATION JWT FROM BACKEND: ', attestationJWT)
+          await storeAttestationJWT(keyId, signingKey.keyId, attestationJWT?.signedAttestation, agent)
 
         } else if (Platform.OS === 'android') {
 
           if (!isAttestationSupportedAndroid) throw new Error('Android device not supported')
 
           const keyId = uuid.v4().toString()
-          await generateHardwareAttestedKeyAsync(keyId, challenge + thumbprint)
+          // To ensure that the string is kept at a reasonable size (< 128 bytes) and consistency with the iOS implementation
+          const boundChallenge = await digestStringAsync(CryptoDigestAlgorithm.SHA256, challenge + thumbprint)
+          await generateHardwareAttestedKeyAsync(keyId, boundChallenge)
           const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyId])
           const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
-          await storeAttestationJWT(keyId, secondaryKey.keyId, attestationJWT.jwt, agent)
+          await storeAttestationJWT(keyId, signingKey.keyId, attestationJWT?.signedAttestation, agent)
 
         } else throw new Error('Platform not supported')
       })

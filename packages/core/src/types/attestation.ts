@@ -21,7 +21,7 @@ export interface GetAttestationChallengeData {
 }
 
 export interface GetAttestationJWTData {
-  jwt: string,
+  signedAttestation: string,
   transactionId: string,
 }
 

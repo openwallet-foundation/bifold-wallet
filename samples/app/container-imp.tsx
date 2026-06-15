@@ -65,6 +65,8 @@ export class AppContainer implements Container {
         '',
       )
 
+      console.log(response)
+
       if (response.status !== 200)
         throw new Error(`Failed to register attestation: ${response.status}`)
       
@@ -72,12 +74,13 @@ export class AppContainer implements Container {
 
     })
 
-    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationResult: string | string[], challenge: string, keyID: string) => {
+    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationResult: string | string[], challenge: string, keyID: string, signingPublicKey: any) => {
 
       const payload: any = {
         attestation: Array.isArray(attestationResult) ? attestationResult.join(',') : attestationResult,
         challenge,
         platform: Platform.OS,
+        signingPublicKey: signingPublicKey.jwk.jwk,
         ...(Platform.OS === 'ios' ? { keyId: keyID } : {})
       }
 
@@ -85,6 +88,8 @@ export class AppContainer implements Container {
         '', 
         JSON.stringify(payload),
       )
+
+      console.log(response)
 
       if (response.status !== 200) 
         throw new Error(`Failed to register attestation: ${response.status}`)
