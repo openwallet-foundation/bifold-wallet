@@ -356,7 +356,7 @@ export async function mapCredentialTypeToCard({
       proofContext: !!proof,
       displayItems: proof ? displayItems : undefined,
       credentialErrors,
-      credentialCardPlaceholderBackground: colorPalette.brand.credentialCardPlaceholderBackground,
+      credentialCardPlaceholderBackground: colorPalette.brand?.credentialCardPlaceholderBackground,
     })
   }
 
