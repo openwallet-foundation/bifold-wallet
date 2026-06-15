@@ -262,7 +262,10 @@ const mapW3CCredToCard = (
   w3cCred: W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord,
   brandingOverlay: CredentialOverlay<BrandingOverlay>,
   brandingOverlayTypeString: string,
-  opts: Pick<MapOpts, 'proofContext' | 'displayItems'> & { credentialErrors?: CredentialErrors[] } = {}
+  opts: Pick<MapOpts, 'proofContext' | 'displayItems'> & {
+    credentialErrors?: CredentialErrors[]
+    credentialCardPlaceholderBackground?: string
+  } = {}
 ): WalletCredentialCardData => {
   const credentialDisplay = getCredentialForDisplay(w3cCred)
   const extraAttributeValue = credentialDisplay.display.primary_overlay_attribute
@@ -281,7 +284,7 @@ const mapW3CCredToCard = (
     },
     branding: {
       type: brandingOverlayTypeString,
-      primaryBg: brandingOverlay?.brandingOverlay?.primaryBackgroundColor,
+      primaryBg: brandingOverlay?.brandingOverlay?.primaryBackgroundColor ?? opts.credentialCardPlaceholderBackground,
       secondaryBg: brandingOverlay?.brandingOverlay?.secondaryBackgroundColor,
       logo1x1Uri: brandingOverlay?.brandingOverlay?.logo,
       backgroundSliceUri: brandingOverlay?.brandingOverlay?.backgroundImageSlice,
@@ -353,6 +356,7 @@ export async function mapCredentialTypeToCard({
       proofContext: !!proof,
       displayItems: proof ? displayItems : undefined,
       credentialErrors,
+      credentialCardPlaceholderBackground: colorPalette.brand.credentialCardPlaceholderBackground,
     })
   }
 

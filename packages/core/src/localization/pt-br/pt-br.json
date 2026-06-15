@@ -534,6 +534,7 @@
     "TermsAndConditions": "Termos e condições",
     "RemoveFromWallet": "Remover da carteira",
     "Revoked": "Revogada",
+    "Invalid": "Inválida",
     "CredentialRevokedMessageTitle": "Esta credencial está revogada",
     "CredentialRevokedMessageBody": "Esta credencial não funcionará mais para algumas requisições de prova. Você precisará atualizar a credencial com o emissor.",
     "NewRevoked": "Credencial revogada",
