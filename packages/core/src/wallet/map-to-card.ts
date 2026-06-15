@@ -262,7 +262,7 @@ const mapW3CCredToCard = (
   w3cCred: W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord,
   brandingOverlay: CredentialOverlay<BrandingOverlay>,
   brandingOverlayTypeString: string,
-  opts: Pick<MapOpts, 'proofContext' | 'displayItems'> = {}
+  opts: Pick<MapOpts, 'proofContext' | 'displayItems'> & { credentialErrors?: CredentialErrors[] } = {}
 ): WalletCredentialCardData => {
   const credentialDisplay = getCredentialForDisplay(w3cCred)
   const extraAttributeValue = credentialDisplay.display.primary_overlay_attribute
@@ -299,7 +299,13 @@ const mapW3CCredToCard = (
       undefined,
   } as W3CInput
 
-  return mapW3CToCard(input, credentialDisplay.id, opts)
+  const card = mapW3CToCard(input, credentialDisplay.id, opts)
+  const isRevoked = !!opts.credentialErrors?.includes(CredentialErrors.Revoked)
+
+  return {
+    ...card,
+    status: isRevoked && !opts.proofContext ? 'error' : card.status,
+  }
 }
 
 /**
@@ -346,6 +352,7 @@ export async function mapCredentialTypeToCard({
     return mapW3CCredToCard(credential, bo, brandingTypeString, {
       proofContext: !!proof,
       displayItems: proof ? displayItems : undefined,
+      credentialErrors,
     })
   }
 

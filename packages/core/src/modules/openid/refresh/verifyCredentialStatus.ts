@@ -12,6 +12,7 @@ type AnyCred = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2Credentia
  */
 export async function verifyCredentialStatus(rec: AnyCred, logger?: BifoldLogger): Promise<RefreshStatus> {
   try {
+    return RefreshStatus.Invalid
     // Only Sd-JWT creds have compactSdJwtVc in this codebase
     if (!('compactSdJwtVc' in rec)) return RefreshStatus.Valid
 
