@@ -19,10 +19,11 @@
     "start": "react-native start --reset-cache"
   },
   "dependencies": {
+    "@animo-id/expo-secure-environment": "0.1.5",
     "@babel/runtime": "~7.27.0",
-    "@bifold/core": "3.0.8",
-    "@bifold/oca": "3.0.8",
-    "@bifold/react-hooks": "3.0.8",
+    "@bifold/core": "3.0.15",
+    "@bifold/oca": "3.0.15",
+    "@bifold/react-hooks": "3.0.15",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
@@ -57,7 +58,7 @@
     "buffer": "~6.0.3",
     "expo": "*",
     "expo-application": "~7.0.8",
-    "expo-crypto": "~14.1.5",
+    "expo-crypto": "~15.0.8",
     "expo-secure-store": "*",
     "fast-text-encoding": "~1.0.6",
     "i18next": "~21.6.16",

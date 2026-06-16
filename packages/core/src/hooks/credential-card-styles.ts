@@ -37,7 +37,7 @@ const useCredentialCardStyles = (
     secondaryFromHelper ??
     (isOverlay(overlayOrColors)
       ? overlayOrColors.brandingOverlay?.primaryBackgroundColor
-      : overlayOrColors.secondaryBackgroundColor ?? overlayOrColors.primaryBackgroundColor)
+      : (overlayOrColors.secondaryBackgroundColor ?? overlayOrColors.primaryBackgroundColor))
 
   const styles = StyleSheet.create({
     container: {
@@ -114,10 +114,7 @@ const useCredentialCardStyles = (
       paddingVertical: 4,
     },
     textContainer: {
-      color:
-        proof && (brandingOverlayType === 'Branding10' || brandingOverlayType === BrandingOverlayType.Branding10)
-          ? TextTheme.normal.color
-          : credentialTextColor(ColorPalette, primaryBg),
+      color: credentialTextColor(ColorPalette, primaryBg),
       flexShrink: 1,
       ...((brandingOverlayType === 'Branding11' || brandingOverlayType === BrandingOverlayType.Branding11) && {
         fontSize: 16,

@@ -66,6 +66,7 @@ export async function reissueCredentialWithAccessToken({
     accessToken: tokenResponse.access_token,
     tokenType: tokenResponse.token_type || 'Bearer',
     cNonce: tokenResponse.c_nonce,
+    dpop: tokenResponse.dpop,
     clientId,
     credentialConfigurationIds: [credentialConfigurationId],
     verifyCredentialStatus: false, // you’ll check after storing
@@ -114,6 +115,13 @@ export async function reissueCredentialWithAccessToken({
   setRefreshCredentialMetadata(newRecord, {
     ...refreshMetaData,
     refreshToken: tokenResponse.refresh_token || refreshMetaData.refreshToken,
+    dpop: tokenResponse.dpop
+      ? {
+          alg: tokenResponse.dpop.alg,
+          jwk: tokenResponse.dpop.jwk.toJson(),
+          nonce: tokenResponse.dpop.nonce,
+        }
+      : refreshMetaData.dpop,
     lastCheckedAt: Date.now(),
     lastCheckResult: RefreshStatus.Valid,
   })

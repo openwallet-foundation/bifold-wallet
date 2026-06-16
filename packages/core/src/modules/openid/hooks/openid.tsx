@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter } from 'react-native'
 import { EventTypes } from '../../../constants'
+import { TOKENS, useServices } from '../../../container-api'
 import { BifoldError } from '../../../types/error'
 import {
   acquirePreAuthorizedAccessToken,
@@ -30,6 +31,7 @@ export const useOpenID = ({
 
   const { agent } = useAgent()
   const { t } = useTranslation()
+  const [{ enableHardwareBackedHolderBinding }] = useServices([TOKENS.CONFIG])
 
   const resolveOpenIDCredential = useCallback(
     async (uri: string) => {
@@ -57,7 +59,10 @@ export const useOpenID = ({
           throw new Error('No credential issuer found in the credential offer metadata')
         }
 
-        const tokenResponse = await acquirePreAuthorizedAccessToken({ agent, resolvedCredentialOffer })
+        const tokenResponse = await acquirePreAuthorizedAccessToken({
+          agent,
+          resolvedCredentialOffer,
+        })
         const refreshToken = tokenResponse.refreshToken
 
         temporaryMetaVanillaObject.tokenResponse = tokenResponse
@@ -66,12 +71,14 @@ export const useOpenID = ({
           agent,
           resolvedCredentialOffer,
           tokenResponse: tokenResponse,
+          enableHardwareBackedHolderBinding,
         })
 
         if (refreshToken) {
           setRefreshCredentialMetadata(credential, {
             tokenEndpoint: tokenEndpoint,
             refreshToken: refreshToken,
+            authorizationServer: tokenResponse.authorizationServer,
             issuerMetadataCache: {
               credential_issuer: credentialIssuer,
               credential_endpoint: credentialEndpoint,
@@ -81,6 +88,14 @@ export const useOpenID = ({
             },
             credentialIssuer: credentialIssuer,
             credentialConfigurationId: configID,
+            tokenBinding: tokenResponse.dpop ? 'DPoP' : 'Bearer',
+            dpop: tokenResponse.dpop
+              ? {
+                  alg: tokenResponse.dpop.alg,
+                  jwk: tokenResponse.dpop.jwk.toJson(),
+                  nonce: tokenResponse.dpop.nonce,
+                }
+              : undefined,
             lastCheckedAt: Date.now(),
             lastCheckResult: RefreshStatus.Valid,
             attemptCount: 0,
@@ -100,7 +115,7 @@ export const useOpenID = ({
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
       }
     },
-    [agent, t]
+    [agent, enableHardwareBackedHolderBinding, t]
   )
 
   const resolveOpenIDPresentationRequest = useCallback(

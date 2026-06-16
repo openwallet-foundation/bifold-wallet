@@ -63,7 +63,7 @@ export const useCredentialNotInState = (state: DidCommCredentialState | DidCommC
 }
 
 interface Props {
-  agent: Agent
+  agent: Agent | undefined
 }
 
 const CredentialProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
@@ -73,6 +73,10 @@ const CredentialProvider: React.FC<PropsWithChildren<Props>> = ({ agent, childre
   })
 
   const setInitialState = useCallback(async () => {
+    if (!agent) {
+      setState({ records: [], loading: true })
+      return
+    }
     const records = await agent.modules.didcomm.credentials.getAll()
     setState({ records, loading: false })
   }, [agent])
@@ -82,7 +86,7 @@ const CredentialProvider: React.FC<PropsWithChildren<Props>> = ({ agent, childre
   }, [setInitialState])
 
   useEffect(() => {
-    if (state.loading) return
+    if (!agent || state.loading) return
 
     const credentialAdded$ = recordsAddedByType(agent, DidCommCredentialExchangeRecord).subscribe((record) =>
       setState(addRecord(record, state)),

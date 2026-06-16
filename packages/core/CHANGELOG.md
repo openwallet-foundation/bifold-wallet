@@ -1,5 +1,60 @@
 # @bifold/core
 
+## 3.0.15
+
+### Patch Changes
+
+- 9ed3b0f: Fix DPop
+- fc4eeb1: Export `FileCache` and `CacheDataFile` from `@bifold/core` so downstream packages can subclass `FileCache` without duplicating the implementation.
+
+  Also corrects `CacheDataFile.updatedAt` from `Date` to `string` — `JSON.parse` returns a string and the previous type was inaccurate.
+
+- 7fce466: Fix incorrect pin error not appearing in new pin design on Android
+  - @bifold/react-hooks@3.0.15
+
+## 3.0.14
+
+### Patch Changes
+
+- c70df9d: fix: add prop for displaying proof request header in record component
+- 4704ce3: Fix header icon on onboarding screens set to white
+  - @bifold/react-hooks@3.0.14
+
+## 3.0.13
+
+### Patch Changes
+
+- f813512: fix watermark missing
+  - @bifold/react-hooks@3.0.13
+
+## 3.0.12
+
+### Patch Changes
+
+- dd22c43: Added new monitor system for proof requests
+  - @bifold/react-hooks@3.0.12
+
+## 3.0.11
+
+### Patch Changes
+
+- Updated dependencies [e99b6d9]
+  - @bifold/react-hooks@3.0.11
+
+## 3.0.10
+
+### Patch Changes
+
+- e3d82d0: fix text color on proof request
+  - @bifold/react-hooks@3.0.10
+
+## 3.0.9
+
+### Patch Changes
+
+- 0944c44: Update contacts chat screen, with fix for input scroll, text color and spacing.
+  - @bifold/react-hooks@3.0.9
+
 ## 3.0.8
 
 ### Patch Changes

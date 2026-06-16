@@ -1,5 +1,23 @@
 # @bifold/react-native-attestation
 
+## 3.0.15
+
+## 3.0.14
+
+### Patch Changes
+
+- 6e3f989: added patch and updated gradle versions
+
+## 3.0.13
+
+## 3.0.12
+
+## 3.0.11
+
+## 3.0.10
+
+## 3.0.9
+
 ## 3.0.8
 
 ## 3.0.7

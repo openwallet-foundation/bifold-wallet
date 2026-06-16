@@ -54,6 +54,12 @@ const proofTypes = {
   },
 }
 
+const hardwareProofTypes = {
+  jwt: {
+    supportedSignatureAlgorithms: ['EdDSA', 'ES256'],
+  },
+}
+
 describe('customCredentialBindingResolver', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -200,6 +206,55 @@ describe('customCredentialBindingResolver', () => {
     ).rejects.toThrow('DID creation failed.')
   })
 
+  test('creates a secure environment key when hardware-backed holder binding is enabled', async () => {
+    const agent = createAgentMock()
+    const didJwk = DidJwk.fromPublicJwk(publicJwk)
+
+    agent.dids.create.mockResolvedValue({
+      didState: {
+        state: 'finished',
+        did: didJwk.did,
+      },
+    })
+
+    const result = await customCredentialBindingResolver({
+      agent: agent as any,
+      supportedDidMethods: ['did:jwk'],
+      supportsAllDidMethods: false,
+      supportsJwk: false,
+      credentialFormat: OpenId4VciCredentialFormatProfile.JwtVcJson,
+      proofTypes: hardwareProofTypes as any,
+      enableHardwareBackedHolderBinding: true,
+    })
+
+    expect(agent.kms.createKeyForSignatureAlgorithm).toHaveBeenCalledWith({
+      algorithm: 'ES256',
+      backend: 'secureEnvironment',
+    })
+    expect(result).toEqual({
+      method: 'did',
+      didUrls: [didJwk.verificationMethodId],
+    })
+  })
+
+  test('throws when hardware-backed holder binding is enabled and ES256 is not supported', async () => {
+    const agent = createAgentMock()
+
+    await expect(
+      customCredentialBindingResolver({
+        agent: agent as any,
+        supportedDidMethods: ['did:jwk'],
+        supportsAllDidMethods: false,
+        supportsJwk: false,
+        credentialFormat: OpenId4VciCredentialFormatProfile.JwtVcJson,
+        proofTypes: proofTypes as any,
+        enableHardwareBackedHolderBinding: true,
+      })
+    ).rejects.toThrow('Issuer does not support ES256')
+
+    expect(agent.kms.createKeyForSignatureAlgorithm).not.toHaveBeenCalled()
+  })
+
   test('returns a plain jwk binding for sd-jwt credentials when only jwk is supported', async () => {
     const agent = createAgentMock()
 
@@ -286,6 +341,116 @@ describe('customCredentialBindingResolver', () => {
       }
     )
     expect(setOpenId4VcCredentialMetadata).toHaveBeenCalledWith(record, extractedMetadata)
+  })
+
+  test('receives a credential using hardware-backed holder binding when enabled', async () => {
+    const agent = createAgentMock()
+    const record = { id: 'record-1' }
+    const resolvedCredentialOffer = {
+      offeredCredentialConfigurations: {
+        employee_card: {
+          display: [{ name: 'Employee Card' }],
+        },
+      },
+      metadata: {
+        credentialIssuer: {
+          credential_issuer: 'https://issuer.example',
+          display: [{ name: 'Issuer Example' }],
+        },
+      },
+    }
+    const extractedMetadata = { credential: {}, issuer: { id: 'https://issuer.example' } }
+
+    ;(extractOpenId4VcCredentialMetadata as jest.Mock).mockReturnValue(extractedMetadata)
+    agent.openid4vc.holder.requestCredentials.mockResolvedValue({
+      credentials: [{ record }],
+    })
+
+    await receiveCredentialFromOpenId4VciOffer({
+      agent: agent as any,
+      resolvedCredentialOffer: resolvedCredentialOffer as any,
+      tokenResponse: { accessToken: 'token' } as any,
+      enableHardwareBackedHolderBinding: true,
+    })
+
+    const requestCredentialsOptions = agent.openid4vc.holder.requestCredentials.mock.calls[0][0]
+    expect(requestCredentialsOptions.allowedProofOfPossessionSignatureAlgorithms).toEqual(['ES256'])
+
+    await requestCredentialsOptions.credentialBindingResolver({
+      supportedDidMethods: [],
+      proofTypes: hardwareProofTypes,
+      supportsAllDidMethods: false,
+      supportsJwk: true,
+      credentialFormat: OpenId4VciCredentialFormatProfile.SdJwtVc,
+    })
+
+    expect(agent.kms.createKeyForSignatureAlgorithm).toHaveBeenCalledWith({
+      algorithm: 'ES256',
+      backend: 'secureEnvironment',
+    })
+  })
+
+  test('passes token response DPoP to credential acquisition without reusing it for holder binding', async () => {
+    const agent = createAgentMock()
+    const record = { id: 'record-1' }
+    const resolvedCredentialOffer = {
+      offeredCredentialConfigurations: {
+        employee_card: {
+          display: [{ name: 'Employee Card' }],
+        },
+      },
+      metadata: {
+        credentialIssuer: {
+          credential_issuer: 'https://issuer.example',
+          display: [{ name: 'Issuer Example' }],
+        },
+      },
+    }
+    const tokenResponseDpop = {
+      alg: 'EdDSA',
+      jwk: Kms.PublicJwk.fromUnknown({
+        kty: 'OKP',
+        crv: 'Ed25519',
+        x: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      }),
+      nonce: 'token-response-nonce',
+    }
+
+    ;(extractOpenId4VcCredentialMetadata as jest.Mock).mockReturnValue({
+      credential: {},
+      issuer: { id: 'https://issuer.example' },
+    })
+    agent.openid4vc.holder.requestCredentials.mockResolvedValue({
+      credentials: [{ record }],
+    })
+
+    await receiveCredentialFromOpenId4VciOffer({
+      agent: agent as any,
+      resolvedCredentialOffer: resolvedCredentialOffer as any,
+      tokenResponse: { accessToken: 'token', cNonce: 'c-nonce', dpop: tokenResponseDpop } as any,
+    })
+
+    const requestCredentialsOptions = agent.openid4vc.holder.requestCredentials.mock.calls[0][0]
+    expect(requestCredentialsOptions).toEqual(
+      expect.objectContaining({
+        accessToken: 'token',
+        cNonce: 'c-nonce',
+        dpop: tokenResponseDpop,
+      })
+    )
+
+    const credentialBinding = await requestCredentialsOptions.credentialBindingResolver({
+      supportedDidMethods: [],
+      proofTypes,
+      supportsAllDidMethods: false,
+      supportsJwk: true,
+      credentialFormat: OpenId4VciCredentialFormatProfile.SdJwtVc,
+    })
+
+    expect(credentialBinding).toEqual({
+      method: 'jwk',
+      keys: [publicJwk],
+    })
   })
 
   test('throws when the requested credential configuration id does not exist in the offer', async () => {

@@ -2,7 +2,7 @@ import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
 import { OpenIDNotificationCard } from '../../../src/modules/openid/features/notifications/OpenIDNotificationCard'
 import { OpenIDNotificationData } from '../../../src/modules/openid/features/notifications/types'
-import { jest, describe, expect, test, beforeEach } from "@jest/globals"
+import { jest, describe, expect, test } from "@jest/globals"
 import { testIdWithKey } from '../../../src/utils/testable'
 
 // --- Mocks ---

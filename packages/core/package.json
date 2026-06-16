@@ -1,6 +1,6 @@
 {
   "name": "@bifold/core",
-  "version": "3.0.8",
+  "version": "3.0.15",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
@@ -11,6 +11,11 @@
       "import": "./lib/module/index.js",
       "require": "./lib/commonjs/index.js",
       "types": "./lib/typescript/src/index.d.ts"
+    },
+    "./utils/file-cache": {
+      "import": "./lib/module/utils/fileCache.js",
+      "require": "./lib/commonjs/utils/fileCache.js",
+      "types": "./lib/typescript/src/utils/fileCache.d.ts"
     },
     "./utils/ledger": {
       "import": "./lib/module/utils/ledger.js",
@@ -42,11 +47,12 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@animo-id/expo-secure-environment": "0.1.5",
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
-    "@bifold/oca": "3.0.8",
-    "@bifold/react-hooks": "3.0.8",
-    "@bifold/verifier": "3.0.8",
+    "@bifold/oca": "3.0.15",
+    "@bifold/react-hooks": "3.0.15",
+    "@bifold/verifier": "3.0.15",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
@@ -101,6 +107,7 @@
     "eslint-plugin-import": "~2.29.1",
     "eslint-plugin-prettier": "~5.2.6",
     "expo": "*",
+    "expo-crypto": "~15.0.8",
     "expo-secure-store": "*",
     "i18next": "~25.8.0",
     "install-peerdeps": "~3.0.7",
@@ -124,7 +131,7 @@
     "react-native-fs": "~2.20.0",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-get-random-values": "~1.11.0",
-    "react-native-gifted-chat": "~2.4.1",
+    "react-native-gifted-chat": "~3.3.2",
     "react-native-keyboard-controller": "~1.18.5",
     "react-native-keychain": "~10.0.0",
     "react-native-localize": "~2.2.6",
@@ -153,7 +160,8 @@
     "zustand": "~4.5.4"
   },
   "peerDependencies": {
-    "@bifold/react-hooks": "3.0.8",
+    "@animo-id/expo-secure-environment": "0.1.5",
+    "@bifold/react-hooks": "3.0.15",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
@@ -187,6 +195,7 @@
     "axios": "~1.13.2",
     "base-64": "~1.0.0",
     "class-transformer": "0.5.1",
+    "expo-crypto": "~15.0.8",
     "i18next": "~21.6.16",
     "lodash.startcase": "~4.4.0",
     "moment": "~2.29.4",
@@ -203,7 +212,7 @@
     "react-native-fs": "~2.20.0",
     "react-native-gesture-handler": "~2.28.0",
     "react-native-get-random-values": "~1.11.0",
-    "react-native-gifted-chat": "~2.4.1",
+    "react-native-gifted-chat": "~3.3.2",
     "react-native-keychain": "~10.0.0",
     "react-native-localize": "~2.2.6",
     "react-native-logs": "~5.1.0",

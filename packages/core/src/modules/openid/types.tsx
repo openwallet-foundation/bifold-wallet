@@ -1,4 +1,8 @@
-import { OpenId4VciCredentialIssuerMetadataDisplay, OpenId4VpResolvedAuthorizationRequest } from '@credo-ts/openid4vc'
+import {
+  OpenId4VciCredentialIssuerMetadataDisplay,
+  OpenId4VciDpopRequestOptions,
+  OpenId4VpResolvedAuthorizationRequest,
+} from '@credo-ts/openid4vc'
 import { CredentialMetadata } from './display'
 import { ClaimFormat } from '@credo-ts/core'
 
@@ -6,7 +10,8 @@ export type CredentialForDisplayId = `w3c-credential-${string}` | `sd-jwt-vc-${s
 export interface OpenId4VcCredentialMetadata {
   credential: {
     display?: CredentialDisplay[]
-    order?: unknown
+    order?: string[]
+    credential_subject?: CredentialSubjectRecord
   }
   issuer: {
     display?: OpenId4VciCredentialIssuerMetadataDisplay[]
@@ -83,6 +88,7 @@ export interface W3cCredentialDisplay {
   validUntil: Date | undefined
   validFrom: Date | undefined
   credentialSubject: CredentialSubjectRecord | undefined
+  attributeOrder?: string[]
 }
 
 export interface OpenId4VPRequestRecord extends OpenId4VpResolvedAuthorizationRequest {
@@ -166,6 +172,9 @@ export interface RefreshResponse {
   /** Some ASs return a DPoP nonce (different naming conventions) */
   dpop_nonce?: string
   dpopNonce?: string
+
+  /** DPoP options used to bind the access token, if the issuer requires DPoP */
+  dpop?: OpenId4VciDpopRequestOptions
 }
 
 export interface SelectedCredentialsFormat {
