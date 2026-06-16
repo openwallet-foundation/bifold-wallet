@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OpenIDNotificationCard Credential Expired Renders correctly for credential expired scenario 1`] = `null`;
+
+exports[`OpenIDNotificationCard Credential Refresh Renders correctly for credential refresh scenario 1`] = `null`;

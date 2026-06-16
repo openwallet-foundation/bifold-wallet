@@ -11,6 +11,7 @@ import { NotificationCardIcon } from './components/NotificationCardIcon'
 import { useOpenIDCredentials } from '../../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../../display'
 import { CredentialDisplay } from '../../types'
+import { testIdWithKey } from '../../../../utils/testable'
 
 export type OIDNotificationType = 'CredentialRefresh' | 'CredentialExpired'
 
@@ -35,6 +36,7 @@ export function OpenIDNotificationCard({ notification, type }: OpenIDNotificatio
     }
 
     if(!id) return
+    
     getCredentialData().then((credentialData) => {
       setCredential(credentialData?.display)
     })
@@ -85,7 +87,7 @@ export function OpenIDNotificationCard({ notification, type }: OpenIDNotificatio
   if (!credential) return
 
   return (
-    <Pressable onPress={notification.onPressAction} style={styles.pressable}>
+    <Pressable onPress={notification.onPressAction} style={styles.pressable} testID={testIdWithKey('OpenIDNotificationPressable')}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           <NotificationCardIcon credentialDisplay={credential ?? {}} notificationType={type} />
@@ -96,8 +98,8 @@ export function OpenIDNotificationCard({ notification, type }: OpenIDNotificatio
           {type === 'CredentialRefresh' && <ThemedText style={styles.ctaText}>{t(`OpenIDNotification.${type}.CTA`)}</ThemedText>}
         </View>
         {type === 'CredentialExpired' &&
-          <Pressable style={styles.closeIcon} hitSlop={10} onPress={notification.onCloseAction}>
-            <Icon size={25} name="close" color={ColorPalette.brand.headerIcon}/>
+          <Pressable style={styles.closeIcon} hitSlop={10} onPress={notification.onCloseAction} testID={testIdWithKey('OpenIDNotificationXButton')}>
+            <Icon size={25} name="close" color={ColorPalette.brand.headerIcon} />
           </Pressable>
         }
       </View>
