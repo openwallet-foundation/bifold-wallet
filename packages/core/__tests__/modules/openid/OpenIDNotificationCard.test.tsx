@@ -76,7 +76,9 @@ describe('OpenIDNotificationCard', () => {
   describe('Credential Refresh', () => {
 
     test('Renders correctly for credential refresh scenario', async () => {
-      const tree = renderCard()
+      const tree = render(
+        <OpenIDNotificationCard notification={baseNotification} type={'CredentialRefresh'} />
+      )
       expect(tree).toMatchSnapshot()
     })
 
@@ -109,7 +111,9 @@ describe('OpenIDNotificationCard', () => {
   describe('Credential Expired', () => {
 
     test('Renders correctly for credential expired scenario', async () => {
-      const tree = renderCard("CredentialExpired", baseNotification)
+      const tree = render(
+        <OpenIDNotificationCard notification={baseNotification} type={'CredentialExpired'} />
+      )
       expect(tree).toMatchSnapshot()
     })
 
