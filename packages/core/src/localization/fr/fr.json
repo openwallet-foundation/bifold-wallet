@@ -564,7 +564,6 @@
     "TermsAndConditions": "Conditions d'utilisation",
     "RemoveFromWallet": "Retirer du portefeuille",
     "Revoked": "Révoqué",
-    "Invalid": "Non valide",
     "CredentialRevokedMessageTitle": "Cette attestation est révoqué",
     "CredentialRevokedMessageBody": "Cette attestation peut ne plus fonctionner pour certaines demandes de preuve. Vous devrez mettre à jour l'attestation avec l'émetteur.",
     "NewRevoked": "Identité révoqué",

@@ -272,8 +272,6 @@ const BrandColors = {
   credentialCardStatusBadgeErrorIcon: '#000000',
   credentialCardStatusBadgeWarningBackground: '#FFF8E1',
   credentialCardStatusBadgeWarningIcon: '#000000',
-  credentialCardInvalidFooterBackground: '#313132',
-  credentialCardInvalidFooterText: '#D8292F',
   secondaryBackground: '#313132',
   tertiaryBackground: '#313132',
   modalPrimary: '#42803E',

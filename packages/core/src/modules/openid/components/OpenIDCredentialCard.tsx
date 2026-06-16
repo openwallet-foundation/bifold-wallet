@@ -127,23 +127,6 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
       borderBottomLeftRadius: borderRadius,
       borderBottomRightRadius: borderRadius,
     },
-    invalidFooter: {
-      backgroundColor: ColorPalette.brand.credentialCardInvalidFooterBackground,
-      flexGrow: 1,
-      marginLeft: -1 * (paddingHorizontal + 10),
-      marginRight: -1 * paddingHorizontal,
-      marginVertical: -1 * paddingVertical,
-      paddingHorizontal,
-      paddingVertical,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderBottomLeftRadius: borderRadius,
-      borderBottomRightRadius: borderRadius,
-    },
-    invalidFooterText: {
-      ...TextTheme.label,
-      color: ColorPalette.brand.credentialCardInvalidFooterText,
-    },
     statusContainer: {
       backgroundColor: transparent,
       borderTopRightRadius: borderRadius,
@@ -244,18 +227,6 @@ const OpenIDCredentialCard: React.FC<CredentialCardProps> = ({
   }
 
   const CardFooter: React.FC = () => {
-    if (isInvalid) {
-      return (
-        <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>
-          <View style={styles.invalidFooter} testID={testIdWithKey('CredentialInvalidBadge')}>
-            <Text style={styles.invalidFooterText} maxFontSizeMultiplier={1}>
-              {t('CredentialDetails.Invalid')}
-            </Text>
-          </View>
-        </View>
-      )
-    }
-
     if (!overlayAttributeField) return null
     return (
       <View testID={testIdWithKey('CredentialCardFooter')} style={styles.footerContainer}>

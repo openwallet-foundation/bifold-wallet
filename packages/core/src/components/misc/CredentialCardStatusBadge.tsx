@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, ViewStyle } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import { testIdWithKey } from '../../utils/testable'
 import { useTheme } from '../../contexts/theme'
 
@@ -13,7 +12,7 @@ type Props = {
 }
 
 const CredentialCardStatusBadge: React.FC<Props> = ({ status, logoHeight, containerStyle, errorBg, warnBg }) => {
-  const { ColorPalette } = useTheme()
+  const { ColorPalette, Assets } = useTheme()
   const isError = status === 'error'
   const backgroundColor = isError
     ? (errorBg ?? ColorPalette.brand.credentialCardStatusBadgeErrorBackground)
@@ -21,6 +20,7 @@ const CredentialCardStatusBadge: React.FC<Props> = ({ status, logoHeight, contai
   const iconColor = isError
     ? ColorPalette.brand.credentialCardStatusBadgeErrorIcon
     : ColorPalette.brand.credentialCardStatusBadgeWarningIcon
+  const StatusIcon = isError ? Assets.svg.credentialRevoked : Assets.svg.credentialNotAvailable
 
   return (
     <View
@@ -29,7 +29,7 @@ const CredentialCardStatusBadge: React.FC<Props> = ({ status, logoHeight, contai
     >
       {status ? (
         <View style={[containerStyle, { backgroundColor }]}>
-          <Icon size={0.7 * logoHeight} name={status} color={iconColor} />
+          <StatusIcon height={0.7 * logoHeight} width={0.7 * logoHeight} color={iconColor} fill={iconColor} />
         </View>
       ) : (
         <View style={containerStyle} />
