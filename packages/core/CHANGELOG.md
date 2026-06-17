@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.16
+
+### Patch Changes
+
+- 282bb4e: Update OID4VC Notification UI and functionality
+  - @bifold/react-hooks@3.0.16
+
 ## 3.0.15
 
 ### Patch Changes
