@@ -1,5 +1,12 @@
 # Change Log
 
+## 2.12.13
+
+### Patch Changes
+
+- 36b1610: added better error serialization
+  - @bifold/core@2.12.13
+
 ## 2.12.12
 
 ### Patch Changes

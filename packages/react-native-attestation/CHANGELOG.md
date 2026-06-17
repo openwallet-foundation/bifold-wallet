@@ -1,5 +1,7 @@
 # @bifold/react-native-attestation
 
+## 2.12.13
+
 ## 2.12.12
 
 ### Patch Changes
