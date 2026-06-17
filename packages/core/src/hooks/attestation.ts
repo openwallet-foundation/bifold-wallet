@@ -73,6 +73,7 @@ export const useAttestation = () => {
       const keyId = attestationKeyData?.content?.["attestationKeyId"] as string ?? null
       const jwt = attestationKeyData?.content?.["attestationJwt"] as string ?? null
       const signingKeyId = attestationKeyData?.content?.["signingKeyId"] as string ?? null
+      console.log(attestationKeyData)
 
       if (!keyId || !jwt || !signingKeyId)
         throw new Error('No stored attestation data')
