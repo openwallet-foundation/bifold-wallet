@@ -1,9 +1,9 @@
-import { BifoldError, AbstractBifoldLogger } from '@bifold/core'
+import { AbstractBifoldLogger, BifoldError } from '@bifold/core'
 import { LogLevel } from '@credo-ts/core'
 import { DeviceEventEmitter, EmitterSubscription } from 'react-native'
 import { logger } from 'react-native-logs'
 
-import { RemoteLoggerOptions, lokiTransport, consoleTransport } from './transports'
+import { RemoteLoggerOptions, consoleTransport, lokiTransport } from './transports'
 
 export enum RemoteLoggerEventTypes {
   ENABLE_REMOTE_LOGGING = 'RemoteLogging.Enable',
@@ -168,11 +168,12 @@ export class RemoteLogger extends AbstractBifoldLogger {
 
   public report(bifoldError: BifoldError): void {
     this._log?.info?.({ message: 'Sending Loki report' })
-    const { title, description, code, message } = bifoldError
 
     lokiTransport({
-      msg: title,
-      rawMsg: [{ message: title, data: { title, description, code, message } }],
+      msg: bifoldError.title,
+      // Preserve the original error instance so downstream serializers can
+      // extract stack/cause and any custom fields consistently.
+      rawMsg: [{ message: bifoldError.title, error: bifoldError }],
       level: { severity: 3, text: 'error' },
       options: {
         lokiUrl: this.lokiUrl,
