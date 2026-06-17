@@ -998,5 +998,15 @@
   },
   "FullScreenErrorModal": {
     "PrimaryCTA": "Go back to home (FR)"
+  },
+  "OpenIDNotification": {
+    "CredentialRefresh": {
+      "Title": "Update to {{cardName}} available (FR)",
+      "CTA": "View offer (FR)"
+    },
+    "CredentialExpired": {
+      "Title": "{{cardName}} has expired (FR)",
+      "CTA": "View offer (FR)"
+    }
   }
 }

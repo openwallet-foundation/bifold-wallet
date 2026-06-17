@@ -7,6 +7,7 @@ import {
   W3cV2CredentialRecord,
 } from '@credo-ts/core'
 import { OpenId4VPRequestRecord, OpenIDCredentialType } from './types'
+import { OpenIDCredentialLite } from './refresh/registry'
 
 export type OpenIDCredentialRecord = W3cCredentialRecord | SdJwtVcRecord | MdocRecord | W3cV2CredentialRecord
 
@@ -50,7 +51,7 @@ export const getOpenIDCredentialClaimFormat = (record: OpenIDCredentialRecord): 
   return typeof claimFormat === 'string' ? (claimFormat as ClaimFormat) : ClaimFormat.JwtVc
 }
 
-export const toOpenIDCredentialLite = (record: OpenIDCredentialRecord) => ({
+export const toOpenIDCredentialLite = (record: OpenIDCredentialRecord): OpenIDCredentialLite => ({
   id: record.id,
   format: getOpenIDCredentialClaimFormat(record),
   createdAt: record.createdAt?.toISOString(),

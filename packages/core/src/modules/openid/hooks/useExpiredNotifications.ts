@@ -1,38 +1,32 @@
 // modules/openid/hooks/useExpiredNotifications.ts
 import { useCallback, useEffect, useState } from 'react'
 import { credentialRegistry, RegistryStore } from '../refresh/registry'
-import { CustomNotification } from '../../../types/notification'
 import { OpenIDCustomNotificationType } from '../refresh/types'
 import { TOKENS, useServices } from '../../../container-api'
 import { useDeclineReplacement } from './useDeclineReplacement'
+import { OpenIDNotificationData } from '../features/notifications/types'
 
-export const useExpiredNotifications = (): CustomNotification[] => {
-  const [items, setItems] = useState<CustomNotification[]>([])
+export const useExpiredNotifications = (): OpenIDNotificationData[] => {
+  const [items, setItems] = useState<OpenIDNotificationData[]>([])
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const { declineByOldId } = useDeclineReplacement({ logger })
 
   const build = useCallback(
-    (s: RegistryStore): CustomNotification[] =>
+    (s: RegistryStore): OpenIDNotificationData[] =>
       s.expired
-        .filter((oldId) => s.checked.includes(oldId) && !s.replacements[oldId])
+        .filter((oldId) => s.checked.includes(oldId) && !s.replacements[oldId] && !s.notificationRemoved.includes(oldId))
         .map((oldId) => {
-          const lite = s.byId[oldId]
-          const n: CustomNotification = {
+          const notification: OpenIDNotificationData = {
             type: OpenIDCustomNotificationType.CredentialExpired,
-            title: 'Credential expired',
-            pageTitle: 'Credential Expired',
-            buttonTitle: 'Review',
-            description: 'This credential is no longer valid. You can attempt to obtain an updated version.',
             createdAt: new Date(),
             onPressAction: () => {},
-            onCloseAction: () => declineByOldId(oldId),
-            component: () => null,
-            metadata: {
-              oldId,
-              format: lite?.format,
+            onCloseAction: () => { 
+              s.markNotificationRemoved(oldId)
+              declineByOldId(oldId)
             },
+            metadata: { oldId },
           }
-          return n
+          return notification
         }),
     [declineByOldId]
   )
