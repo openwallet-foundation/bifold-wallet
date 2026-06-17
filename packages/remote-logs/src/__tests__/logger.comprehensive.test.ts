@@ -459,12 +459,7 @@ describe('RemoteLogger', () => {
         rawMsg: [
           {
             message: 'Error Title',
-            data: {
-              title: 'Error Title',
-              description: 'Error Description',
-              code: 1001,
-              message: 'Error Message',
-            },
+            error: bifoldError,
           },
         ],
         level: { severity: 3, text: 'error' },
