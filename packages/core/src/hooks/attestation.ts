@@ -22,12 +22,6 @@ import { encodeToBase64Url } from '@openid4vc/utils'
 
 const WALLET_ATTEST_STORAGE_KEY = 'walletAttestStorage'
 
-interface AttestationJwt {
-  jwt: string,
-  keyId: string,
-  signingKeyId: string,
-}
-
 export const useAttestation = () => {
 
   const [, dispatch] = useStore()
@@ -45,13 +39,10 @@ export const useAttestation = () => {
     TOKENS.UTIL_AGENT_BRIDGE,
   ])
 
-  const storeAttestationJWT = useCallback(async (attestationKeyId: string, signingKeyId: string, attestationJwt: string, agent: Agent): Promise<void> => {
+  const storeAttestationJWT = useCallback(async (attestationJwt: string, agent: Agent): Promise<void> => {
     try {
-
       await agent.genericRecords.save({
         content: {
-          attestationKeyId,
-          signingKeyId,
           attestationJwt,
         },
         id: WALLET_ATTEST_STORAGE_KEY,
@@ -65,21 +56,14 @@ export const useAttestation = () => {
     }
     }, [agentBridge, dispatch, logger])
 
-  const retrieveAttestationJWT = useCallback(async (agent: Agent): Promise<AttestationJwt> => {
+  const retrieveAttestationJWT = useCallback(async (agent: Agent): Promise<string> => {
     try {
-      const attestationKeyData = await agent.genericRecords.findById(WALLET_ATTEST_STORAGE_KEY)
-      const keyId = attestationKeyData?.content?.["attestationKeyId"] as string ?? null
-      const jwt = attestationKeyData?.content?.["attestationJwt"] as string ?? null
-      const signingKeyId = attestationKeyData?.content?.["signingKeyId"] as string ?? null
 
-      if (!keyId || !jwt || !signingKeyId)
+      const storedAttestationData = await agent.genericRecords.findById(WALLET_ATTEST_STORAGE_KEY)
+      const attestationJwt = storedAttestationData?.content?.["attestationJwt"] as string ?? null
+
+      if (attestationJwt)
         throw new Error('No stored attestation data')
-
-      const attestationJwt: AttestationJwt = {
-        keyId,
-        jwt,
-        signingKeyId
-      }
 
       return attestationJwt
 
@@ -111,10 +95,7 @@ export const useAttestation = () => {
           { algorithm: 'ES256', backend: 'secureEnvironment' }
         )
         const signingKey = Kms.PublicJwk.fromPublicJwk(secondaryKey.publicJwk)
-
-        console.log(signingKey)
         const thumbprint = encodeToBase64Url(signingKey.getJwkThumbprint())
-        console.log(thumbprint)
 
         if (Platform.OS === 'ios') {
 
@@ -124,7 +105,7 @@ export const useAttestation = () => {
           // No need to SHA256 encode the challenge on iOS as that is handled by the OS
           const attestationResult = await withRetry(attestKeyAsync, [keyId, challenge + thumbprint])
           const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
-          await storeAttestationJWT(keyId, signingKey.keyId, attestationJWT?.signedAttestation, agent)
+          await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
 
         } else if (Platform.OS === 'android') {
 
@@ -136,10 +117,12 @@ export const useAttestation = () => {
           await generateHardwareAttestedKeyAsync(keyId, boundChallenge)
           const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyId])
           const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
-          await storeAttestationJWT(keyId, signingKey.keyId, attestationJWT?.signedAttestation, agent)
+          await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
 
         } else throw new Error('Platform not supported')
+
       })
+
     } catch(err: any) {
       logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error initializing attestation')
