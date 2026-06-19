@@ -53,6 +53,7 @@ export const useOpenID = ({
 
         let walletAttestationJwt
         if (enableAttestation) walletAttestationJwt = await retrieveAttestationJWT(agent)
+        console.log(walletAttestationJwt)
 
         const authServers = resolvedCredentialOffer.metadata.credentialIssuer.authorization_servers
         const authServer = resolvedCredentialOffer.metadata.authorizationServers[0]
@@ -87,6 +88,8 @@ export const useOpenID = ({
             })
           : undefined
 
+        console.log(walletAttestationJwt?.jwt)
+
         const tokenResponse = await acquirePreAuthorizedAccessToken({
           agent,
           resolvedCredentialOffer,
@@ -99,6 +102,8 @@ export const useOpenID = ({
           ...(enableAttestation ? { walletAttestationJwt: walletAttestationJwt?.jwt } : {}),
         })
         const refreshToken = tokenResponse.refreshToken
+
+        console.log(tokenResponse)
 
         temporaryMetaVanillaObject.tokenResponse = tokenResponse
 
