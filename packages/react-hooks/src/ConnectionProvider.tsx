@@ -62,7 +62,7 @@ export const useConnectionById = (id: string): DidCommConnectionRecord | undefin
 }
 
 interface Props {
-  agent: BifoldAgent
+  agent: BifoldAgent | undefined
 }
 
 const ConnectionProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
@@ -72,6 +72,10 @@ const ConnectionProvider: React.FC<PropsWithChildren<Props>> = ({ agent, childre
   })
 
   const setInitialState = useCallback(async () => {
+    if (!agent) {
+      setState({ records: [], loading: true })
+      return
+    }
     const records = await agent.modules.didcomm.connections.getAll()
     setState({ records, loading: false })
   }, [agent])
@@ -81,7 +85,7 @@ const ConnectionProvider: React.FC<PropsWithChildren<Props>> = ({ agent, childre
   }, [setInitialState])
 
   useEffect(() => {
-    if (state.loading) return
+    if (!agent || state.loading) return
 
     const connectionAdded$ = recordsAddedByType(agent, DidCommConnectionRecord).subscribe((record) =>
       setState(addRecord(record, state)),

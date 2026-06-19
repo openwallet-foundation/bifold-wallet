@@ -67,7 +67,7 @@ export const useCredentialFormatDataById = (id: string): CredentialFormatData | 
 }
 
 interface Props {
-  agent: BifoldAgent
+  agent: BifoldAgent | undefined
 }
 
 const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agent, children }) => {
@@ -86,6 +86,10 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
   }
 
   const setInitialState = useCallback(async () => {
+    if (!agent) {
+      setState({ formattedData: [], loading: true })
+      return
+    }
     const records = await agent.modules.didcomm.credentials.getAll()
     const formattedData: Array<CredentialFormatData> = []
     for (const record of records) {
@@ -99,7 +103,7 @@ const CredentialFormatDataProvider: React.FC<PropsWithChildren<Props>> = ({ agen
   }, [setInitialState])
 
   useEffect(() => {
-    if (state.loading) return
+    if (!agent || state.loading) return
 
     const credentialAdded$ = recordsAddedByType(agent, DidCommCredentialExchangeRecord).subscribe(
       async (record: DidCommCredentialExchangeRecord) => {

@@ -25,6 +25,7 @@ import CredentialDetailPrimaryHeader from '../../../components/views/CredentialD
 import ScreenLayout from '../../../layout/ScreenLayout'
 import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { OpenIDCredentialRecord } from '../credentialRecord'
+import { credentialRegistry } from '../refresh/registry'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -155,6 +156,8 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   const handleRemove = async () => {
     if (!credential) return
     try {
+      const notificationRegistry = credentialRegistry.getState()
+      notificationRegistry.removeCredentialFromRegistry(credential.id)
       await removeCredential(credential, type)
       navigation.pop()
     } catch (err) {

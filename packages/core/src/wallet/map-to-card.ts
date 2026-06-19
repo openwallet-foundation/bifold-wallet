@@ -235,7 +235,7 @@ const resolveBundleForW3CCredential = async (
       credConnectionId: undefined,
       credName: credentialDisplay.display.name,
     },
-    attributes: buildFieldsFromW3cCredsCredential(credentialDisplay),
+    attributes: buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, i18n.language),
     language: i18n.language,
   }
 
@@ -262,7 +262,10 @@ const mapW3CCredToCard = (
   w3cCred: W3cCredentialRecord | W3cV2CredentialRecord | SdJwtVcRecord | MdocRecord,
   brandingOverlay: CredentialOverlay<BrandingOverlay>,
   brandingOverlayTypeString: string,
-  opts: Pick<MapOpts, 'proofContext' | 'displayItems'> = {}
+  opts: Pick<MapOpts, 'proofContext' | 'displayItems'> & {
+    credentialErrors?: CredentialErrors[]
+    credentialCardPlaceholderBackground?: string
+  } = {}
 ): WalletCredentialCardData => {
   const credentialDisplay = getCredentialForDisplay(w3cCred)
   const extraAttributeValue = credentialDisplay.display.primary_overlay_attribute
@@ -281,7 +284,7 @@ const mapW3CCredToCard = (
     },
     branding: {
       type: brandingOverlayTypeString,
-      primaryBg: brandingOverlay?.brandingOverlay?.primaryBackgroundColor,
+      primaryBg: brandingOverlay?.brandingOverlay?.primaryBackgroundColor ?? opts.credentialCardPlaceholderBackground,
       secondaryBg: brandingOverlay?.brandingOverlay?.secondaryBackgroundColor,
       logo1x1Uri: brandingOverlay?.brandingOverlay?.logo,
       backgroundSliceUri: brandingOverlay?.brandingOverlay?.backgroundImageSlice,
@@ -299,7 +302,13 @@ const mapW3CCredToCard = (
       undefined,
   } as W3CInput
 
-  return mapW3CToCard(input, credentialDisplay.id, opts)
+  const card = mapW3CToCard(input, credentialDisplay.id, opts)
+  const isRevoked = !!opts.credentialErrors?.includes(CredentialErrors.Revoked)
+
+  return {
+    ...card,
+    status: isRevoked && !opts.proofContext ? 'error' : card.status,
+  }
 }
 
 /**
@@ -346,6 +355,8 @@ export async function mapCredentialTypeToCard({
     return mapW3CCredToCard(credential, bo, brandingTypeString, {
       proofContext: !!proof,
       displayItems: proof ? displayItems : undefined,
+      credentialErrors,
+      credentialCardPlaceholderBackground: colorPalette.brand?.credentialCardPlaceholderBackground,
     })
   }
 

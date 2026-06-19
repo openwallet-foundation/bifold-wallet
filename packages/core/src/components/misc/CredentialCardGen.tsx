@@ -17,6 +17,7 @@ import { brandingOverlayTypeString, mapCredentialTypeToCard } from '../../wallet
 
 import { useTranslation } from 'react-i18next'
 import { useCredentialConnectionLabel } from '../../utils/helpers'
+import { useCredentialErrorsFromRegistry } from '../../modules/openid/hooks/useCredentialErrorsFromRegistry'
 
 export interface CredentialCardProps {
   credential?: GenericCredentialExchangeRecord
@@ -48,6 +49,7 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
   const { ColorPalette } = useTheme()
   const { t } = useTranslation()
   const credentialConnectionLabel = useCredentialConnectionLabel(credential as DidCommCredentialExchangeRecord)
+  const computedCredentialErrors = useCredentialErrorsFromRegistry(credential, credentialErrors)
 
   // unified card data
   const [cardData, setCardData] = useState<WalletCredentialCardData | undefined>(undefined)
@@ -62,7 +64,7 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
         unknownIssuerName: t('Contacts.UnknownContact'),
         brandingOverlay,
         proof,
-        credentialErrors,
+        credentialErrors: computedCredentialErrors,
         credName,
         credentialConnectionLabel,
         displayItems,
@@ -78,7 +80,7 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
     ColorPalette,
     brandingOverlay,
     proof,
-    credentialErrors,
+    computedCredentialErrors,
     t,
     credName,
     credentialConnectionLabel,

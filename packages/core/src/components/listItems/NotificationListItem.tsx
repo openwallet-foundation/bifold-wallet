@@ -34,7 +34,6 @@ import { InfoBoxType } from '../misc/InfoBox'
 import CommonRemoveModal from '../modals/CommonRemoveModal'
 import { ThemedText } from '../texts/ThemedText'
 import { useOpenIdReplacementNavigation } from '../../modules/openid/hooks/useOpenIdReplacementNavigation'
-import { OpenIDCustomNotificationType } from '../../modules/openid/refresh/types'
 import { useUpgradeExpiredCredential } from '../../modules/openid/hooks/useUpgradeExpiredCredential'
 
 const iconSize = 30
@@ -223,6 +222,7 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
     toggleDeclineModalVisible()
   }, [customNotification, dispatch, toggleDeclineModalVisible])
 
+
   const commonRemoveModal = () => {
     let usage: ModalUsage | undefined
     let onSubmit: GenericFn | undefined
@@ -322,7 +322,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
 
       setDetails(details ?? defaultDetails)
     }
-
     if (notificationType === NotificationType.Custom && customNotification) {
       setDetails({
         type: InfoBoxType.Info,
@@ -403,18 +402,6 @@ const NotificationListItem: React.FC<NotificationListItemProps> = ({
         break
       case NotificationType.Custom:
         onPress = () => {
-          if (customNotification?.type === OpenIDCustomNotificationType.CredentialReplacementAvailable) {
-            openReplacementOffer(customNotification)
-            return
-          }
-          if (
-            customNotification?.type === OpenIDCustomNotificationType.CredentialExpired &&
-            customNotification.metadata &&
-            typeof customNotification.metadata.oldId === 'string'
-          ) {
-            upgrade(customNotification.metadata.oldId)
-            return
-          }
           customNotification?.onPressAction
             ? customNotification.onPressAction()
             : navigation.getParent()?.navigate(Stacks.NotificationStack, {

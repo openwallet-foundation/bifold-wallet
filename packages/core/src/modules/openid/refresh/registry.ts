@@ -1,5 +1,7 @@
 import { ClaimFormat } from '@credo-ts/core'
 import { createStore } from 'zustand/vanilla'
+import { persist, createJSONStorage } from 'zustand/middleware'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export interface OpenIDCredentialLite {
   id: string
@@ -10,6 +12,10 @@ export interface OpenIDCredentialLite {
 
 export interface ReplacementMap {
   [oldId: string]: OpenIDCredentialLite // the new “offer”/replacement
+}
+
+export interface ExpiredMap {
+  [oldId: string]: OpenIDCredentialLite
 }
 
 export interface RefreshingMap {
@@ -39,12 +45,15 @@ export interface RegistryState {
   blocked: Record<string, BlockEntry>
   // last run timestamps (optional, helps UI)
   lastSweepAt?: string
+
+  notificationRemoved: string[]
 }
 
 export interface RegistryActions {
   upsert: (cred: OpenIDCredentialLite) => void
 
   markRefreshing: (id: string) => void
+
   clearRefreshing: (id: string) => void
 
   /** Old cred `oldId` has a replacement available (offer or reissued record) */
@@ -71,18 +80,24 @@ export interface RegistryActions {
   shouldSkip: (id: string) => boolean
 
   setLastSweep: (iso: string) => void
+
+  removeCredentialFromRegistry: (id: string) => void
+
+  markNotificationRemoved: (id: string) => void
+
   reset: () => void
 }
 
 export type RegistryStore = RegistryState & RegistryActions
 
-export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
+export const credentialRegistry = createStore<RegistryStore>()(persist((set, get) => ({
   byId: {},
   expired: [],
   checked: [],
   replacements: {},
   refreshing: {},
   blocked: {},
+  notificationRemoved: [],
   lastSweepAt: undefined,
 
   upsert: (cred) => set((s) => ({ byId: { ...s.byId, [cred.id]: cred } })),
@@ -159,6 +174,24 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
 
   setLastSweep: (iso) => set({ lastSweepAt: iso }),
 
+  removeCredentialFromRegistry: (id: string) => {
+    set((s) => {
+      const replacements = s.replacements
+      if (replacements?.id) delete replacements[id]
+      return {
+        expired: s.expired.filter((expiredId) => expiredId !== id),
+        checked: s.checked.filter((checkedId) => checkedId !== id),
+        replacements,
+      }
+    })
+  },
+
+  markNotificationRemoved: (id: string) => {
+    set((s) => ({
+      notificationRemoved: [...s.notificationRemoved, id]
+    }))
+  },
+
   reset: () =>
     set({
       byId: {},
@@ -169,7 +202,12 @@ export const credentialRegistry = createStore<RegistryStore>((set, get) => ({
       blocked: {},
       lastSweepAt: undefined,
     }),
-}))
+}),
+  {
+    name: 'credential-refresh-storage',
+    storage: createJSONStorage(() => AsyncStorage),
+  }
+))
 
 // Non-React helpers for workers/services
 export const readRegistry = () => credentialRegistry.getState()

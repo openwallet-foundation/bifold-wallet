@@ -1,5 +1,50 @@
 # Change Log
 
+## 3.0.16
+
+### Patch Changes
+
+- Updated dependencies [282bb4e]
+  - @bifold/core@3.0.16
+
+## 3.0.15
+
+### Patch Changes
+
+- Updated dependencies [9ed3b0f]
+- Updated dependencies [fc4eeb1]
+- Updated dependencies [7fce466]
+  - @bifold/core@3.0.15
+
+## 3.0.14
+
+### Patch Changes
+
+- Updated dependencies [c70df9d]
+- Updated dependencies [4704ce3]
+  - @bifold/core@3.0.14
+
+## 3.0.13
+
+### Patch Changes
+
+- Updated dependencies [f813512]
+  - @bifold/core@3.0.13
+
+## 3.0.12
+
+### Patch Changes
+
+- Updated dependencies [dd22c43]
+  - @bifold/core@3.0.12
+
+## 3.0.11
+
+### Patch Changes
+
+- 178d2f8: logging change had strange side effects
+  - @bifold/core@3.0.11
+
 ## 3.0.10
 
 ### Patch Changes

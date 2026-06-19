@@ -267,6 +267,11 @@ const BrandColors = {
   primaryLight: `rgba(53, 130, 63, ${lightOpacity})`,
   highlight: '#FCBA19',
   primaryBackground: '#000000',
+  credentialCardPlaceholderBackground: '#1C1C1E',
+  credentialCardStatusBadgeErrorBackground: '#FDECEA',
+  credentialCardStatusBadgeErrorIcon: '#000000',
+  credentialCardStatusBadgeWarningBackground: '#FFF8E1',
+  credentialCardStatusBadgeWarningIcon: '#000000',
   secondaryBackground: '#313132',
   tertiaryBackground: '#313132',
   modalPrimary: '#42803E',
@@ -1080,7 +1085,7 @@ export function createOnboardingTheme(theme: { ColorPalette: IColorPalette; Text
   return {
     ...textStyles,
     ...viewStyles,
-    headerTintColor: ColorPalette.grayscale.white,
+    headerTintColor: theme.ColorPalette.brand.headerIcon,
     imageDisplayOptions: {
       fill: ColorPalette.notification.infoText,
     },

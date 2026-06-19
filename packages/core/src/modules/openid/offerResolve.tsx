@@ -16,10 +16,12 @@ type CredentialBindingResolverOptions = Pick<
 > & {
   agent: Agent
   enableHardwareBackedHolderBinding?: boolean
-  holderBindingKey?: Kms.PublicJwk
 }
 
-const holderBindingKeyIds = new WeakMap<Kms.PublicJwk, string>()
+type CredentialBindingKey = {
+  keyId: string
+  publicJwk: Kms.PublicJwk
+}
 
 /**
  * Creates a holder-binding key for OpenID4VCI proof signing.
@@ -27,7 +29,7 @@ const holderBindingKeyIds = new WeakMap<Kms.PublicJwk, string>()
  * When hardware-backed holder binding is enabled the key is created in the secure environment.
  * Otherwise the agent's default KMS backend is used.
  */
-export const createHolderBindingKey = async ({
+const createCredentialBindingKey = async ({
   agent,
   signatureAlgorithm,
   enableHardwareBackedHolderBinding = false,
@@ -35,49 +37,17 @@ export const createHolderBindingKey = async ({
   agent: Agent
   signatureAlgorithm: Kms.KnownJwaSignatureAlgorithm
   enableHardwareBackedHolderBinding?: boolean
-}): Promise<Kms.PublicJwk> => {
+}): Promise<CredentialBindingKey> => {
   const key = await agent.kms.createKeyForSignatureAlgorithm(
     enableHardwareBackedHolderBinding
       ? { algorithm: signatureAlgorithm, backend: 'secureEnvironment' }
       : { algorithm: signatureAlgorithm }
   )
 
-  const publicJwk = Kms.PublicJwk.fromPublicJwk(key.publicJwk)
-  holderBindingKeyIds.set(publicJwk, key.keyId)
-
-  return publicJwk
-}
-
-/**
- * Selects the DPoP signing algorithm advertised by the authorization server.
- *
- * A missing `dpop_signing_alg_values_supported` value means DPoP is not used. Hardware-backed
- * keys require ES256 because the secure environment backend only supports P-256 signing.
- */
-export const getDpopSignatureAlgorithm = ({
-  dpopSigningAlgValuesSupported,
-  enableHardwareBackedHolderBinding = false,
-}: {
-  dpopSigningAlgValuesSupported?: string[]
-  enableHardwareBackedHolderBinding?: boolean
-}): Kms.KnownJwaSignatureAlgorithm | undefined => {
-  if (!dpopSigningAlgValuesSupported?.length) {
-    return undefined
+  return {
+    keyId: key.keyId,
+    publicJwk: Kms.PublicJwk.fromPublicJwk(key.publicJwk),
   }
-
-  if (enableHardwareBackedHolderBinding) {
-    if (!dpopSigningAlgValuesSupported.includes('ES256')) {
-      throw new Error(
-        'Unable to request credential with hardware-backed DPoP. Authorization server does not support ES256.'
-      )
-    }
-
-    return 'ES256'
-  }
-
-  return (
-    dpopSigningAlgValuesSupported.includes('ES256') ? 'ES256' : dpopSigningAlgValuesSupported[0]
-  ) as Kms.KnownJwaSignatureAlgorithm
 }
 
 /**
@@ -177,9 +147,8 @@ export async function acquirePreAuthorizedAccessToken({
 /**
  * Resolves the holder binding used for the credential request proof of possession.
  *
- * If a holder binding key is supplied, it is reused. This lets DPoP and credential binding share
- * the same key when required by product policy. If no key is supplied, a new key is created based
- * on the issuer-supported proof algorithm and the hardware-backed holder binding setting.
+ * A new key is created based on the issuer-supported proof algorithm and the hardware-backed
+ * holder binding setting.
  */
 export const customCredentialBindingResolver = async ({
   agent,
@@ -189,7 +158,6 @@ export const customCredentialBindingResolver = async ({
   credentialFormat,
   proofTypes,
   enableHardwareBackedHolderBinding = false,
-  holderBindingKey,
 }: CredentialBindingResolverOptions): Promise<OpenId4VcCredentialHolderBinding> => {
   let didMethod: 'key' | 'jwk' | undefined =
     supportsAllDidMethods || supportedDidMethods?.includes('did:jwk')
@@ -210,21 +178,17 @@ export const customCredentialBindingResolver = async ({
     throw new Error('Unable to request credential with hardware-backed holder binding. Issuer does not support ES256.')
   }
 
-  const publicJwk =
-    holderBindingKey ??
-    (await createHolderBindingKey({
-      agent,
-      signatureAlgorithm,
-      enableHardwareBackedHolderBinding,
-    }))
+  const credentialBindingKey = await createCredentialBindingKey({
+    agent,
+    signatureAlgorithm,
+    enableHardwareBackedHolderBinding,
+  })
 
   if (didMethod) {
-    const keyId = holderBindingKeyIds.get(publicJwk) ?? publicJwk.keyId
-
     const didResult = await agent.dids.create<JwkDidCreateOptions | KeyDidCreateOptions>({
       method: didMethod,
       options: {
-        keyId,
+        keyId: credentialBindingKey.keyId,
       },
     })
 
@@ -254,7 +218,7 @@ export const customCredentialBindingResolver = async ({
   ) {
     return {
       method: 'jwk',
-      keys: [publicJwk], // Need to replace getJwkFromKey here
+      keys: [credentialBindingKey.publicJwk],
     }
   }
 
@@ -268,8 +232,8 @@ export const customCredentialBindingResolver = async ({
 /**
  * Requests and stores credentials from a resolved OpenID4VCI offer using an existing token response.
  *
- * The credential binding resolver can receive a pre-created holder binding key. When supplied, that
- * key is reused for the credential proof; otherwise the resolver creates the key itself.
+ * The DPoP proof for the credential endpoint is taken from the token response. Holder binding is
+ * resolved separately for the credential request proof.
  */
 export const receiveCredentialFromOpenId4VciOffer = async ({
   agent,
@@ -278,7 +242,6 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   credentialConfigurationIdsToRequest,
   clientId,
   enableHardwareBackedHolderBinding = false,
-  holderBindingKey,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
@@ -286,16 +249,18 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
   credentialConfigurationIdsToRequest?: string[]
   clientId?: string
   enableHardwareBackedHolderBinding?: boolean
-  holderBindingKey?: Kms.PublicJwk
 }): Promise<OpenIDCredentialRecord> => {
   const credentialConfigurationIds = getCredentialConfigurationIdsToRequest({
     resolvedCredentialOffer,
     credentialConfigurationIdsToRequest,
   })
+  const tokenBoundDpop = tokenResponse.dpop
 
   const credentials = await agent.openid4vc.holder.requestCredentials({
     resolvedCredentialOffer,
-    ...tokenResponse,
+    accessToken: tokenResponse.accessToken,
+    cNonce: tokenResponse.cNonce,
+    dpop: tokenBoundDpop,
     clientId,
     credentialConfigurationIds,
     verifyCredentialStatus: false,
@@ -315,7 +280,6 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
         supportsJwk,
         credentialFormat,
         enableHardwareBackedHolderBinding,
-        holderBindingKey,
       })
     },
     dPop: {

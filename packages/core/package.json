@@ -1,6 +1,6 @@
 {
   "name": "@bifold/core",
-  "version": "3.0.10",
+  "version": "3.0.16",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
@@ -11,6 +11,11 @@
       "import": "./lib/module/index.js",
       "require": "./lib/commonjs/index.js",
       "types": "./lib/typescript/src/index.d.ts"
+    },
+    "./utils/file-cache": {
+      "import": "./lib/module/utils/fileCache.js",
+      "require": "./lib/commonjs/utils/fileCache.js",
+      "types": "./lib/typescript/src/utils/fileCache.d.ts"
     },
     "./utils/ledger": {
       "import": "./lib/module/utils/ledger.js",
@@ -45,9 +50,9 @@
     "@animo-id/expo-secure-environment": "0.1.5",
     "@babel/core": "~7.28.6",
     "@babel/runtime": "~7.28.6",
-    "@bifold/oca": "3.0.10",
-    "@bifold/react-hooks": "3.0.10",
-    "@bifold/verifier": "3.0.10",
+    "@bifold/oca": "3.0.16",
+    "@bifold/react-hooks": "3.0.16",
+    "@bifold/verifier": "3.0.16",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
@@ -156,7 +161,7 @@
   },
   "peerDependencies": {
     "@animo-id/expo-secure-environment": "0.1.5",
-    "@bifold/react-hooks": "3.0.10",
+    "@bifold/react-hooks": "3.0.16",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",

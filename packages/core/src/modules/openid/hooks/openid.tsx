@@ -7,8 +7,6 @@ import { TOKENS, useServices } from '../../../container-api'
 import { BifoldError } from '../../../types/error'
 import {
   acquirePreAuthorizedAccessToken,
-  createHolderBindingKey,
-  getDpopSignatureAlgorithm,
   receiveCredentialFromOpenId4VciOffer,
   resolveOpenId4VciOffer,
 } from '../offerResolve'
@@ -69,33 +67,9 @@ export const useOpenID = ({
           throw new Error('No credential issuer found in the credential offer metadata')
         }
 
-        const dpopSigningAlgValuesSupported = [
-          authServer.dpop_signing_alg_values_supported,
-          issuerMetadata.dpop_signing_alg_values_supported,
-        ].find(Array.isArray)
-
-        const dpopSignatureAlgorithm = getDpopSignatureAlgorithm({
-          dpopSigningAlgValuesSupported,
-          enableHardwareBackedHolderBinding,
-        })
-
-        const holderBindingKey = dpopSignatureAlgorithm
-          ? await createHolderBindingKey({
-              agent,
-              signatureAlgorithm: dpopSignatureAlgorithm,
-              enableHardwareBackedHolderBinding,
-            })
-          : undefined
-
         const tokenResponse = await acquirePreAuthorizedAccessToken({
           agent,
           resolvedCredentialOffer,
-          dpop: holderBindingKey && dpopSignatureAlgorithm
-            ? {
-                jwk: holderBindingKey,
-                alg: dpopSignatureAlgorithm,
-              }
-            : undefined,
           ...(enableAttestation ? { walletAttestationJwt: walletAttestationJwt } : {}),
         })
         const refreshToken = tokenResponse.refreshToken
@@ -109,7 +83,6 @@ export const useOpenID = ({
           resolvedCredentialOffer,
           tokenResponse: tokenResponse,
           enableHardwareBackedHolderBinding,
-          holderBindingKey,
         })
 
         if (refreshToken) {

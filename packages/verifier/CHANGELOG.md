@@ -1,5 +1,42 @@
 # @bifold/verifier
 
+## 3.0.16
+
+### Patch Changes
+
+- @bifold/react-hooks@3.0.16
+
+## 3.0.15
+
+### Patch Changes
+
+- @bifold/react-hooks@3.0.15
+
+## 3.0.14
+
+### Patch Changes
+
+- @bifold/react-hooks@3.0.14
+
+## 3.0.13
+
+### Patch Changes
+
+- @bifold/react-hooks@3.0.13
+
+## 3.0.12
+
+### Patch Changes
+
+- @bifold/react-hooks@3.0.12
+
+## 3.0.11
+
+### Patch Changes
+
+- Updated dependencies [e99b6d9]
+  - @bifold/react-hooks@3.0.11
+
 ## 3.0.10
 
 ### Patch Changes
