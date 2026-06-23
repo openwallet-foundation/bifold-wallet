@@ -220,7 +220,12 @@ describe('useAttestation', () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
-      expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, mockKeyID, mockSigningKey)
+      expect(mockGetJWT).toHaveBeenCalledWith({
+        attestationResult: mockAttestationResult,
+        challenge: mockChallenge,
+        keyId: mockKeyID,
+        signingKey: mockSigningKey
+      })
     })
 
     it('stores the attestation JWT and marks the attestation process as completed', async () => {
@@ -292,7 +297,12 @@ describe('useAttestation', () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
-      expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, androidKeyID, mockSigningKey )
+      expect(mockGetJWT).toHaveBeenCalledWith({
+        attestationResult: mockAttestationResult,
+        challenge: mockChallenge,
+        keyId: androidKeyID,
+        signingKey: mockSigningKey
+      })
     })
 
     it('saves the attestation JWT and marks attestation completed', async () => {
