@@ -121,7 +121,6 @@ export const resolveOpenId4VciOffer = async ({
     throw new Error('Authorization code flow is not implemented in this OpenID credential offer flow.')
   }
 
-
   return resolvedCredentialOffer
 }
 

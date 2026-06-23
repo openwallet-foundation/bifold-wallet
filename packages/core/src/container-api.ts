@@ -17,7 +17,6 @@ import { AgentSetupReturnType } from './hooks/useBifoldAgentSetup'
 import { IHistoryManager } from './modules/history'
 import { IRefreshOrchestrator } from './modules/openid/refresh/types'
 import type { GetAttestationJWTData, GetAttestationJWTPayload, GetAttestationChallengeData } from './types/attestation'
-import { Kms } from '@credo-ts/core'
 import { OnboardingStackProps } from './navigators/OnboardingStack'
 import Onboarding from './screens/Onboarding'
 import { PINExplainerProps } from './screens/PINExplainer'
@@ -188,13 +187,8 @@ export const TOKENS = {
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
 export type FN_PIN_HASH_ALGORITHM = (PIN: string, salt: string) => Promise<string>
-export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<string>
-export type FN_ATTESTATION_GET_JWT = (
-  attestationResult: string | string[],
-  challenge: string,
-  keyId: string,
-  signingKey?: Kms.PublicJwk,
-) => Promise<GetAttestationJWTData>
+export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<GetAttestationChallengeData>
+export type FN_ATTESTATION_GET_JWT = (params: GetAttestationJWTPayload) => Promise<GetAttestationJWTData>
 
 export type TokenMapping = {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {

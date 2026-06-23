@@ -19,6 +19,7 @@ import { DispatchAction } from '../contexts/reducers/store'
 import { withRetry } from '../utils/network'
 import { Agent, Kms } from '@credo-ts/core'
 import { encodeToBase64Url } from '@openid4vc/utils'
+import { GetAttestationJWTPayload } from 'types/attestation'
 
 const WALLET_ATTEST_STORAGE_KEY = 'walletAttestStorage'
 
@@ -104,7 +105,13 @@ export const useAttestation = () => {
           const keyId = await generateKeyAsync()
           // No need to SHA256 encode the challenge on iOS as that is handled by the OS
           const attestationResult = await withRetry(attestKeyAsync, [keyId, challenge + thumbprint])
-          const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
+          const getAttestationJwtParams: GetAttestationJWTPayload = {
+            attestationResult,
+            challenge,
+            keyId,
+            signingKey,
+          }
+          const attestationJWT = await getAttestationJWT(getAttestationJwtParams)
           await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
 
         } else if (Platform.OS === 'android') {
@@ -116,7 +123,13 @@ export const useAttestation = () => {
           const boundChallenge = await digestStringAsync(CryptoDigestAlgorithm.SHA256, challenge + thumbprint)
           await generateHardwareAttestedKeyAsync(keyId, boundChallenge)
           const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyId])
-          const attestationJWT = await getAttestationJWT(attestationResult, challenge, keyId, signingKey)
+          const getAttestationJwtParams: GetAttestationJWTPayload = {
+            attestationResult,
+            challenge,
+            keyId,
+            signingKey,
+          }
+          const attestationJWT = await getAttestationJWT(getAttestationJwtParams)
           await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
 
         } else throw new Error('Platform not supported')

@@ -15,10 +15,8 @@ export interface AttestationMonitor {
   stop(): void
   requestAttestationCredential(): Promise<void>
 }
-
-export interface GetAttestationChallengeData {
-  challenge: string
-}
+ 
+export type GetAttestationChallengeData = string
 
 export interface GetAttestationJWTData {
   signedAttestation: string,

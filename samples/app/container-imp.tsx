@@ -1,7 +1,5 @@
 import { BifoldLogger, Container, TokenMapping, TOKENS } from '@bifold/core'
-import { Platform } from 'react-native'
 import { DependencyContainer } from 'tsyringe'
-import axios from 'axios'
 
 export class AppContainer implements Container {
   private _container: DependencyContainer
