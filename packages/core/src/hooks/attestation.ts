@@ -88,7 +88,7 @@ export const useAttestation = () => {
         return
       }
 
-      agentBridge.onReady(async (agent) => {
+      await agentBridge.onReady(async (agent) => {
 
         const challenge = await getAttestationChallenge()
         const secondaryKey = await agent.kms.createKeyForSignatureAlgorithm(
@@ -132,6 +132,7 @@ export const useAttestation = () => {
   return {
     initAttestation,
     retrieveAttestationJWT,
+    storeAttestationJWT,
   }
 
 }

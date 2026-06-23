@@ -1,3 +1,4 @@
+import { jest, describe, expect, it, beforeEach, beforeAll, afterAll } from "@jest/globals"
 import { renderHook, act } from '@testing-library/react-native'
 import { Platform } from 'react-native'
 import {
@@ -6,6 +7,8 @@ import {
   generateHardwareAttestedKeyAsync,
   getAttestationCertificateChainAsync,
 } from '@expo/app-integrity'
+import { Kms } from '@credo-ts/core'
+import { encodeToBase64Url } from '@openid4vc/utils'
 
 import { useAttestation } from '../../src/hooks/attestation'
 import { PersistentStorage } from '../../src/services/storage'
@@ -23,6 +26,7 @@ jest.mock('@expo/app-integrity', () => ({
   generateHardwareAttestedKeyAsync: jest.fn(),
   getAttestationCertificateChainAsync: jest.fn(),
   isSupported: true,
+  isHardwareAttestationSupportedAsync: true,
 }))
 
 jest.mock('react-native-uuid', () => ({
@@ -30,6 +34,10 @@ jest.mock('react-native-uuid', () => ({
   default: {
     v4: jest.fn().mockReturnValue('123456789')
   }
+}))
+
+jest.mock('@openid4vc/utils', () => ({
+  encodeToBase64Url: jest.fn()
 }))
 
 jest.mock('../../src/services/storage', () => ({
@@ -58,25 +66,61 @@ jest.mock('../../src/utils/network', () => ({
   withRetry: jest.fn(),
 }))
 
+const mockAgent = {
+  kms: {
+    createKeyForSignatureAlgorithm: jest.fn(() => Promise.resolve(mockPublicJwk)),
+  },
+  genericRecords: {
+    save: jest.fn(() => Promise.resolve()),
+    findById: jest.fn(),
+  },
+}
+
+jest.mock('@credo-ts/core', () => {
+  const actual: { Kms: any } = jest.requireActual('@credo-ts/core')
+  return {
+    ...actual,
+    Kms: {
+      ...actual.Kms,
+      PublicJwk: {
+        ...actual.Kms.PublicJwk,
+        fromPublicJwk: jest.fn(), // explicit override after spread
+      },
+    },
+  }
+})
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const mockChallenge = 'test-challenge'
 const mockKeyID = 'test-key-id'
 const mockAttestationResult = 'attestation-result'
-const mockAttestationJWT = 'attestation-jwt'
+const mockAttestationJWT = { signedAttestation: 'attestation-jwt' }
+const mockJWTThumbprint = 'jwt-thumbprint'
+const mockEncodedThumbprint = 'encoded-thumbprint'
+const mockEncodedChallenge = `Mocked ${mockChallenge + mockEncodedThumbprint} encoded as SHA-256`
 
-const mockGetChallenge = jest.fn().mockResolvedValue(mockChallenge)
-const mockGetJWT = jest.fn().mockResolvedValue(mockAttestationJWT)
+const mockGetJwkThumbprint = jest.fn().mockReturnValue(mockJWTThumbprint)
+const mockGetChallenge = jest.fn().mockResolvedValue(mockChallenge as never)
+const mockGetJWT = jest.fn().mockResolvedValue(mockAttestationJWT as never)
 const mockDispatch = jest.fn()
 const mockLogger = { error: jest.fn(), info: jest.fn(), warn: jest.fn() }
-const mockAgent = {
-  genericRecords: {
-    save: jest.fn().mockResolvedValue(undefined),
-  },
-}
+const mockPublicJwk = { publicJwk: { kty: 'EC', crv: 'P-256' } }
+const mockSigningKey = { getJwkThumbprint: mockGetJwkThumbprint }
 const mockAgentBridge = {
   onReady: jest.fn((cb: (agent: typeof mockAgent) => Promise<void>) => cb(mockAgent)),
 }
+
+const mockGenerateKeyAsync = generateKeyAsync as jest.MockedFunction<typeof generateKeyAsync>
+const mockGenerateHardwareAttestedKeyAsync = generateHardwareAttestedKeyAsync as jest.MockedFunction<typeof generateHardwareAttestedKeyAsync>
+const mockGetAttestationCertificateChainAsync = getAttestationCertificateChainAsync as jest.MockedFunction<typeof getAttestationCertificateChainAsync>
+const mockAttestKeyAsync = attestKeyAsync as jest.MockedFunction<typeof attestKeyAsync>
+const mockWithRetry = withRetry as jest.MockedFunction<typeof withRetry>
+const encodeToBase64UrlMock = encodeToBase64Url as jest.MockedFunction<typeof encodeToBase64Url>
+const fromPublicJwkMock = Kms.PublicJwk.fromPublicJwk as jest.MockedFunction<typeof Kms.PublicJwk.fromPublicJwk>
+const useStoreMock = useStore as jest.MockedFunction<typeof useStore>
+const fetchValueForKeyMock = PersistentStorage.fetchValueForKey as jest.MockedFunction<typeof PersistentStorage.fetchValueForKey>
+const storeValueForKeyMock = PersistentStorage.storeValueForKey as jest.MockedFunction<typeof PersistentStorage.storeValueForKey>
 
 function setupDefaultMocks(overrides: Partial<{
   enableAttestation: boolean
@@ -89,20 +133,21 @@ function setupDefaultMocks(overrides: Partial<{
     getAttestationChallenge = mockGetChallenge,
     getAttestationJWT = mockGetJWT,
     isAttestationConfigured = false,
-  } = overrides
+  } = overrides;
 
-  ;(useServices as jest.Mock).mockReturnValue([
+  (useServices as jest.Mock).mockReturnValue([
     getAttestationChallenge,
     getAttestationJWT,
     { enableAttestation },
     mockLogger,
     mockAgentBridge,
-  ])
-
-  ;(useStore as jest.Mock).mockReturnValue([{}, mockDispatch])
-
-  ;(PersistentStorage.fetchValueForKey as jest.Mock).mockResolvedValue(isAttestationConfigured)
-  ;(PersistentStorage.storeValueForKey as jest.Mock).mockResolvedValue(undefined)
+  ]);
+  useStoreMock.mockReturnValue([{} as any, mockDispatch]);
+  fetchValueForKeyMock.mockImplementation(() => Promise.resolve(isAttestationConfigured as any));
+  storeValueForKeyMock.mockImplementation(() => Promise.resolve(undefined));
+  fromPublicJwkMock.mockReturnValue(mockSigningKey)
+  encodeToBase64UrlMock.mockReturnValue(mockEncodedThumbprint)
+  mockGenerateKeyAsync.mockResolvedValue(mockKeyID)
 }
 
 describe('useAttestation', () => {
@@ -118,7 +163,7 @@ describe('useAttestation', () => {
     })
   })
 
-  describe('early exit conditions', () => {
+  describe('Early exit conditions', () => {
     it('marks attestation completed and returns when enableAttestation is false', async () => {
       setupDefaultMocks({ enableAttestation: false })
       const { result } = renderHook(() => useAttestation())
@@ -161,9 +206,8 @@ describe('useAttestation', () => {
 
   describe('iOS attestation flow', () => {
     beforeEach(() => {
-      Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true })
-      ;(generateKeyAsync as jest.Mock).mockResolvedValue(mockKeyID)
-      ;(withRetry as jest.Mock).mockResolvedValue(mockAttestationResult)
+      Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true });
+      (withRetry as jest.Mock).mockImplementation(() => Promise.resolve(mockAttestationResult));
     })
 
     it('generates a key and attests it', async () => {
@@ -171,72 +215,50 @@ describe('useAttestation', () => {
       await act(() => result.current.initAttestation())
 
       expect(generateKeyAsync).toHaveBeenCalled()
-      expect(withRetry).toHaveBeenCalledWith(attestKeyAsync, [mockKeyID, mockChallenge])
+      expect(withRetry).toHaveBeenCalledWith(attestKeyAsync, [mockKeyID, mockChallenge + mockEncodedThumbprint])
     })
 
-    it('fetches an attestation JWT using the result and challenge', async () => {
+    it('fetches an attestation JWT using the correct params', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
-      expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, mockKeyID)
+      expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, mockKeyID, mockSigningKey)
     })
 
-    it('saves the attestation JWT via the agent bridge', async () => {
+    it('stores the attestation JWT and marks the attestation process as completed', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
-
-      expect(mockAgentBridge.onReady).toHaveBeenCalled()
-      expect(mockAgent.genericRecords.save).toHaveBeenCalledWith({
-        content: mockAttestationJWT,
-        id: 'attestationJWT',
-      })
-    })
-
-    it('persists the configured flag and key ID in storage', async () => {
-      const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.initAttestation())
-
+      expect(mockAgent.genericRecords.save).toHaveBeenCalledWith(
+        { content: { attestationJwt: mockAttestationJWT.signedAttestation }, id: 'walletAttestStorage' }
+      )
       expect(PersistentStorage.storeValueForKey).toHaveBeenCalledWith(
         LocalStorageKeys.AttestationConfigured,
         true
       )
-      expect(PersistentStorage.storeValueForKey).toHaveBeenCalledWith(
-        LocalStorageKeys.AttestationKey,
-        mockKeyID
-      )
-    })
-
-    it('dispatches SET_ATTESTATION_COMPLETED after storing', async () => {
-      const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.initAttestation())
-
       expect(mockDispatch).toHaveBeenCalledWith({
         type: DispatchAction.SET_ATTESTATION_COMPLETED,
         payload: [true],
       })
     })
 
-    it('logs and rethrows when generateKeyAsync fails', async () => {
-      (generateKeyAsync as jest.Mock).mockRejectedValue(new Error('key gen failed'))
-
+    it('throws an error when generateKeyAsync fails', async () => {
+      mockGenerateKeyAsync.mockImplementationOnce(() => Promise.reject(new Error('generateKeyAsync failed')))
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
 
-    it('logs and rethrows when withRetry (attestKeyAsync) fails', async () => {
-      (withRetry as jest.Mock).mockRejectedValue(new Error('attest failed'))
-
+    it('throws an error when attestKeyAsync fails', async () => {
+      mockGenerateKeyAsync.mockImplementationOnce(() => Promise.reject(new Error('generateKeyAsync failed')))
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
       )
     })
 
-    it('logs and rethrows when getAttestationJWT fails', async () => {
-      mockGetJWT.mockRejectedValueOnce(new Error('jwt fetch failed'))
-
+    it('throws an error when getAttestationJWT fails', async () => {
+      mockGetJWT.mockImplementationOnce(() => Promise.reject(new Error('getAttestationJWT failed')))
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.initAttestation())).rejects.toThrow(
         'Error initializing attestation'
@@ -250,16 +272,15 @@ describe('useAttestation', () => {
     const androidKeyID = '123456789'
 
     beforeEach(() => {
-      Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true })
-      ;(generateHardwareAttestedKeyAsync as jest.Mock).mockResolvedValue(undefined)
-      ;(withRetry as jest.Mock).mockResolvedValue(mockAttestationResult)
+      Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true });
+      mockGenerateHardwareAttestedKeyAsync.mockImplementation(() => Promise.resolve(undefined));
     })
 
     it('generates a hardware attested key with the correct key ID', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
-      expect(generateHardwareAttestedKeyAsync).toHaveBeenCalledWith(androidKeyID, mockChallenge)
+      expect(generateHardwareAttestedKeyAsync).toHaveBeenCalledWith(androidKeyID, mockEncodedChallenge)
     })
 
     it('retrieves the certificate chain via withRetry', async () => {
@@ -273,46 +294,34 @@ describe('useAttestation', () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
-      expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, androidKeyID)
+      expect(mockGetJWT).toHaveBeenCalledWith(mockAttestationResult, mockChallenge, androidKeyID, mockSigningKey )
     })
 
-    it('saves the attestation JWT and persists state', async () => {
+    it('saves the attestation JWT and marks attestation completed', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
-
-      expect(mockAgent.genericRecords.save).toHaveBeenCalledWith({
-        content: mockAttestationJWT,
-        id: 'attestationJWT',
-      })
-      expect(PersistentStorage.storeValueForKey).toHaveBeenCalledWith(
-        LocalStorageKeys.AttestationKey,
-        androidKeyID
+      expect(mockAgent.genericRecords.save).toHaveBeenCalledWith(
+        { content: { attestationJwt: mockAttestationJWT.signedAttestation }, id: 'walletAttestStorage' }
       )
-    })
-
-    it('dispatches SET_ATTESTATION_COMPLETED', async () => {
-      const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.initAttestation())
-
+      expect(PersistentStorage.storeValueForKey).toHaveBeenCalledWith(
+        LocalStorageKeys.AttestationConfigured,
+        true
+      )
       expect(mockDispatch).toHaveBeenCalledWith({
         type: DispatchAction.SET_ATTESTATION_COMPLETED,
         payload: [true],
       })
     })
 
-    it('logs and rethrows when generateHardwareAttestedKeyAsync fails', async () => {
-      (generateHardwareAttestedKeyAsync as jest.Mock).mockRejectedValue(
-        new Error('hw key gen failed')
-      )
-
+    it('throws an error when generateHardwareAttestedKeyAsync fails', async () => {
+      mockGenerateHardwareAttestedKeyAsync.mockRejectedValueOnce(new Error('hw key gen failed'))
       const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
-        'Error initializing attestation'
-      )
+
+      await expect(result.current.initAttestation()).rejects.toThrow('Error initializing attestation')
     })
 
-    it('logs and rethrows when withRetry (getCertificateChain) fails', async () => {
-      (withRetry as jest.Mock).mockRejectedValue(new Error('cert chain failed'))
+    it('throws an error when getCertificateChain fails', async () => {
+      mockWithRetry.mockRejectedValueOnce(new Error('cert chain failed'))
 
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.initAttestation())).rejects.toThrow(
@@ -339,8 +348,8 @@ describe('useAttestation', () => {
   describe('storeAttestationJWT', () => {
     beforeEach(() => {
       Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true })
-      ;(generateKeyAsync as jest.Mock).mockResolvedValue(mockKeyID)
-      ;(withRetry as jest.Mock).mockResolvedValue(mockAttestationResult)
+      mockGenerateKeyAsync.mockResolvedValue(mockKeyID)
+      mockWithRetry.mockResolvedValue(mockAttestationResult)
     })
 
     it('wraps agent bridge errors as "Error storing attestation result"', async () => {
@@ -362,17 +371,16 @@ describe('useAttestation', () => {
   describe('challenge fetching', () => {
     beforeEach(() => {
       Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true })
-      ;(generateKeyAsync as jest.Mock).mockResolvedValue(mockKeyID)
-      ;(withRetry as jest.Mock).mockResolvedValue(mockAttestationResult)
+      mockWithRetry.mockResolvedValue(mockAttestationResult)
     })
 
     it('fetches a challenge before any key operations', async () => {
       const callOrder: string[] = []
-      mockGetChallenge.mockImplementation(async () => {
+      mockGetChallenge.mockImplementationOnce(async () => {
         callOrder.push('challenge')
         return mockChallenge
       })
-      ;(generateKeyAsync as jest.Mock).mockImplementation(async () => {
+      mockGenerateKeyAsync.mockImplementationOnce(async () => {
         callOrder.push('generateKey')
         return mockKeyID
       })
@@ -385,7 +393,7 @@ describe('useAttestation', () => {
     })
 
     it('logs and rethrows when challenge fetch fails', async () => {
-      mockGetChallenge.mockRejectedValueOnce(new Error('challenge fetch failed'))
+      mockGetChallenge.mockImplementationOnce(() => Promise.reject(new Error('challenge fetch failed')))
 
       const { result } = renderHook(() => useAttestation())
       await expect(act(() => result.current.initAttestation())).rejects.toThrow(
