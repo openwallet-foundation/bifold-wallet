@@ -1,4 +1,4 @@
-import { jest, describe, expect, it, beforeEach, beforeAll, afterAll } from "@jest/globals"
+import { jest, describe, expect, it, beforeEach } from "@jest/globals"
 import { renderHook, act } from '@testing-library/react-native'
 import { Platform } from 'react-native'
 import {
@@ -113,8 +113,6 @@ const mockAgentBridge = {
 
 const mockGenerateKeyAsync = generateKeyAsync as jest.MockedFunction<typeof generateKeyAsync>
 const mockGenerateHardwareAttestedKeyAsync = generateHardwareAttestedKeyAsync as jest.MockedFunction<typeof generateHardwareAttestedKeyAsync>
-const mockGetAttestationCertificateChainAsync = getAttestationCertificateChainAsync as jest.MockedFunction<typeof getAttestationCertificateChainAsync>
-const mockAttestKeyAsync = attestKeyAsync as jest.MockedFunction<typeof attestKeyAsync>
 const mockWithRetry = withRetry as jest.MockedFunction<typeof withRetry>
 const encodeToBase64UrlMock = encodeToBase64Url as jest.MockedFunction<typeof encodeToBase64Url>
 const fromPublicJwkMock = Kms.PublicJwk.fromPublicJwk as jest.MockedFunction<typeof Kms.PublicJwk.fromPublicJwk>

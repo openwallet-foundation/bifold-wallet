@@ -55,7 +55,7 @@ export const useAttestation = () => {
       logger.error(err?.message ?? 'Error storing attestation JWT')
       throw new Error('Error storing attestation JWT')
     }
-    }, [agentBridge, dispatch, logger])
+    }, [dispatch, logger])
 
   const retrieveAttestationJWT = useCallback(async (agent: Agent): Promise<string> => {
     try {
@@ -140,7 +140,7 @@ export const useAttestation = () => {
       logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error initializing attestation')
     }
-  }, [enableAttestation, getAttestationChallenge, getAttestationJWT, dispatch, logger, storeAttestationJWT])
+  }, [enableAttestation, getAttestationChallenge, getAttestationJWT, dispatch, logger, storeAttestationJWT, agentBridge])
 
   return {
     initAttestation,

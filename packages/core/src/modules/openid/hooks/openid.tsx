@@ -124,7 +124,7 @@ export const useOpenID = ({
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
       }
     },
-    [agent, enableHardwareBackedHolderBinding, t]
+    [agent, enableHardwareBackedHolderBinding, t, enableAttestation, retrieveAttestationJWT]
   )
 
   const resolveOpenIDPresentationRequest = useCallback(
