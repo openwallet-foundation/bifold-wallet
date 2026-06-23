@@ -74,8 +74,6 @@ export const useOpenID = ({
         })
         const refreshToken = tokenResponse.refreshToken
 
-        console.log(tokenResponse)
-
         temporaryMetaVanillaObject.tokenResponse = tokenResponse
 
         const credential = await receiveCredentialFromOpenId4VciOffer({

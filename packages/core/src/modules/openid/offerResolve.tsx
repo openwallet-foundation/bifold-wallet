@@ -90,11 +90,14 @@ export const resolveOpenId4VciOffer = async ({
   agent,
   data,
   uri,
+  authorization,
 }: {
   agent: Agent
   // Either data itself (the offer) or uri can be passed
   data?: unknown
   uri?: string
+  fetchAuthorization?: boolean
+  authorization?: { clientId: string; redirectUri: string }
 }): Promise<OpenId4VciResolvedCredentialOffer> => {
   let offerUri = uri
 
@@ -113,6 +116,11 @@ export const resolveOpenId4VciOffer = async ({
   })
 
   const resolvedCredentialOffer = await agent.openid4vc.holder.resolveCredentialOffer(offerUri)
+
+  if (authorization) {
+    throw new Error('Authorization code flow is not implemented in this OpenID credential offer flow.')
+  }
+
 
   return resolvedCredentialOffer
 }
@@ -281,11 +289,6 @@ export const receiveCredentialFromOpenId4VciOffer = async ({
         credentialFormat,
         enableHardwareBackedHolderBinding,
       })
-    },
-    dPop: {
-      jwk: '',
-      alg: '',
-      nonce: '',
     },
   })
 

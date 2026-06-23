@@ -57,25 +57,19 @@ export class AppContainer implements Container {
         throw new Error(`Error generating hash for PIN ${String((error as Error)?.message ?? error)}`)
       }
     })
-    */ 
 
+    // Get challenge example for app attestation
       this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async () => {
-
       const response = await axios.post(
-        '',
+        'GET_CHALLENGE_URL_GOES_HERE',
       )
-
-      console.log(response)
-
       if (response.status !== 200)
         throw new Error(`Failed to register attestation: ${response.status}`)
-      
       return response.data?.attestation_challenge
-
     })
 
+    // Get jwt example for app attestation
     this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationResult: string | string[], challenge: string, keyID: string, signingPublicKey: any) => {
-
       const payload: any = {
         attestation: Array.isArray(attestationResult) ? attestationResult.join(',') : attestationResult,
         challenge,
@@ -83,20 +77,15 @@ export class AppContainer implements Container {
         signingPublicKey: signingPublicKey.jwk.jwk,
         ...(Platform.OS === 'ios' ? { keyId: keyID } : {})
       }
-
       const response = await axios.post(
-        '', 
-        JSON.stringify(payload),
+        'GET_JWT_URL_GOES_HERE', 
+        payload,
       )
-
-      console.log(response)
-
       if (response.status !== 200) 
         throw new Error(`Failed to register attestation: ${response.status}`)
-
       return response.data
-      
     })
+    */ 
 
     return this
   }
