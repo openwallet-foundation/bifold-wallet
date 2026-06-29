@@ -85,6 +85,35 @@ export class AppContainer implements Container {
     })
     */ 
 
+    // Sample implementation for the attestation GET_CHALLENGE and GET_JWT functions
+
+    // this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async (): Promise<string> => {
+
+    //   const response = await axios.post(
+    //     'https://attestation-controller.azurewebsites.net/api/challenge',
+    //   )
+
+    //   if (response.status !== 200)
+    //     throw new Error(`Failed to register attestation: ${response.status}`)
+      
+    //   return response.data?.attestation_challenge
+
+    // })
+
+    // this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (getAttestationJwtPayload: GetAttestationJWTPayload): Promise<GetAttestationJWTData> => {
+
+    //   const response = await axios.post(
+    //     '', 
+    //     getAttestationJwtPayload,
+    //   )
+
+    //   if (response.status !== 200) 
+    //     throw new Error(`Failed to register attestation: ${response.status}`)
+
+    //   return response.data
+      
+    // })
+
     return this
   }
 

@@ -181,6 +181,7 @@ export type { DismissiblePopupModalProps } from './components/modals/Dismissible
 export type { BannerSectionProps } from './components/views/Banner'
 export { OpenIDCredentialRefreshFlowType } from './modules/openid/refresh/types'
 export type { IRefreshOrchestrator } from './modules/openid/refresh/types'
+export type { GetAttestationJWTPayload, GetAttestationJWTData } from './types/attestation'
 
 export {
   AbstractBifoldLogger,

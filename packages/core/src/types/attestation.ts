@@ -24,8 +24,9 @@ export interface GetAttestationJWTData {
 }
 
 export interface GetAttestationJWTPayload {
-  attestationResult: string | string[]
+  attestation: string | string[]
   challenge: string
-  keyId: string
-  signingKey?: Kms.PublicJwk
+  keyId?: string
+  signingKey: Kms.PublicJwk
+  platform: string
 }

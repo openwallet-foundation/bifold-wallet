@@ -63,7 +63,7 @@ export const useAttestation = () => {
       const storedAttestationData = await agent.genericRecords.findById(WALLET_ATTEST_STORAGE_KEY)
       const attestationJwt = storedAttestationData?.content?.["attestationJwt"] as string ?? null
 
-      if (attestationJwt)
+      if (!attestationJwt)
         throw new Error('No stored attestation data')
 
       return attestationJwt
@@ -104,12 +104,13 @@ export const useAttestation = () => {
 
           const keyId = await generateKeyAsync()
           // No need to SHA256 encode the challenge on iOS as that is handled by the OS
-          const attestationResult = await withRetry(attestKeyAsync, [keyId, challenge + thumbprint])
+          const attestation = await withRetry(attestKeyAsync, [keyId, challenge + thumbprint])
           const getAttestationJwtParams: GetAttestationJWTPayload = {
-            attestationResult,
+            attestation,
             challenge,
             keyId,
             signingKey,
+            platform: Platform.OS,
           }
           const attestationJWT = await getAttestationJWT(getAttestationJwtParams)
           await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
@@ -122,12 +123,13 @@ export const useAttestation = () => {
           // To ensure that the string is kept at a reasonable size (< 128 bytes) and consistency with the native iOS implementation
           const boundChallenge = await digestStringAsync(CryptoDigestAlgorithm.SHA256, challenge + thumbprint)
           await generateHardwareAttestedKeyAsync(keyId, boundChallenge)
-          const attestationResult = await withRetry(getAttestationCertificateChainAsync, [keyId])
+          const attestation = await withRetry(getAttestationCertificateChainAsync, [keyId])
           const getAttestationJwtParams: GetAttestationJWTPayload = {
-            attestationResult,
+            attestation,
             challenge,
             keyId,
             signingKey,
+            platform: Platform.OS,
           }
           const attestationJWT = await getAttestationJWT(getAttestationJwtParams)
           await storeAttestationJWT(attestationJWT?.signedAttestation, agent)

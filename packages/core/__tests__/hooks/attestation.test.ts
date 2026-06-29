@@ -221,9 +221,10 @@ describe('useAttestation', () => {
       await act(() => result.current.initAttestation())
 
       expect(mockGetJWT).toHaveBeenCalledWith({
-        attestationResult: mockAttestationResult,
+        attestation: mockAttestationResult,
         challenge: mockChallenge,
         keyId: mockKeyID,
+        platform: 'ios',
         signingKey: mockSigningKey
       })
     })
@@ -298,9 +299,10 @@ describe('useAttestation', () => {
       await act(() => result.current.initAttestation())
 
       expect(mockGetJWT).toHaveBeenCalledWith({
-        attestationResult: mockAttestationResult,
+        attestation: mockAttestationResult,
         challenge: mockChallenge,
         keyId: androidKeyID,
+        platform: 'android',
         signingKey: mockSigningKey
       })
     })
