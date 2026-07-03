@@ -36,7 +36,7 @@ Screen / Component
     -> use case / application service
       -> domain policy and mappers
       -> repositories / gateways
-        -> Credo agent, storage, OCA resolver, network, history
+        -> Credo agent, storage, network, history
 ```
 
 ## Current State Assessment
@@ -325,9 +325,10 @@ This should be treated as "MVVM kind of architecture" rather than strict textboo
 Recommended shape:
 
 ```text
-Credo / OCA / storage / network
+Credo / storage / network
   -> repositories and gateways
-    -> mappers
+    -> mappers and display interpreters
+      -> OCA interpretation / branding / labels
       -> local wallet models
         -> view model hooks
           -> screens and components
@@ -338,7 +339,7 @@ Credo / OCA / storage / network
 MVVM depends on the View consuming stable presentation state instead of raw infrastructure objects. The current mapper work helps because:
 
 - `WalletCredentialCardData` gives card views a local display contract.
-- `map-to-card.ts` starts isolating Credo and OCA details from card rendering.
+- `map-to-card.ts` starts isolating Credo details and OCA interpretation from card rendering.
 - `Card10Pure` and `Card11Pure` are close to true Views because they render local data.
 - OpenID display helpers already map protocol records into local display types.
 
@@ -524,6 +525,7 @@ Responsibilities:
 
 - Convert Credo/OpenID/DidComm records into local wallet models.
 - Hide Credo class differences from UI.
+- Interpret OCA bundles as display metadata, branding, labels, formats, and PII flags.
 - Normalize credential display fields, issuer, branding, status, dates, attributes, and proof context.
 - Own `instanceof` checks against Credo classes where unavoidable.
 
@@ -580,10 +582,10 @@ Example names:
 Responsibilities:
 
 - Wrap Credo APIs.
-- Wrap OCA resolver APIs.
 - Wrap history persistence.
 - Wrap global errors/toasts.
 - Hide record implementation details.
+- Keep OCA resolver usage behind mapper/display services rather than exposing it as a View dependency.
 
 Example adapters:
 
@@ -703,30 +705,3 @@ A flow is considered decoupled when:
 | Existing screens are large and fragile  | Migrate one flow at a time with characterization tests.                            |
 | Error behavior changes during migration | Centralize error presentation but preserve existing `BifoldError` codes initially. |
 | Navigation remains coupled to use cases | Use cases return outcomes; view models/screens perform navigation.                 |
-
-## Role of Ontario Wallet Team
-
-The Ontario Wallet team should:
-
-- Lead the initial spike review using Ontario-specific pain points and examples from this investigation.
-- Identify which coupling issues are blocking Ontario development or testing today.
-- Propose the first migrated reference flow.
-- Define Ontario-specific policies that should become injectable rather than hardcoded.
-- Contribute reusable abstractions back to Bifold where they are broadly useful.
-
-## Discussion Required with BC Team Managers
-
-This spike should be reviewed with BC Team managers before implementation starts.
-
-Decision topics:
-
-- Confirm whether BC Team agrees with the incremental architecture.
-- Confirm ownership of shared Bifold abstractions versus Ontario-specific extensions.
-- Confirm whether mapper completion should happen before broader use-case extraction.
-- Confirm the first migration candidate and expected timeline.
-- Confirm testing expectations for migrated flows.
-- Confirm whether new contribution guidelines should block new direct `agent.modules...` calls or Credo `instanceof` checks in UI files.
-
-Recommended decision:
-
-Proceed with an incremental migration. Start with dead card cleanup and completion of the local credential mapper layer, then migrate OpenID and DidComm credential screens to the shared local models. After the display layer is stable, introduce use-case services for credential offer, proof request, credential details, and contact removal workflows.
