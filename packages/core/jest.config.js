@@ -14,12 +14,14 @@ module.exports = {
     '^uuid$': require.resolve('uuid'),
     '^@bifold/oca$': '<rootDir>/../oca/src/index.ts',
     '^@bifold/verifier$': '<rootDir>/../verifier/src/index.ts',
+    'expo-crypto': '<rootDir>/__mocks__/@expo/expo-crypto.js',
+    '@expo/app-integrity': '<rootDir>/__mocks__/@expo/app-integrity.js'
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(.*react-native.*|@credo-ts|@openid4vc|@noble|@stablelib|@digitalcredentials|dcql|valibot|query-string|decode-uri-component|filter-obj|split-on-first|uuid|@bifold)/)',
+    'node_modules/(?!(.*react-native.*|@credo-ts|@openid4vc|@noble|@stablelib|@digitalcredentials|dcql|valibot|query-string|decode-uri-component|filter-obj|split-on-first|uuid|@bifold|expo(nent)?|@expo(nent)?/.*)/)',
   ],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$',
   testPathIgnorePatterns: [

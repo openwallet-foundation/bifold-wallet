@@ -1,4 +1,4 @@
-import { Agent } from '@credo-ts/core'
+import { Agent, Kms } from '@credo-ts/core'
 
 export const AttestationEventTypes = {
   Started: 'AttestationEvent.Started',
@@ -14,4 +14,19 @@ export interface AttestationMonitor {
   start(agent: Agent): void
   stop(): void
   requestAttestationCredential(): Promise<void>
+}
+ 
+export type GetAttestationChallengeData = string
+
+export interface GetAttestationJWTData {
+  signedAttestation: string,
+  transactionId: string,
+}
+
+export interface GetAttestationJWTPayload {
+  attestation: string | string[]
+  challenge: string
+  keyId?: string
+  signingKey: Kms.PublicJwk
+  platform: string
 }

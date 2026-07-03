@@ -135,16 +135,19 @@ export async function acquirePreAuthorizedAccessToken({
   resolvedCredentialOffer,
   txCode,
   dpop,
+  walletAttestationJwt,
 }: {
   agent: Agent
   resolvedCredentialOffer: OpenId4VciResolvedCredentialOffer
   txCode?: string
   dpop?: OpenId4VciDpopRequestOptions
+  walletAttestationJwt?: string
 }): Promise<OpenId4VciRequestTokenResponse> {
   return await agent.openid4vc.holder.requestToken({
     resolvedCredentialOffer,
     txCode,
     dpop,
+    walletAttestationJwt,
   })
 }
 

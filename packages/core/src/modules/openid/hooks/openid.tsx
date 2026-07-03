@@ -17,6 +17,7 @@ import { setRefreshCredentialMetadata } from '../metadata'
 import { RefreshStatus } from '../refresh/types'
 import { temporaryMetaVanillaObject } from '../metadata'
 import { OpenIDCredentialRecord } from '../credentialRecord'
+import { useAttestation } from '../../../hooks/attestation'
 
 type OpenIDContextProps = {
   openIDUri?: string
@@ -31,7 +32,10 @@ export const useOpenID = ({
 
   const { agent } = useAgent()
   const { t } = useTranslation()
-  const [{ enableHardwareBackedHolderBinding }] = useServices([TOKENS.CONFIG])
+  const [{ enableAttestation, enableHardwareBackedHolderBinding }] = useServices([
+    TOKENS.CONFIG,
+  ])
+  const { retrieveAttestationJWT } = useAttestation()
 
   const resolveOpenIDCredential = useCallback(
     async (uri: string) => {
@@ -39,10 +43,14 @@ export const useOpenID = ({
         return
       }
       try {
+
         const resolvedCredentialOffer = await resolveOpenId4VciOffer({
           agent: agent,
           uri: uri,
         })
+
+        let walletAttestationJwt: string | undefined
+        if (enableAttestation) walletAttestationJwt = await retrieveAttestationJWT(agent)
 
         const authServers = resolvedCredentialOffer.metadata.credentialIssuer.authorization_servers
         const authServer = resolvedCredentialOffer.metadata.authorizationServers[0]
@@ -62,6 +70,7 @@ export const useOpenID = ({
         const tokenResponse = await acquirePreAuthorizedAccessToken({
           agent,
           resolvedCredentialOffer,
+          ...(enableAttestation ? { walletAttestationJwt: walletAttestationJwt } : {}),
         })
         const refreshToken = tokenResponse.refreshToken
 
@@ -115,7 +124,7 @@ export const useOpenID = ({
         DeviceEventEmitter.emit(EventTypes.OPENID_CONNECTION_ERROR, error)
       }
     },
-    [agent, enableHardwareBackedHolderBinding, t]
+    [agent, enableHardwareBackedHolderBinding, t, enableAttestation, retrieveAttestationJWT]
   )
 
   const resolveOpenIDPresentationRequest = useCallback(

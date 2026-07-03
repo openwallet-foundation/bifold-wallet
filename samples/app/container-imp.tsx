@@ -55,7 +55,65 @@ export class AppContainer implements Container {
         throw new Error(`Error generating hash for PIN ${String((error as Error)?.message ?? error)}`)
       }
     })
+
+    // Get challenge example for app attestation
+      this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async () => {
+      const response = await axios.post(
+        'GET_CHALLENGE_URL_GOES_HERE',
+      )
+      if (response.status !== 200)
+        throw new Error(`Failed to register attestation: ${response.status}`)
+      return response.data?.attestation_challenge
+    })
+
+    // Get jwt example for app attestation
+    this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (attestationResult: string | string[], challenge: string, keyID: string, signingPublicKey: any) => {
+      const payload: any = {
+        attestation: Array.isArray(attestationResult) ? attestationResult.join(',') : attestationResult,
+        challenge,
+        platform: Platform.OS,
+        signingPublicKey: signingPublicKey.jwk.jwk,
+        ...(Platform.OS === 'ios' ? { keyId: keyID } : {})
+      }
+      const response = await axios.post(
+        'GET_JWT_URL_GOES_HERE', 
+        payload,
+      )
+      if (response.status !== 200) 
+        throw new Error(`Failed to register attestation: ${response.status}`)
+      return response.data
+    })
     */ 
+
+    // Sample implementation for the attestation GET_CHALLENGE and GET_JWT functions
+
+    // this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, async (): Promise<string> => {
+
+    //   const response = await axios.post(
+    //     'https://attestation-controller.azurewebsites.net/api/challenge',
+    //   )
+
+    //   if (response.status !== 200)
+    //     throw new Error(`Failed to register attestation: ${response.status}`)
+      
+    //   return response.data?.attestation_challenge
+
+    // })
+
+    // this.container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, async (getAttestationJwtPayload: GetAttestationJWTPayload): Promise<GetAttestationJWTData> => {
+
+    //   const response = await axios.post(
+    //     '', 
+    //     getAttestationJwtPayload,
+    //   )
+
+    //   if (response.status !== 200) 
+    //     throw new Error(`Failed to register attestation: ${response.status}`)
+
+    //   return response.data
+      
+    // })
+
     return this
   }
 
