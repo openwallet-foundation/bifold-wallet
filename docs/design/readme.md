@@ -8,3 +8,4 @@ The following documents are provided:
 
 - [Aries RFC Documents](aries-rfcs.md) - key Aries RFCs and how they apply to the solution from a Mobile and overall Aries stack level.
 - [Mobile Security Design Considerations](OS-specific-security-settings.md) - considerations and design constraints that should be considered for the applications, depending on the over assurance needs.
+- [Decoupling UI from Business Logic in Bifold](ui-business-logic-decoupling.md) - investigation and recommended migration approach for separating React Native UI from wallet business logic.
