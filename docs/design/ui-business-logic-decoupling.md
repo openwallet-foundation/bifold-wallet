@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This spike investigates how Ontario Wallet can improve maintainability, scalability, and testability by separating React Native UI concerns from wallet business logic in Bifold.
+This spike investigates how Bifold Wallet can improve maintainability, scalability, and testability by separating React Native UI concerns from wallet business logic in Bifold.
 
 The intent is not to replace Bifold's current architecture. The recommended path is an incremental architecture adjustment that keeps existing hooks, providers, dependency injection, extension points, and the mapper work already started, while moving protocol orchestration and Credo-specific decisions out of screens and reusable UI components.
 
@@ -269,7 +269,7 @@ Pros:
 - Best fit for current Bifold structure once local models are stable.
 - Use cases can be unit tested without React Native.
 - Reuses existing `TOKENS`, `useServices`, `AgentBridge`, and provider patterns.
-- Allows Ontario Wallet and other regions to override policies or services without forking entire screens.
+- Allows Bifold consumers to override policies or services without forking entire screens.
 
 Cons:
 
