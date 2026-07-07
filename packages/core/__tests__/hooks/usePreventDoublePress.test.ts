@@ -21,10 +21,16 @@ describe('usePreventDoublePress', () => {
     expect(callback).toHaveBeenCalledWith('a', 1)
   })
 
-  it('does not throw when no callback is provided', async () => {
+  it('returns undefined when undefined callback is provided', () => {
     const { result } = renderHook(() => usePreventDoublePress())
 
-    await expect(act(() => result.current.preventDoublePress()())).resolves.not.toThrow()
+    expect(result.current.preventDoublePress(undefined)).toBeUndefined()
+  })
+
+  it('returns null when null callback is provided', () => {
+    const { result } = renderHook(() => usePreventDoublePress())
+
+    expect(result.current.preventDoublePress(null)).toBeUndefined()
   })
 
   it('sets isPressing to true while the callback is pending and false once it resolves', async () => {

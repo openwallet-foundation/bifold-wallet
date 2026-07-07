@@ -101,7 +101,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={'button'}
       testID={testID}
-      onPress={preventDoublePress(onPress, logger)}
+      onPress={preventDoublePress(onPress)}
       hitSlop={hitSlop}
     >
       <View style={style.container}>{layoutForButtonLocation(buttonLocation)}</View>

@@ -6,7 +6,6 @@ import { useTheme } from '../../contexts/theme'
 import { ThemedText } from '../texts/ThemedText'
 import { Button, ButtonProps, ButtonType } from './Button-api'
 import { usePreventDoublePress } from '../../hooks/usePreventDoublePress'
-import { TOKENS, useServices } from '../../container-api'
 
 const ButtonImpl = ({
   title,
@@ -21,7 +20,6 @@ const ButtonImpl = ({
   ref,
 }: ButtonProps) => {
   const { Buttons, heavyOpacity } = useTheme()
-  const [logger] = useServices([TOKENS.UTIL_LOGGER])
   const { preventDoublePress } = usePreventDoublePress()
   const buttonStyles = {
     [ButtonType.Critical]: {
@@ -77,7 +75,7 @@ const ButtonImpl = ({
 
   return (
     <TouchableOpacity
-      onPress={preventDoublePress(onPress, logger)}
+      onPress={preventDoublePress(onPress)}
       accessible
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}

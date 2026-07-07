@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { BifoldLogger } from '../services/logger'
 
 /**
  * Prevents double press on a button by disabling the button while the callback is executing.
@@ -10,7 +9,7 @@ import { BifoldLogger } from '../services/logger'
  * const MyButton = () => {
  *   const { preventDoublePress } = usePreventDoublePress();
  *   const handlePress = async () => {};
- *   return <Button onPress={preventDoublePress(handlePress, logger)} title="Press me" />;
+ *   return <Button onPress={preventDoublePress(handlePress)} title="Press me" />;
  * }
  * ```
  * @returns An object containing the `preventDoublePress` function.
@@ -24,14 +23,19 @@ export const usePreventDoublePress = () => {
    * Prevents double press on a button by disabling the button while the callback is executing.
    *
    * @param callback The callback to execute when the button is pressed.
-   * @param logger Optional logger to log double press events.
    * @returns A function that can be used as an onPress handler for a button.
    */
   const preventDoublePress = useCallback(
-    <T extends (...args: never[]) => unknown>(callback?: T | null, logger?: BifoldLogger) =>
-      async (...args: Parameters<T>) => {
+    <TFunction extends ((...args: any[]) => any) | null | undefined>(callback: TFunction) => {
+      if (!callback) {
+        return callback
+      }
+
+      return async (...args: Parameters<NonNullable<TFunction>>) => {
         if (isPressingRef.current) {
-          logger?.debug('[usePreventDoublePress] Double press detected, ignoring.')
+          // Using console.debug here to prevent introducing a new dependency for a single debug log
+          // eslint-disable-next-line no-console
+          console.debug('[usePreventDoublePress] Double press detected, ignoring.')
           return
         }
 
@@ -44,7 +48,8 @@ export const usePreventDoublePress = () => {
           setIsPressing(false)
           isPressingRef.current = false
         }
-      },
+      }
+    },
     []
   )
 
