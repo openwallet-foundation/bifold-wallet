@@ -21,15 +21,10 @@ describe('usePreventDoublePress', () => {
     expect(callback).toHaveBeenCalledWith('a', 1)
   })
 
-  it('returns undefined when undefined callback is provided', () => {
+  it('returns undefined when no callback is provided', () => {
     const { result } = renderHook(() => usePreventDoublePress())
 
     expect(result.current.preventDoublePress(undefined)).toBeUndefined()
-  })
-
-  it('returns null when null callback is provided', () => {
-    const { result } = renderHook(() => usePreventDoublePress())
-
     expect(result.current.preventDoublePress(null)).toBeUndefined()
   })
 
