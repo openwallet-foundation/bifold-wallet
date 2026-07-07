@@ -3,6 +3,8 @@ import { Pressable, Animated } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useTheme } from '../../contexts/theme'
 import { useTranslation } from 'react-i18next'
+import { usePreventDoublePress } from '../../hooks/usePreventDoublePress'
+import { TOKENS, useServices } from '../../container-api'
 
 interface ToggleButtonProps {
   isEnabled: boolean
@@ -26,6 +28,8 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   const { ColorPalette } = useTheme()
   const [toggleAnim] = useState(new Animated.Value(isEnabled ? 1 : 0))
   const { t } = useTranslation()
+  const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  const { preventDoublePress } = usePreventDoublePress()
 
   useEffect(() => {
     Animated.timing(toggleAnim, {
@@ -54,7 +58,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
       accessibilityState={{
         checked: isEnabled,
       }}
-      onPress={isAvailable && !disabled ? toggleAction : undefined} // Prevent onPress if not available or disabled
+      onPress={isAvailable && !disabled ? preventDoublePress(toggleAction, logger) : undefined} // Prevent onPress if not available or disabled
       disabled={!isAvailable || disabled}
     >
       <Animated.View

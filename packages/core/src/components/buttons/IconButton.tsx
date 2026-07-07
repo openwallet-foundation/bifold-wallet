@@ -6,6 +6,7 @@ import { hitSlop } from '../../constants'
 import { useTheme } from '../../contexts/theme'
 import { ThemedText } from '../texts/ThemedText'
 import { TOKENS, useServices } from '../../container-api'
+import { usePreventDoublePress } from '../../hooks/usePreventDoublePress'
 
 const defaultIconSize = 26
 
@@ -35,6 +36,7 @@ const IconButton: React.FC<IconButtonProps> = ({
 }) => {
   const { ColorPalette } = useTheme()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
+  const { preventDoublePress } = usePreventDoublePress()
 
   const style = StyleSheet.create({
     container: {
@@ -99,7 +101,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={'button'}
       testID={testID}
-      onPress={onPress}
+      onPress={preventDoublePress(onPress, logger)}
       hitSlop={hitSlop}
     >
       <View style={style.container}>{layoutForButtonLocation(buttonLocation)}</View>

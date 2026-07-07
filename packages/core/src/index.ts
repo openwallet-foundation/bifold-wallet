@@ -78,6 +78,7 @@ import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { QrCodeScanError } from './types/error'
+import { usePreventDoublePress } from './hooks/usePreventDoublePress'
 
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
@@ -271,6 +272,7 @@ export {
   useDeveloperMode,
   usePreventScreenCapture,
   useTour,
+  usePreventDoublePress,
   walletTimeout,
 }
 export type { BannerMessage, DeepPartial, IButton }
