@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.17
+
+### Patch Changes
+
+- f8b07b0: Disabled double presses on button components. Added usePreventDoublePress hook for disabling duplicate onPress events.
+- 981a18c: App attestation upon credential issuance for OID4VC credentials
+  - @bifold/react-hooks@3.0.17
+
 ## 3.0.16
 
 ### Patch Changes
