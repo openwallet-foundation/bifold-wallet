@@ -24,7 +24,7 @@ export interface WalletCredentialCardAttribute {
 }
 
 export interface WalletCredentialCardBranding {
-  primaryBackgroundColor: string
+  primaryBackgroundColor?: string
   secondaryBackgroundColor?: string
   logoUri?: string
   logoText?: string

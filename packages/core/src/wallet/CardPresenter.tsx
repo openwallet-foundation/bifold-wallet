@@ -1,5 +1,6 @@
 import React from 'react'
 import type { WalletCredentialCardData } from './ui-types'
+import { toWalletCredentialCardViewModel } from './to-card-view-model'
 import Card10Pure from '../components/misc/Card10Pure'
 import Card11Pure from '../components/misc/Card11Pure'
 
@@ -12,7 +13,10 @@ type Props = {
 }
 
 const WalletCredentialCard: React.FC<Props> = (props) => {
-  return props.data.brandingType === 'Branding10' ? <Card11Pure {...props} /> : <Card10Pure {...props} />
+  const data = toWalletCredentialCardViewModel(props.data)
+  const cardProps = { ...props, data }
+
+  return data.layout === 'card11' ? <Card11Pure {...cardProps} /> : <Card10Pure {...cardProps} />
 }
 
 export default WalletCredentialCard

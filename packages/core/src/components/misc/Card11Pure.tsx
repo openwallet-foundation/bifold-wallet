@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { View, ImageBackground, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { WalletCredentialCardData } from '../../wallet/ui-types'
+import type { WalletCredentialCardViewModel } from '../../wallet/card-view-model'
 import { ThemedText } from '../texts/ThemedText'
 import { testIdWithKey } from '../../utils/testable'
-import useCredentialCardStyles from '../../hooks/credential-card-styles'
+import useCardViewStyles from '../../wallet/use-card-view-styles'
 import CardWatermark from './CardWatermark'
 import CredentialCardGenLogo from './CredentialCardGenLogo'
 import startCase from 'lodash.startcase'
@@ -14,7 +14,7 @@ import CredentialCardAttributeList from './CredentialCardAttributeList'
 import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
 
 type Props = {
-  data: WalletCredentialCardData
+  data: WalletCredentialCardViewModel
   onPress?: () => void
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
@@ -24,15 +24,10 @@ type Props = {
 const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
-  const { branding, proofContext, hideSlice } = data
-  const { styles, borderRadius, logoHeight } = useCredentialCardStyles(
-    // NEW: pass simple colors (no overlay object)
-    { primaryBackgroundColor: branding.primaryBg, secondaryBackgroundColor: branding.secondaryBg },
-    branding.type,
-    !!proofContext
-  )
+  const { branding, proofContext, hideBrandingSlice } = data
+  const { styles, borderRadius, logoHeight } = useCardViewStyles(branding, data.layout, !!proofContext)
 
-  const list = data.items
+  const list = data.attributes
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color
   const issuerAccessibilityLabel = data.issuerName ? `Issued by ${data.issuerName}` : ''
   const accessibilityLabel =
@@ -69,7 +64,7 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
           </ThemedText>
         </View>
 
-        {data.extraOverlayParameter && !proofContext && (
+        {data.extraAttribute && !proofContext && (
           <View style={{ flex: 1, justifyContent: 'flex-end' }}>
             <ThemedText
               variant="caption"
@@ -77,8 +72,7 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
                 color: styles.textContainer.color,
               }}
             >
-              {data.extraOverlayParameter.label ?? startCase(data.extraOverlayParameter.label || '')}:{' '}
-              {data.extraOverlayParameter.value}
+              {data.extraAttribute.label ?? startCase(data.extraAttribute.label || '')}: {data.extraAttribute.value}
             </ThemedText>
           </View>
         )}
@@ -121,17 +115,17 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const Main = () => (
     <View style={styles.cardContainer} accessible accessibilityLabel={accessibilityLabel}>
       <CredentialCardSecondaryBody
-        hideSlice={hideSlice}
-        secondaryBg={branding.secondaryBg}
+        hideSlice={hideBrandingSlice}
+        secondaryBg={branding.secondaryBackgroundColor}
         backgroundSliceUri={branding.backgroundSliceUri}
         borderRadius={borderRadius}
         containerStyle={styles.secondaryBodyContainer}
       />
       <CredentialCardGenLogo
         noLogoText={branding.logoText ?? 'U'}
-        logo={branding.logo1x1Uri}
-        primaryBackgroundColor={branding.primaryBg}
-        secondaryBackgroundColor={branding.secondaryBg}
+        logo={branding.logoUri}
+        primaryBackgroundColor={branding.primaryBackgroundColor ?? 'transparent'}
+        secondaryBackgroundColor={branding.secondaryBackgroundColor}
         containerStyle={styles.logoContainer}
         logoHeight={logoHeight}
         elevated={elevated}
@@ -165,8 +159,8 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
               watermark={branding.watermark}
             />
           )}
-          {branding.backgroundFullUri && hideSlice ? (
-            <ImageBackground source={toImageSource(branding.backgroundFullUri)}>
+          {branding.backgroundImageUri && hideBrandingSlice ? (
+            <ImageBackground source={toImageSource(branding.backgroundImageUri)}>
               <Main />
             </ImageBackground>
           ) : (

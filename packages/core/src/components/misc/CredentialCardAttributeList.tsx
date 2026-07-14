@@ -1,11 +1,11 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import type { CardAttribute } from '../../wallet/ui-types'
+import type { WalletCredentialCardAttribute } from '../../wallet/card-view-model'
 import CredentialCardActionLink from './CredentialCardActionLink'
 import { CredentialAttributeRow } from './AttributeRow'
 
 type Props = {
-  list: CardAttribute[]
+  list: WalletCredentialCardAttribute[]
 
   textColor: string
   showPiiWarning: boolean
