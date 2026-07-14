@@ -1,5 +1,7 @@
 # @bifold/react-native-attestation
 
+## 3.0.18
+
 ## 3.0.17
 
 ## 3.0.16
