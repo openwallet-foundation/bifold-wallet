@@ -25,7 +25,7 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const { branding, proofContext, hideBrandingSlice } = data
-  const { styles, borderRadius, logoHeight } = useCardViewStyles(branding, data.layout, !!proofContext)
+  const { styles, borderRadius, logoHeight } = useCardViewStyles(branding, data.layout)
 
   const list = data.attributes
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color

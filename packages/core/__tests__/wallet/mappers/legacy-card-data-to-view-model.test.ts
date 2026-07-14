@@ -1,5 +1,5 @@
-import type { WalletCredentialCardData } from '../../src/wallet/ui-types'
-import { toWalletCredentialCardViewModel } from '../../src/wallet/to-card-view-model'
+import type { WalletCredentialCardData } from '../../../src/wallet/ui-types'
+import { toWalletCredentialCardViewModel } from '../../../src/wallet/mappers/legacy-card-data-to-view-model'
 
 const cardData = (brandingType: WalletCredentialCardData['brandingType']): WalletCredentialCardData => ({
   id: 'credential-id',

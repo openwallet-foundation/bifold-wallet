@@ -22,7 +22,7 @@ type Props = {
  */
 const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
   const { branding, hideBrandingSlice } = data
-  const { styles, borderRadius, logoHeight } = useCardViewStyles(branding, data.layout, !!data.proofContext)
+  const { styles, borderRadius, logoHeight } = useCardViewStyles(branding, data.layout)
 
   const byKey: Record<string, WalletCredentialCardAttribute> = useMemo(
     () => Object.fromEntries(data.attributes.map((i) => [i.key, i])),

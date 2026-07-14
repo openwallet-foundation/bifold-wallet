@@ -1,5 +1,5 @@
-import type { WalletCredentialCardData } from './ui-types'
-import type { WalletCredentialCardViewModel } from './card-view-model'
+import type { WalletCredentialCardData } from '../ui-types'
+import type { WalletCredentialCardViewModel } from '../card-view-model'
 
 /**
  * Transitional adapter from the existing mapper output to the OCA-free card

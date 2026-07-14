@@ -1,6 +1,6 @@
 import startCase from 'lodash.startcase'
-import type { WalletCredentialCardAttribute, WalletCredentialCardViewModel } from '../../wallet/card-view-model'
-import type { W3cCredentialDisplay } from './types'
+import type { WalletCredentialCardAttribute, WalletCredentialCardViewModel } from '../../../wallet/card-view-model'
+import type { W3cCredentialDisplay } from '../types'
 
 type MapOpenIdCredentialToCardViewModelOptions = {
   revoked?: boolean

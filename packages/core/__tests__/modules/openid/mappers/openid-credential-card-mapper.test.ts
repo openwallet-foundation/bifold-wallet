@@ -1,6 +1,6 @@
 import { ClaimFormat } from '@credo-ts/core'
-import { mapOpenIdCredentialToCardViewModel } from '../../../src/modules/openid/map-to-card-view-model'
-import type { W3cCredentialDisplay } from '../../../src/modules/openid/types'
+import { mapOpenIdCredentialToCardViewModel } from '../../../../src/modules/openid/mappers/openid-credential-card-mapper'
+import type { W3cCredentialDisplay } from '../../../../src/modules/openid/types'
 
 const display: W3cCredentialDisplay = {
   id: 'w3c-credential-id',

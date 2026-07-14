@@ -3,11 +3,7 @@ import { useTheme } from '../contexts/theme'
 import { credentialTextColor } from '../utils/credential'
 import type { WalletCredentialCardBranding, WalletCredentialCardLayout } from './card-view-model'
 
-const useCardViewStyles = (
-  branding: WalletCredentialCardBranding,
-  layout: WalletCredentialCardLayout,
-  _proof?: boolean
-) => {
+const useCardViewStyles = (branding: WalletCredentialCardBranding, layout: WalletCredentialCardLayout) => {
   const { ColorPalette, TextTheme, ListItems, CredentialCardShadowTheme } = useTheme()
   const { width, fontScale } = useWindowDimensions()
   const padding = width * 0.05

@@ -22,7 +22,7 @@ import { useAcceptReplacement } from '../hooks/useAcceptReplacement'
 import { useDeclineReplacement } from '../hooks/useDeclineReplacement'
 import uuid from 'react-native-uuid'
 import WalletCredentialCard from '../../../wallet/CardPresenter'
-import { mapOpenIdCredentialToCardViewModel } from '../map-to-card-view-model'
+import { mapOpenIdCredentialToCardViewModel } from '../mappers/openid-credential-card-mapper'
 import { useCredentialErrorsFromRegistry } from '../hooks/useCredentialErrorsFromRegistry'
 import { CredentialErrors } from '../../../types/credentials'
 

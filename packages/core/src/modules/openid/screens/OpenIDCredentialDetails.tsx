@@ -26,7 +26,7 @@ import ScreenLayout from '../../../layout/ScreenLayout'
 import { OpenIDCredentialRecord } from '../credentialRecord'
 import { credentialRegistry } from '../refresh/registry'
 import WalletCredentialCard from '../../../wallet/CardPresenter'
-import { mapOpenIdCredentialToCardViewModel } from '../map-to-card-view-model'
+import { mapOpenIdCredentialToCardViewModel } from '../mappers/openid-credential-card-mapper'
 import { useCredentialErrorsFromRegistry } from '../hooks/useCredentialErrorsFromRegistry'
 import { CredentialErrors } from '../../../types/credentials'
 

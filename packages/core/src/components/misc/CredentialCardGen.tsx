@@ -13,8 +13,8 @@ import type { CredentialErrors, GenericCredentialExchangeRecord } from '../../ty
 // unified wallet-model imports
 import WalletCredentialCard from '../../wallet/CardPresenter'
 import type { WalletCredentialCardData } from '../../wallet/ui-types'
-import { toWalletCredentialCardViewModel } from '../../wallet/to-card-view-model'
-import { mapCredentialTypeToCard } from '../../wallet/map-to-card'
+import { toWalletCredentialCardViewModel } from '../../wallet/mappers/legacy-card-data-to-view-model'
+import { mapCredentialTypeToCard } from '../../wallet/mappers/credo-card-mapper'
 
 import { useTranslation } from 'react-i18next'
 import { useCredentialConnectionLabel } from '../../utils/helpers'
