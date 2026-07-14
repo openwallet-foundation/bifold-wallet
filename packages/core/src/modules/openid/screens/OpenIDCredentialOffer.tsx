@@ -1,9 +1,6 @@
-import { BrandingOverlay } from '@bifold/oca'
-import { CredentialOverlay } from '@bifold/oca/build/legacy'
-import { W3cCredentialRecord } from '@credo-ts/core'
 import { useAgent } from '@bifold/react-hooks'
 import { StackScreenProps } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DeviceEventEmitter, StyleSheet, Text, View } from 'react-native'
 import Button, { ButtonType } from '../../../components/buttons/Button'
@@ -18,14 +15,16 @@ import { BifoldError } from '../../../types/error'
 import { DeliveryStackParams, Screens, TabStacks } from '../../../types/navigators'
 import { ModalUsage } from '../../../types/remove'
 import { testIdWithKey } from '../../../utils/testable'
-import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
-import { useOpenIDCredentials } from '../context/OpenIDCredentialRecordProvider'
 import { getCredentialForDisplay } from '../display'
 import { NotificationEventType, useOpenId4VciNotifications } from '../notification'
 import { temporaryMetaVanillaObject } from '../metadata'
 import { useAcceptReplacement } from '../hooks/useAcceptReplacement'
 import { useDeclineReplacement } from '../hooks/useDeclineReplacement'
 import uuid from 'react-native-uuid'
+import WalletCredentialCard from '../../../wallet/CardPresenter'
+import { mapOpenIdCredentialToCardViewModel } from '../map-to-card-view-model'
+import { useCredentialErrorsFromRegistry } from '../hooks/useCredentialErrorsFromRegistry'
+import { CredentialErrors } from '../../../types/credentials'
 
 type OpenIDCredentialDetailsProps = StackScreenProps<DeliveryStackParams, Screens.OpenIDCredentialOffer>
 
@@ -40,35 +39,21 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   const { t } = useTranslation()
   const { ColorPalette, TextTheme } = useTheme()
   const { agent } = useAgent()
-  const { resolveBundleForCredential } = useOpenIDCredentials()
   const { sendOpenId4VciNotification } = useOpenId4VciNotifications()
+  const credentialErrors = useCredentialErrorsFromRegistry(credential, [])
+  const cardViewModel = useMemo(
+    () =>
+      mapOpenIdCredentialToCardViewModel(credentialDisplay, {
+        revoked: credentialErrors.includes(CredentialErrors.Revoked),
+      }),
+    [credentialDisplay, credentialErrors]
+  )
 
   const [isRemoveModalDisplayed, setIsRemoveModalDisplayed] = useState(false)
   const [buttonsVisible, setButtonsVisible] = useState(true)
   const [acceptModalVisible, setAcceptModalVisible] = useState(false)
   const { acceptNewCredential } = useAcceptReplacement()
   const { declineByNewId } = useDeclineReplacement({ logger: logger })
-
-  const [overlay, setOverlay] = useState<CredentialOverlay<BrandingOverlay>>({
-    bundle: undefined,
-    presentationFields: [],
-    metaOverlay: undefined,
-    brandingOverlay: undefined,
-  })
-
-  useEffect(() => {
-    if (!credential) {
-      return
-    }
-
-    const resolveOverlay = async () => {
-      const brandingOverlay = await resolveBundleForCredential(credential)
-      setOverlay(brandingOverlay)
-    }
-
-    resolveOverlay()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [credential])
 
   const styles = StyleSheet.create({
     headerTextContainer: {
@@ -107,7 +92,8 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
             originalDraftVersion: 'V1' as any,
             credentialIssuer: temporaryMetaVanillaObject.notificationMetadata?.credentialIssuer,
             authorizationServers: temporaryMetaVanillaObject.notificationMetadata?.authorizationServers,
-            knownCredentialConfigurations: temporaryMetaVanillaObject.notificationMetadata?.knownCredentialConfigurations,
+            knownCredentialConfigurations:
+              temporaryMetaVanillaObject.notificationMetadata?.knownCredentialConfigurations,
           },
         })
       }
@@ -153,13 +139,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
   }
 
   const renderOpenIdCard = () => {
-    if (!credentialDisplay || !credential) return null
-    return (
-      <OpenIDCredentialCard
-        credentialDisplay={credentialDisplay}
-        credentialRecord={credential as W3cCredentialRecord}
-      />
-    )
+    return <WalletCredentialCard data={cardViewModel} />
   }
 
   const header = () => {
@@ -211,7 +191,7 @@ const OpenIDCredentialOffer: React.FC<OpenIDCredentialDetailsProps> = ({ navigat
 
   return (
     <ScreenLayout screen={Screens.OpenIDCredentialDetails}>
-      <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
+      <Record fields={[]} hideFieldValues header={header} footer={footer} />
       <CredentialOfferAccept visible={acceptModalVisible} credentialId={''} confirmationOnly={true} />
       <CommonRemoveModal
         usage={ModalUsage.CredentialOfferDecline}

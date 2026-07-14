@@ -13,7 +13,8 @@ import type { CredentialErrors, GenericCredentialExchangeRecord } from '../../ty
 // unified wallet-model imports
 import WalletCredentialCard from '../../wallet/CardPresenter'
 import type { WalletCredentialCardData } from '../../wallet/ui-types'
-import { brandingOverlayTypeString, mapCredentialTypeToCard } from '../../wallet/map-to-card'
+import { toWalletCredentialCardViewModel } from '../../wallet/to-card-view-model'
+import { mapCredentialTypeToCard } from '../../wallet/map-to-card'
 
 import { useTranslation } from 'react-i18next'
 import { useCredentialConnectionLabel } from '../../utils/helpers'
@@ -92,19 +93,16 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
     const isBranding10 = bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10
     return (
       <WalletCredentialCard
-        data={
-          {
-            id: 'loading',
-            issuerName: '',
-            credentialName: credName ?? 'Credential',
-            branding: {
-              primaryBg: isBranding10 ? ColorPalette.brand.secondaryBackground : undefined,
-              secondaryBg: undefined,
-            },
-            items: [],
-            brandingType: brandingOverlayTypeString(bundleResolver.getBrandingOverlayType()),
-          } as any
-        }
+        data={{
+          id: 'loading',
+          layout: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding01 ? 'card10' : 'card11',
+          issuerName: '',
+          credentialName: credName ?? 'Credential',
+          branding: {
+            primaryBackgroundColor: isBranding10 ? ColorPalette.brand.secondaryBackground : undefined,
+          },
+          attributes: [],
+        }}
         onPress={onPress}
         hasAltCredentials={hasAltCredentials}
         onChangeAlt={handleAltCredChange}
@@ -115,7 +113,7 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
 
   return (
     <WalletCredentialCard
-      data={cardData}
+      data={toWalletCredentialCardViewModel(cardData)}
       onPress={onPress}
       hasAltCredentials={hasAltCredentials}
       onChangeAlt={handleAltCredChange}

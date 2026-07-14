@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParams, Screens } from '../../../types/navigators'
 import { getCredentialForDisplay } from '../display'
@@ -23,9 +23,12 @@ import CredentialDetailSecondaryHeader from '../../../components/views/Credentia
 import CredentialCardLogo from '../../../components/views/CredentialCardLogo'
 import CredentialDetailPrimaryHeader from '../../../components/views/CredentialDetailPrimaryHeader'
 import ScreenLayout from '../../../layout/ScreenLayout'
-import OpenIDCredentialCard from '../components/OpenIDCredentialCard'
 import { OpenIDCredentialRecord } from '../credentialRecord'
 import { credentialRegistry } from '../refresh/registry'
+import WalletCredentialCard from '../../../wallet/CardPresenter'
+import { mapOpenIdCredentialToCardViewModel } from '../map-to-card-view-model'
+import { useCredentialErrorsFromRegistry } from '../hooks/useCredentialErrorsFromRegistry'
+import { CredentialErrors } from '../../../types/credentials'
 
 export enum OpenIDCredScreenMode {
   offer,
@@ -58,6 +61,16 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
     metaOverlay: undefined,
     brandingOverlay: undefined,
   })
+  const credentialErrors = useCredentialErrorsFromRegistry(credential, [])
+  const cardViewModel = useMemo(
+    () =>
+      credentialDisplay
+        ? mapOpenIdCredentialToCardViewModel(credentialDisplay, {
+            revoked: credentialErrors.includes(CredentialErrors.Revoked),
+          })
+        : undefined,
+    [credentialDisplay, credentialErrors]
+  )
 
   const styles = StyleSheet.create({
     container: {
@@ -181,8 +194,7 @@ const OpenIDCredentialDetails: React.FC<OpenIDCredentialDetailsProps> = ({ navig
   }
 
   const renderOpenIdCard = () => {
-    if (!credentialDisplay) return null
-    return <OpenIDCredentialCard credentialDisplay={credentialDisplay} credentialRecord={credential} />
+    return cardViewModel ? <WalletCredentialCard data={cardViewModel} /> : null
   }
 
   const header = () => {
