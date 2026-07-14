@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.18
+
+### Patch Changes
+
+- be89bdd: make env mediator authority
+- 26f1ec5: oob invitation url update
+  - @bifold/react-hooks@3.0.18
+
 ## 3.0.17
 
 ### Patch Changes
