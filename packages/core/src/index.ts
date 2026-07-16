@@ -117,6 +117,7 @@ export { migrateToAskar } from './utils/migration'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 export { parsedSchema } from './utils/schema'
 export { testIdForAccessabilityLabel, testIdWithKey } from './utils/testable'
+import { getCredentialDefinitionIdForRecord } from './utils/helpers'
 
 export { default as OpenIDCredentialDetails } from './modules/openid/screens/OpenIDCredentialDetails'
 export { default as CredentialDetails } from './screens/CredentialDetails'
@@ -274,6 +275,7 @@ export {
   useTour,
   usePreventDoublePress,
   walletTimeout,
+  getCredentialDefinitionIdForRecord,
 }
 export type { BannerMessage, DeepPartial, IButton }
 

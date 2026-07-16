@@ -60,13 +60,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const didcommCredentials = (agent as any)?.modules?.didcomm?.credentials ?? (agent as any)?.credentials
   const { t, i18n } = useTranslation()
   const { ColorPalette, Assets } = useTheme()
-  const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
-    TOKENS.UTIL_OCA_RESOLVER,
-    TOKENS.UTIL_LOGGER,
-    TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_ENABLED,
-    TOKENS.HISTORY_EVENTS_LOGGER,
-  ])
+  const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger, CredentialSubHeader] =
+    useServices([
+      TOKENS.UTIL_OCA_RESOLVER,
+      TOKENS.UTIL_LOGGER,
+      TOKENS.FN_LOAD_HISTORY,
+      TOKENS.HISTORY_ENABLED,
+      TOKENS.HISTORY_EVENTS_LOGGER,
+      TOKENS.COMPONENT_CRED_SUBHEADER,
+    ])
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
@@ -383,6 +385,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           </View>
         ) : null}
         {credential && <CredentialCardGen credential={credential} style={{ margin: 16 }} />}
+        <CredentialSubHeader credential={credential} />
       </View>
     ) : (
       <View style={styles.container}>
@@ -398,6 +401,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             {credential && <CredentialRevocationMessage credential={credential} />}
           </View>
         ) : null}
+        <CredentialSubHeader credential={credential} />
       </View>
     )
   }

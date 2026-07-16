@@ -34,6 +34,7 @@ import { OnboardingStackParams, OnboardingTask, ScreenLayoutConfig, ScreenOption
 import { CustomNotification } from './types/notification'
 import { State } from './types/state'
 import { IVersionCheckService } from './types/version-check'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -106,6 +107,7 @@ export const FN_TOKENS = {
   COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
   COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
   COMPONENT_CRED_LIST_FOOTER: 'fn.credListFooter',
+  COMPONENT_CRED_SUBHEADER: 'fn.credSubHeader',
 } as const
 
 export const HISTORY_TOKENS = {
@@ -238,6 +240,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
+  [TOKENS.COMPONENT_CRED_SUBHEADER]: React.FC<{ credential?: DidCommCredentialExchangeRecord }>
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
   [TOKENS.COMPONENT_NOTIFICATION_BANNER]: React.FC
   [TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST]: React.FC
