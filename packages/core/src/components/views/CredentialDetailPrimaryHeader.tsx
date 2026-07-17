@@ -50,10 +50,7 @@ const CredentialDetailPrimaryHeader: React.FC<CredentialDetailPrimaryHeaderProps
   })
 
   return (
-    <View
-      testID={testIdWithKey('CredentialDetailsPrimaryHeader')}
-      style={[styles.primaryHeaderContainer, { zIndex: -1 }]}
-    >
+    <View testID={testIdWithKey('CredentialDetailsPrimaryHeader')} style={[styles.primaryHeaderContainer]}>
       <View>
         {overlay.metaOverlay?.watermark && brandingOverlayType === BrandingOverlayType.Branding10 && (
           <CardWatermark width={width} height={height} watermark={overlay.metaOverlay?.watermark} />
