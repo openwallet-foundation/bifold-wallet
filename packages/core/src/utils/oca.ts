@@ -69,7 +69,9 @@ export const buildFieldsFromW3cCredsCredential = (
   filterByAttributes?: string[],
   language?: string
 ): Array<Field> => {
-  const entries = Object.entries(display.attributes).filter(([key]) => key !== 'id' && key !== 'sub' && key !== 'status')
+  const entries = Object.entries(display.attributes).filter(
+    ([key]) => key !== 'id' && key !== 'sub' && key !== 'status'
+  )
   const entryByKey = new Map(entries)
   const orderedKeys = display.attributeOrder?.filter((key) => entryByKey.has(key)) ?? []
   const orderedKeySet = new Set(orderedKeys)
@@ -163,6 +165,7 @@ export const buildOverlayFromW3cCredential = async ({
   language: string
   resolver: OCABundleResolverType
 }): Promise<CredentialOverlay<BrandingOverlay>> => {
+  const presentationFields = buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, language)
   const params: OCABundleResolveAllParams = {
     identifiers: {
       schemaId: '',
@@ -173,7 +176,7 @@ export const buildOverlayFromW3cCredential = async ({
       credConnectionId: undefined,
       credName: credentialDisplay.display.name,
     },
-    attributes: buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, language),
+    attributes: presentationFields,
     language,
   }
 
@@ -181,6 +184,6 @@ export const buildOverlayFromW3cCredential = async ({
 
   return {
     ...(bundle as CredentialOverlay<BrandingOverlay>),
-    presentationFields: buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, language),
+    presentationFields,
   }
 }
