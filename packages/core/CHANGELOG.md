@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.19
+
+### Patch Changes
+
+- 495c28b: Updated styling for CredentialDetails screen. Includes issuer name and title + subheader component.
+- 3dee0f8: Added custom subheader component for CredentialDetails
+  - @bifold/react-hooks@3.0.19
+
 ## 3.0.18
 
 ### Patch Changes
