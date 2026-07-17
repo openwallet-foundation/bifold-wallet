@@ -78,7 +78,7 @@ exports[`Settings Screen Renders correctly 1`] = `
               "value": "Language.code",
             },
             Object {
-              "accessibilityLabel": "Settings.AutoLockTime",
+              "accessibilityLabel": "Settings.AutoLockTimeAccessibilityLabel",
               "onPress": [Function],
               "testID": "com.ariesbifold:id/Lockout",
               "title": "Settings.AutoLockTime",
@@ -956,7 +956,7 @@ exports[`Settings Screen Renders correctly 1`] = `
         >
           <View>
             <View
-              accessibilityLabel="Settings.AutoLockTime"
+              accessibilityLabel="Settings.AutoLockTimeAccessibilityLabel"
               accessibilityRole="button"
               accessibilityState={
                 Object {
