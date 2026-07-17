@@ -385,7 +385,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           </View>
         ) : null}
         {credential && <CredentialCardGen credential={credential} style={{ margin: 16 }} />}
-        <CredentialSubHeader credential={credential} />
       </View>
     ) : (
       <View style={styles.container}>
@@ -397,14 +396,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               backgroundColor: ColorPalette.brand.secondaryBackground,
               ...(isBranding11 && { paddingTop: 0 }),
             }}
-          >
-            {credential && <CredentialRevocationMessage credential={credential} />}
-          </View>
+          ></View>
         ) : null}
-        <CredentialSubHeader credential={credential} />
       </View>
     )
   }
+
+  const subHeader = useCallback(() => {
+    return <CredentialSubHeader credential={credential} />
+  }, [CredentialSubHeader, credential])
 
   const footer = () => {
     return (
@@ -419,7 +419,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             }}
           >
             <ThemedText testID={testIdWithKey('IssuerName')}>
-              <ThemedText variant="title" style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
+              <ThemedText
+                variant="title"
+                style={[isRevoked && { color: ColorPalette.grayscale.mediumGrey }, { fontWeight: 'bold' }]}
+              >
                 {t('CredentialDetails.IssuedBy') + ' '}
               </ThemedText>
               <ThemedText style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
@@ -429,7 +432,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             {/* issued date if dev mode */}
             {store?.preferences.developerModeEnabled && credential?.createdAt ? (
               <ThemedText testID={testIdWithKey('IssuedDate')}>
-                <ThemedText variant="title" style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
+                <ThemedText
+                  variant="title"
+                  style={[isRevoked && { color: ColorPalette.grayscale.mediumGrey }, { fontWeight: 'bold' }]}
+                >
                   {t('CredentialDetails.Issued') + ': '}
                 </ThemedText>
                 <ThemedText style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
@@ -443,9 +449,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View
             style={{
               backgroundColor: ColorPalette.brand.secondaryBackground,
-              marginTop: paddingVertical,
               paddingHorizontal,
-              paddingVertical,
             }}
           >
             <TouchableOpacity
@@ -453,7 +457,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               accessibilityLabel={t('Global.ViewJSON')}
               accessibilityRole={'button'}
               testID={testIdWithKey('JSONDetails')}
-              style={{ flexDirection: 'row', gap: 8 }}
             >
               <Assets.svg.iconCode width={20} height={20} color={ColorPalette.brand.secondary} />
               <ThemedText>{t('Global.ViewJSON')}</ThemedText>
@@ -464,9 +467,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View
             style={{
               backgroundColor: ColorPalette.notification.error,
-              marginTop: paddingVertical,
               paddingHorizontal,
-              paddingVertical,
             }}
           >
             <ThemedText testID={testIdWithKey('RevokedDate')}>
@@ -492,7 +493,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
+      <Record
+        fields={overlay.presentationFields || []}
+        hideFieldValues
+        header={header}
+        subHeader={subHeader}
+        footer={footer}
+      />
       <CommonRemoveModal
         usage={ModalUsage.CredentialRemove}
         visible={isRemoveModalDisplayed}
