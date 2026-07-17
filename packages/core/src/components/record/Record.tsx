@@ -91,7 +91,7 @@ const Record: React.FC<RecordProps> = ({
         header ? (
           <RecordHeader>
             {header()}
-            <View style={styles.subHeaderContainer}>{subHeader()}</View>
+            {subHeader ? <View style={styles.subHeaderContainer}>{subHeader()}</View> : null}
             {hideFieldValues ? (
               <View style={styles.linkContainer}>
                 {isProofRequest && <Text style={TextTheme.headingFour}>{t('ProofRequest.DetailsHeader')}</Text>}
