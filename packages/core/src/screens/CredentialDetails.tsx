@@ -60,13 +60,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
   const didcommCredentials = (agent as any)?.modules?.didcomm?.credentials ?? (agent as any)?.credentials
   const { t, i18n } = useTranslation()
   const { ColorPalette, Assets } = useTheme()
-  const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger] = useServices([
-    TOKENS.UTIL_OCA_RESOLVER,
-    TOKENS.UTIL_LOGGER,
-    TOKENS.FN_LOAD_HISTORY,
-    TOKENS.HISTORY_ENABLED,
-    TOKENS.HISTORY_EVENTS_LOGGER,
-  ])
+  const [bundleResolver, logger, historyManagerCurried, historyEnabled, historyEventsLogger, CredentialSubHeader] =
+    useServices([
+      TOKENS.UTIL_OCA_RESOLVER,
+      TOKENS.UTIL_LOGGER,
+      TOKENS.FN_LOAD_HISTORY,
+      TOKENS.HISTORY_ENABLED,
+      TOKENS.HISTORY_EVENTS_LOGGER,
+      TOKENS.COMPONENT_CRED_SUBHEADER,
+    ])
   const [isRevoked, setIsRevoked] = useState<boolean>(false)
   const [revocationDate, setRevocationDate] = useState<string>('')
   const [preciseRevocationDate, setPreciseRevocationDate] = useState<string>('')
@@ -394,13 +396,15 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               backgroundColor: ColorPalette.brand.secondaryBackground,
               ...(isBranding11 && { paddingTop: 0 }),
             }}
-          >
-            {credential && <CredentialRevocationMessage credential={credential} />}
-          </View>
+          ></View>
         ) : null}
       </View>
     )
   }
+
+  const subHeader = useCallback(() => {
+    return <CredentialSubHeader credential={credential} />
+  }, [CredentialSubHeader, credential])
 
   const footer = () => {
     return (
@@ -415,7 +419,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             }}
           >
             <ThemedText testID={testIdWithKey('IssuerName')}>
-              <ThemedText variant="title" style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
+              <ThemedText
+                variant="title"
+                style={[isRevoked && { color: ColorPalette.grayscale.mediumGrey }, { fontWeight: 'bold' }]}
+              >
                 {t('CredentialDetails.IssuedBy') + ' '}
               </ThemedText>
               <ThemedText style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
@@ -425,7 +432,10 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             {/* issued date if dev mode */}
             {store?.preferences.developerModeEnabled && credential?.createdAt ? (
               <ThemedText testID={testIdWithKey('IssuedDate')}>
-                <ThemedText variant="title" style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
+                <ThemedText
+                  variant="title"
+                  style={[isRevoked && { color: ColorPalette.grayscale.mediumGrey }, { fontWeight: 'bold' }]}
+                >
                   {t('CredentialDetails.Issued') + ': '}
                 </ThemedText>
                 <ThemedText style={isRevoked && { color: ColorPalette.grayscale.mediumGrey }}>
@@ -439,9 +449,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View
             style={{
               backgroundColor: ColorPalette.brand.secondaryBackground,
-              marginTop: paddingVertical,
               paddingHorizontal,
-              paddingVertical,
             }}
           >
             <TouchableOpacity
@@ -449,7 +457,6 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
               accessibilityLabel={t('Global.ViewJSON')}
               accessibilityRole={'button'}
               testID={testIdWithKey('JSONDetails')}
-              style={{ flexDirection: 'row', gap: 8 }}
             >
               <Assets.svg.iconCode width={20} height={20} color={ColorPalette.brand.secondary} />
               <ThemedText>{t('Global.ViewJSON')}</ThemedText>
@@ -460,9 +467,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           <View
             style={{
               backgroundColor: ColorPalette.notification.error,
-              marginTop: paddingVertical,
               paddingHorizontal,
-              paddingVertical,
             }}
           >
             <ThemedText testID={testIdWithKey('RevokedDate')}>
@@ -488,7 +493,13 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
 
   return (
     <SafeAreaView style={{ flexGrow: 1 }} edges={['left', 'right']}>
-      <Record fields={overlay.presentationFields || []} hideFieldValues header={header} footer={footer} />
+      <Record
+        fields={overlay.presentationFields || []}
+        hideFieldValues
+        header={header}
+        subHeader={subHeader}
+        footer={footer}
+      />
       <CommonRemoveModal
         usage={ModalUsage.CredentialRemove}
         visible={isRemoveModalDisplayed}

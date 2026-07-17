@@ -1,5 +1,6 @@
 import {
   AnonCredsCredentialInfo,
+  AnonCredsCredentialMetadataKey,
   AnonCredsCredentialsForProofRequest,
   AnonCredsPredicateType,
   AnonCredsProofRequest,
@@ -1278,14 +1279,14 @@ export function isChildFunction<T>(children: ReactNode | ChildFn<T>): children i
 
 // Fetches the credential definition id for a given credential exchange record, returns null if ID is not found
 export const getCredentialDefinitionIdForRecord = (record: DidCommCredentialExchangeRecord): string | null => {
-  // assumes record is anonCred
-  return record.metadata.get('_anoncreds/credential')?.credentialDefinitionId ?? null
+  // assumes record is anonCred ie: "_anoncreds/credential"
+  return record.metadata.get(AnonCredsCredentialMetadataKey)?.credentialDefinitionId ?? null
 }
 
 // Fetches the schema id for a given credential exchange record, returns null if ID is not found
 export const getCredentialSchemaIdForRecord = (record: DidCommCredentialExchangeRecord): string | null => {
-  // assumes record is anonCred
-  return record.metadata.get('_anoncreds/credential')?.schemaId ?? null
+  // assumes record is anonCred ie: "_anoncreds/credential"
+  return record.metadata.get(AnonCredsCredentialMetadataKey)?.schemaId ?? null
 }
 
 export function getCredentialEventRole(record: DidCommCredentialExchangeRecord) {

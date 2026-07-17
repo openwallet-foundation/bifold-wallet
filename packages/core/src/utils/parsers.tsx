@@ -63,7 +63,13 @@ export const isDidCommInvitation = (url: string) => {
     return true
   }
 
-  if (url.includes('c_i=') || url.includes('oob=') || url.includes('oobUrl=') || url.includes('d_m=')) {
+  if (
+    url.includes('c_i=') ||
+    url.includes('oob=') ||
+    url.includes('oobUrl=') ||
+    url.includes('d_m=') ||
+    url.includes('/i/')
+  ) {
     return true
   }
 
