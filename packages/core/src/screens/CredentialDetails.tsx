@@ -385,6 +385,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
           </View>
         ) : null}
         {credential && <CredentialCardGen credential={credential} style={{ margin: 16 }} />}
+        <CredentialSubHeader credential={credential} />
       </View>
     ) : (
       <View style={styles.container}>
@@ -398,6 +399,7 @@ const CredentialDetails: React.FC<CredentialDetailsProps> = ({ navigation, route
             }}
           ></View>
         ) : null}
+        <CredentialSubHeader credential={credential} />
       </View>
     )
   }
