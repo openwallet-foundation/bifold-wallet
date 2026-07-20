@@ -7,6 +7,7 @@ import type {
   W3cCredentialJson,
 } from './types'
 import { Mdoc, MdocRecord, TypedArrayEncoder } from '@credo-ts/core'
+import moment from 'moment'
 
 import { Hasher, SdJwtVcRecord, ClaimFormat, JsonTransformer } from '@credo-ts/core'
 import { decodeSdJwtSync, getClaimsSync } from '@sd-jwt/decode'
@@ -369,7 +370,7 @@ export function getCredentialForDisplay(credentialRecord: OpenIDCredentialRecord
         ...credentialDisplay,
         issuer: issuerDisplay,
       },
-      attributes,
+      attributes: attributes,
       // TODO:
       metadata: {
         // holder: 'Unknown',
@@ -432,6 +433,9 @@ export function getCredentialForDisplay(credentialRecord: OpenIDCredentialRecord
   }
 }
 
+type mdocDate = {
+  date: string
+}
 type MappedAttributesReturnType =
   | string
   | number
@@ -451,16 +455,14 @@ export function recursivelyMapAttribues(value: unknown): MappedAttributesReturnT
     return TypedArrayEncoder.toUtf8String(value)
   }
   if (value === null || value === undefined || typeof value === 'number' || typeof value === 'boolean') return value
-
-  if (value instanceof Date || (typeof value === 'string' && isDateString(value))) {
-    // TODO: handle DateOnly (should be handled as time is 0 then)
-    return formatDate(value)
-  }
   if (typeof value === 'string') return value
   if (value instanceof Map) {
     return Object.fromEntries(Array.from(value.entries()).map(([key, value]) => [key, recursivelyMapAttribues(value)]))
   }
   if (Array.isArray(value)) return value.map(recursivelyMapAttribues)
-
+  if (value instanceof Date || (typeof value === 'string' && isDateString(value)) || (value instanceof Object && Object.keys(value)?.includes('date'))) {
+    // TODO: handle DateOnly (should be handled as time is 0 then)
+      return value instanceof Object ? moment((value as mdocDate)?.date).format('DD-MM-YYYY') : moment(value).format('DD-MM-YYYY')
+  }
   return Object.fromEntries(Object.entries(value).map(([key, value]) => [key, recursivelyMapAttribues(value)]))
 }
