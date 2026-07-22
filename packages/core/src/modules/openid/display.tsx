@@ -462,7 +462,7 @@ export function recursivelyMapAttribues(value: unknown): MappedAttributesReturnT
   if (Array.isArray(value)) return value.map(recursivelyMapAttribues)
   if (value instanceof Date || (typeof value === 'string' && isDateString(value)) || (value instanceof Object && Object.keys(value)?.includes('date'))) {
     // TODO: handle DateOnly (should be handled as time is 0 then)
-      return value instanceof Object ? moment((value as mdocDate)?.date).format('YYYY-MM-DD') : moment(value).format('YYYY-MM-DD')
+      return value instanceof Object ? moment((value as mdocDate)?.date, true).utc(false).format('YYYY-MM-DD') : moment(value, true).utc(false).format('YYYY-MM-DD')
   }
   return Object.fromEntries(Object.entries(value).map(([key, value]) => [key, recursivelyMapAttribues(value)]))
 }
