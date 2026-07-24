@@ -5,28 +5,43 @@ import {
   WalletCredentialCardData,
   CardAttribute,
   AttrFormat,
+  BrandingBits,
   AnonCredsBundleLite,
   W3CInput,
   MapOpts,
   isPredicate,
-} from './ui-types'
+} from '../ui-types'
 import {
   Attribute,
   BrandingOverlayType,
   CredentialOverlay,
-  OCABundleResolveAllParams,
   OCABundleResolverType,
   Predicate,
 } from '@bifold/oca/build/legacy'
 import { BaseOverlay, BrandingOverlay, LegacyBrandingOverlay } from '@bifold/oca'
-import { CredentialErrors, GenericCredentialExchangeRecord } from '../types/credentials'
-import { getCredentialForDisplay } from '../modules/openid/display'
-import { buildFieldsFromW3cCredsCredential, getAttributeField } from '../utils/oca'
-import { i18n } from '../localization'
-import { getCredentialIdentifiers } from '../utils/credential'
-import { IColorPalette } from '../theme'
+import { CredentialErrors, GenericCredentialExchangeRecord } from '../../types/credentials'
+import { getCredentialForDisplay } from '../../modules/openid/display'
+import { buildOverlayFromW3cCredential, getAttributeField } from '../../utils/oca'
+import { i18n } from '../../localization'
+import { getCredentialIdentifiers } from '../../utils/credential'
+import { IColorPalette } from '../../theme'
 
 const isDataUrl = (v: unknown) => typeof v === 'string' && /^data:image\/[a-zA-Z]+;base64,/.test(v)
+
+const toCardBranding = (branding: BrandingBits, watermark?: string): BrandingBits => ({
+  type: branding.type,
+  primaryBg: branding.primaryBg,
+  secondaryBg: branding.secondaryBg,
+  logo1x1Uri: branding.logo1x1Uri,
+  logoText: branding.logoText,
+  backgroundSliceUri: branding.backgroundSliceUri,
+  backgroundFullUri: branding.backgroundFullUri,
+  watermark,
+  preferredTextColor: branding.preferredTextColor,
+})
+
+const hasOnlyPiiAttributes = (items: CardAttribute[]) =>
+  items.length > 0 && items.every((item) => !item.predicate?.present && (item.isPII ?? false))
 
 const fmt = (format: AttrFormat | undefined, value: any) => {
   if (!format) return value
@@ -120,24 +135,14 @@ export function mapAnonCredsToCard(
   }
 
   const status: 'error' | 'warning' | undefined = revoked && !proofContext ? 'error' : undefined
-  const allPI = items.length > 0 && items.every((i) => !i.predicate?.present && (i.isPII ?? false))
+  const allPI = hasOnlyPiiAttributes(items)
 
   return {
     id: (rec as any).id ?? rec.threadId,
     issuerName: bundle.issuer ?? (opts?.connectionLabel || 'Unknown Contact'),
     credentialName: bundle.name ?? 'Credential',
     connectionLabel: opts?.connectionLabel,
-    branding: {
-      type: bundle.branding.type,
-      primaryBg: bundle.branding.primaryBg,
-      secondaryBg: bundle.branding.secondaryBg,
-      logo1x1Uri: bundle.branding.logo1x1Uri,
-      logoText: bundle.branding.logoText,
-      backgroundSliceUri: bundle.branding.backgroundSliceUri,
-      backgroundFullUri: bundle.branding.backgroundFullUri,
-      watermark: bundle.watermark,
-      preferredTextColor: bundle.branding.preferredTextColor,
-    },
+    branding: toCardBranding(bundle.branding, bundle.watermark),
     items,
     primaryAttributeKey: bundle.primaryAttributeKey,
     secondaryAttributeKey: bundle.secondaryAttributeKey,
@@ -182,23 +187,13 @@ export function mapW3CToCard(
           }
         })
 
-  const allPI = items.length > 0 && items.every((i) => !i.predicate?.present && (i.isPII ?? false))
+  const allPI = hasOnlyPiiAttributes(items)
 
   return {
     id,
     issuerName,
     credentialName: input.vc.name || (input.vc.type?.[1] ?? 'Credential'),
-    branding: {
-      type: input.branding.type,
-      primaryBg: input.branding.primaryBg,
-      secondaryBg: input.branding.secondaryBg,
-      logo1x1Uri: input.branding.logo1x1Uri,
-      logoText: input.branding.logoText,
-      backgroundSliceUri: input.branding.backgroundSliceUri,
-      backgroundFullUri: input.branding.backgroundFullUri,
-      watermark: input.branding.watermark,
-      preferredTextColor: input.branding.preferredTextColor,
-    },
+    branding: toCardBranding(input.branding, input.branding.watermark),
     items,
     brandingType: input.branding.type,
     proofContext,
@@ -224,38 +219,22 @@ const resolveBundleForW3CCredential = async (
   bundleResolver: OCABundleResolverType
 ): Promise<CredentialOverlay<BrandingOverlay>> => {
   const credentialDisplay = getCredentialForDisplay(credential)
-
-  const params: OCABundleResolveAllParams = {
-    identifiers: {
-      schemaId: '',
-      credentialDefinitionId: credentialDisplay.id,
-    },
-    meta: {
-      alias: credentialDisplay.display.issuer.name,
-      credConnectionId: undefined,
-      credName: credentialDisplay.display.name,
-    },
-    attributes: buildFieldsFromW3cCredsCredential(credentialDisplay, undefined, i18n.language),
+  const bundle = await buildOverlayFromW3cCredential({
+    credentialDisplay,
     language: i18n.language,
-  }
-
-  const bundle = await bundleResolver.resolveAllBundles(params)
-  const _bundle = bundle as CredentialOverlay<BrandingOverlay>
-
-  const brandingOverlay: BrandingOverlay = new BrandingOverlay('none', {
-    capture_base: 'none',
-    type: BrandingOverlayType.Branding10,
-    primary_background_color: credentialDisplay.display.backgroundColor,
-    background_image: credentialDisplay.display.backgroundImage?.uri,
-    logo: credentialDisplay.display.logo?.uri,
+    resolver: bundleResolver,
   })
-  const ocaBundle: CredentialOverlay<BrandingOverlay> = {
-    ..._bundle,
-    presentationFields: bundle.presentationFields,
-    brandingOverlay: brandingOverlay,
-  }
 
-  return ocaBundle
+  return {
+    ...bundle,
+    brandingOverlay: new BrandingOverlay('none', {
+      capture_base: 'none',
+      type: BrandingOverlayType.Branding10,
+      primary_background_color: credentialDisplay.display.backgroundColor,
+      background_image: credentialDisplay.display.backgroundImage?.uri,
+      logo: credentialDisplay.display.logo?.uri,
+    }),
+  }
 }
 
 const mapW3CCredToCard = (

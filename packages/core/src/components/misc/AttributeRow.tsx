@@ -2,11 +2,11 @@ import React from 'react'
 import { View, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { ThemedText } from '../texts/ThemedText'
-import type { CardAttribute } from '../../wallet/ui-types'
+import type { WalletCredentialCardAttribute } from '../../wallet/card-view-model'
 import { useTheme } from '../../contexts/theme'
 
 type Props = {
-  item: CardAttribute
+  item: WalletCredentialCardAttribute
   textColor: string
   showPiiWarning: boolean
   isNotInWallet?: boolean

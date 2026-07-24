@@ -1,9 +1,9 @@
 import { W3cCredentialRecord } from '@credo-ts/core'
 import { BrandingOverlayType } from '@bifold/oca/build/legacy'
-import { getCredentialForDisplay } from '../../src/modules/openid/display'
-import { mapCredentialTypeToCard, mapW3CToCard } from '../../src/wallet/map-to-card'
+import { getCredentialForDisplay } from '../../../src/modules/openid/display'
+import { mapCredentialTypeToCard, mapW3CToCard } from '../../../src/wallet/mappers/credo-card-mapper'
 
-jest.mock('../../src/modules/openid/display', () => ({
+jest.mock('../../../src/modules/openid/display', () => ({
   getCredentialForDisplay: jest.fn(),
 }))
 

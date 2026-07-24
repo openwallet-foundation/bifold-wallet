@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react'
 import { View, Image, ImageBackground, TouchableOpacity } from 'react-native'
-import { WalletCredentialCardData, CardAttribute } from '../../wallet/ui-types'
+import type { WalletCredentialCardAttribute, WalletCredentialCardViewModel } from '../../wallet/card-view-model'
 import { ThemedText } from '../texts/ThemedText'
 import { testIdWithKey } from '../../utils/testable'
-import useCredentialCardStyles from '../../hooks/credential-card-styles'
+import useCardViewStyles from '../../wallet/use-card-view-styles'
 import CardWatermark from '../misc/CardWatermark'
 import CredentialCardStatusBadge from './CredentialCardStatusBadge'
 import CredentialCardAttributeList from './CredentialCardAttributeList'
 import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
 
 type Props = {
-  data: WalletCredentialCardData
+  data: WalletCredentialCardViewModel
   onPress?: () => void
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
@@ -18,30 +18,24 @@ type Props = {
 }
 
 /**
- * Card10Pure: overlay-free Card 10 UI that renders from WalletCredentialCardData.
- * - Passes 'Branding10' to the style hook for layout differences.
- * - No OCA resolution or overlay usage at render time.
+ * Card10Pure renders an OCA-free card view model.
  */
 const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
-  const { branding, hideSlice } = data
-  const { styles, borderRadius, logoHeight } = useCredentialCardStyles(
-    { primaryBackgroundColor: branding.primaryBg, secondaryBackgroundColor: branding.secondaryBg },
-    'Branding10',
-    !!data.proofContext
-  )
+  const { branding, hideBrandingSlice } = data
+  const { styles, borderRadius, logoHeight } = useCardViewStyles(branding, data.layout)
 
-  const byKey: Record<string, CardAttribute> = useMemo(
-    () => Object.fromEntries(data.items.map((i) => [i.key, i])),
-    [data.items]
+  const byKey: Record<string, WalletCredentialCardAttribute> = useMemo(
+    () => Object.fromEntries(data.attributes.map((i) => [i.key, i])),
+    [data.attributes]
   )
   const primary = data.primaryAttributeKey ? byKey[data.primaryAttributeKey] : undefined
   const secondary = data.secondaryAttributeKey ? byKey[data.secondaryAttributeKey] : undefined
   const list = useMemo(
     () =>
-      [primary, secondary, ...data.items.filter((i) => i.key !== primary?.key && i.key !== secondary?.key)].filter(
+      [primary, secondary, ...data.attributes.filter((i) => i.key !== primary?.key && i.key !== secondary?.key)].filter(
         Boolean
-      ) as CardAttribute[],
-    [primary, secondary, data.items]
+      ) as WalletCredentialCardAttribute[],
+    [primary, secondary, data.attributes]
   )
 
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color
@@ -53,8 +47,8 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const Header = () => (
     <View style={[styles.primaryBodyNameContainer, { flexDirection: 'row', alignItems: 'center' }]}>
       {/* Card10 shows issuer and name side-by-side in the header row */}
-      {branding.logo1x1Uri ? (
-        <Image source={{ uri: branding.logo1x1Uri }} style={{ width: logoHeight, height: logoHeight, borderRadius }} />
+      {branding.logoUri ? (
+        <Image source={{ uri: branding.logoUri }} style={{ width: logoHeight, height: logoHeight, borderRadius }} />
       ) : (
         <View style={{ width: logoHeight, height: logoHeight }} />
       )}
@@ -88,8 +82,8 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const Main = () => (
     <View style={styles.cardContainer} accessible accessibilityLabel={accessibilityLabel}>
       <CredentialCardSecondaryBody
-        hideSlice={hideSlice}
-        secondaryBg={branding.secondaryBg}
+        hideSlice={hideBrandingSlice}
+        secondaryBg={branding.secondaryBackgroundColor}
         backgroundSliceUri={branding.backgroundSliceUri}
         borderRadius={borderRadius}
         containerStyle={styles.secondaryBodyContainer}
@@ -112,8 +106,8 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
       >
         <View testID={testIdWithKey('CredentialCard')} style={{ overflow: 'hidden' }}>
           {branding.watermark && <CardWatermark width={0} height={0} style={{}} watermark={branding.watermark} />}
-          {branding.backgroundFullUri && hideSlice ? (
-            <ImageBackground source={{ uri: branding.backgroundFullUri }}>
+          {branding.backgroundImageUri && hideBrandingSlice ? (
+            <ImageBackground source={{ uri: branding.backgroundImageUri }}>
               <Main />
             </ImageBackground>
           ) : (
