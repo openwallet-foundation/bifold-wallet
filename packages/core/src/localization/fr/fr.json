@@ -536,7 +536,8 @@
     "EmptyList": "Votre portefeuille est vide. Vos attestations acceptés seront ajoutés ici.",
     "IssuedBy": "Émis par",
     "Issued": "Issued (FR)",
-    "Credential": "attestation"
+    "Credential": "attestation",
+    "CredentialCardAccessibilityLabel": "{{cardName}} from {{issuerName}} (FR)"
   },
   "PushNotifications": {
     "EnableNotifications": "Activer les Notifications pour recevoir des alertes instantanées",

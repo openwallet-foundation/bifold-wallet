@@ -115,6 +115,7 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
 
   return (
     <WalletCredentialCard
+      cardAccessibilityLabel={t('Credentials.CredentialCardAccessibilityLabel', { cardName: cardData?.credentialName, issuerName: cardData?.issuerName })}
       data={cardData}
       onPress={onPress}
       hasAltCredentials={hasAltCredentials}
