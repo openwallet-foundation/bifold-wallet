@@ -2,6 +2,7 @@ import { W3cCredentialRecord } from '@credo-ts/core'
 import { BrandingOverlayType } from '@bifold/oca/build/legacy'
 import { getCredentialForDisplay } from '../../src/modules/openid/display'
 import { mapCredentialTypeToCard, mapW3CToCard } from '../../src/wallet/map-to-card'
+import { CredentialErrors } from '../../src/types/credentials'
 
 jest.mock('../../src/modules/openid/display', () => ({
   getCredentialForDisplay: jest.fn(),
@@ -120,5 +121,49 @@ describe('mapCredentialTypeToCard', () => {
         isPII: true,
       }),
     ])
+  })
+
+  test('resolves OCA branding from bare identifiers when the credential is not in the wallet', async () => {
+    const resolveAllBundles = jest.fn().mockResolvedValue({
+      bundle: {
+        labelOverlay: { attributeLabels: { given_name: 'Given Name' } },
+        attributes: [{ name: 'given_name', format: undefined }],
+      },
+      brandingOverlay: { primaryBackgroundColor: '#123456', backgroundImageSlice: 'https://example/slice.png' },
+      metaOverlay: { issuer: 'Test Issuer', name: 'Person Credential', watermark: 'SHOWCASE' },
+    })
+
+    const result = await mapCredentialTypeToCard({
+      // No credential record — this is a proof request's missing credential.
+      credDefId: 'cred-def-id',
+      schemaId: 'schema-id',
+      bundleResolver: {
+        getBrandingOverlayType: () => BrandingOverlayType.Branding10,
+        resolveAllBundles,
+      } as any,
+      colorPalette: { grayscale: { lightGrey: '#eeeeee', white: '#ffffff' } } as any,
+      unknownIssuerName: 'Unknown Contact',
+      proof: true,
+      credentialErrors: [CredentialErrors.NotInWallet],
+      displayItems: [{ name: 'given_name', value: 'Ada' }] as any,
+    })
+
+    // Previously returned undefined (plain placeholder card) — now a fully branded card.
+    expect(result).toBeDefined()
+    expect(result?.notInWallet).toBe(true)
+    expect(result?.id).toBe('cred-def-id')
+    expect(result?.issuerName).toBe('Test Issuer')
+    expect(result?.credentialName).toBe('Person Credential')
+    expect(result?.items).toEqual([expect.objectContaining({ key: 'given_name', label: 'Given Name' })])
+    expect(resolveAllBundles).toHaveBeenCalledWith(
+      expect.objectContaining({ identifiers: { schemaId: 'schema-id', credentialDefinitionId: 'cred-def-id' } })
+    )
+
+    // Branding10 proof appearance: body goes white, the primary colour moves to the slice,
+    // the image slice is dropped, and the watermark is preserved.
+    expect(result?.branding.primaryBg).toBe('#ffffff')
+    expect(result?.branding.secondaryBg).toBe('#123456')
+    expect(result?.branding.backgroundSliceUri).toBeUndefined()
+    expect(result?.branding.watermark).toBe('SHOWCASE')
   })
 })
