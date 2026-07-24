@@ -21,9 +21,9 @@
   "dependencies": {
     "@animo-id/expo-secure-environment": "0.1.5",
     "@babel/runtime": "~7.27.0",
-    "@bifold/core": "3.0.19",
-    "@bifold/oca": "3.0.19",
-    "@bifold/react-hooks": "3.0.19",
+    "@bifold/core": "3.0.20",
+    "@bifold/oca": "3.0.20",
+    "@bifold/react-hooks": "3.0.20",
     "@credo-ts/anoncreds": "0.6.3",
     "@credo-ts/askar": "0.6.3",
     "@credo-ts/core": "0.6.3",
