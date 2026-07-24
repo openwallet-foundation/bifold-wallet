@@ -1,5 +1,12 @@
 # @bifold/core
 
+## 3.0.20
+
+### Patch Changes
+
+- 0395522: Fix date format for mdl/mdoc credentials
+  - @bifold/react-hooks@3.0.20
+
 ## 3.0.19
 
 ### Patch Changes
