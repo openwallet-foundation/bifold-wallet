@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.20
+
+### Patch Changes
+
+- b82c437: fix anoncreds proof request regressions
+- 0395522: Fix date format for mdl/mdoc credentials
+  - @bifold/react-hooks@3.0.20
+
 ## 3.0.19
 
 ### Patch Changes
