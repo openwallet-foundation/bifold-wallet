@@ -99,18 +99,18 @@ export const brandingOverlayTypeString = (type: BrandingOverlayType) => {
 }
 
 export function mapAnonCredsToCard(
-  rec: CredentialExchangeRecord,
+  rec: CredentialExchangeRecord | undefined,
   bundle: AnonCredsBundleLite,
   opts: MapOpts = {}
 ): WalletCredentialCardData {
-  const { proofContext = false, revoked = false, notInWallet = false, displayItems } = opts
+  const { proofContext = false, revoked = false, notInWallet = false, displayItems, fallbackId } = opts
 
   let items: CardAttribute[] = []
 
   if (proofContext && displayItems?.length) {
     items = displayItems.map((it) => mapItemToCardAttr(it, bundle.labels, bundle.formats, bundle.flaggedPII))
   } else {
-    const attrs = rec.credentialAttributes ?? []
+    const attrs = rec?.credentialAttributes ?? []
     items = attrs.map((a) =>
       mapItemToCardAttr(
         { name: a.name, label: a.name, value: a.value } as unknown as Attribute,
@@ -138,7 +138,7 @@ export function mapAnonCredsToCard(
   const allPI = hasOnlyPiiAttributes(items)
 
   return {
-    id: (rec as any).id ?? rec.threadId,
+    id: (rec as any)?.id ?? rec?.threadId ?? fallbackId ?? 'missing-credential',
     issuerName: bundle.issuer ?? (opts?.connectionLabel || 'Unknown Contact'),
     credentialName: bundle.name ?? 'Credential',
     connectionLabel: opts?.connectionLabel,
@@ -297,7 +297,10 @@ const mapW3CCredToCard = (
  * If proof=true, will map in proof context (limited attributes, no PII, no primary/secondary ordering).
  */
 export interface GenericCardMapInput {
-  credential: GenericCredentialExchangeRecord
+  credential?: GenericCredentialExchangeRecord
+  /** Identifiers used to resolve branding when there is no record (e.g. a proof request's missing credential) */
+  credDefId?: string
+  schemaId?: string
   bundleResolver: OCABundleResolverType
   colorPalette: IColorPalette
   unknownIssuerName: string
@@ -311,6 +314,8 @@ export interface GenericCardMapInput {
 
 export async function mapCredentialTypeToCard({
   credential,
+  credDefId,
+  schemaId,
   bundleResolver,
   colorPalette,
   unknownIssuerName,
@@ -340,15 +345,16 @@ export async function mapCredentialTypeToCard({
   }
 
   //Anoncreds case
-  const rec = credential as CredentialExchangeRecord
-  if (!rec) return undefined
+  const rec = credential as CredentialExchangeRecord | undefined
+  // Without a record we still resolve branding from bare identifiers (missing proof-request credential).
+  if (!rec && !credDefId && !schemaId) return undefined
 
   const isRevoked = !!credentialErrors?.includes(CredentialErrors.Revoked)
   const notInWallet = !!credentialErrors?.includes(CredentialErrors.NotInWallet)
 
   const params: any = {
-    identifiers: getCredentialIdentifiers(rec),
-    attributes: proof ? [] : rec.credentialAttributes,
+    identifiers: rec ? getCredentialIdentifiers(rec) : { schemaId, credentialDefinitionId: credDefId },
+    attributes: proof ? [] : (rec?.credentialAttributes ?? []),
     meta: {
       credName,
       credConnectionId: rec?.connectionId,
@@ -392,11 +398,25 @@ export async function mapCredentialTypeToCard({
     },
   } as AnonCredsBundleLite
 
+  // Branding10 proof cards render lighter: the credential's primary colour moves to the
+  // side slice, the body goes white, and the image slice/full background are dropped
+  // (the watermark still shows). Owned and missing credentials share this appearance.
+  if (proof && brandingTypeString === 'Branding10') {
+    bundleLite.branding = {
+      ...bundleLite.branding,
+      secondaryBg: bundleLite.branding.primaryBg,
+      primaryBg: colorPalette.grayscale.white,
+      backgroundSliceUri: undefined,
+      backgroundFullUri: undefined,
+    }
+  }
+
   return mapAnonCredsToCard(rec, bundleLite as any, {
     proofContext: !!proof,
     revoked: isRevoked,
     notInWallet,
     connectionLabel: credentialConnectionLabel,
     displayItems: proof ? displayItems : undefined,
+    fallbackId: credDefId ?? schemaId,
   })
 }

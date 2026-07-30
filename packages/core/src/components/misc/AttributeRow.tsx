@@ -25,11 +25,13 @@ export const CredentialAttributeRow: React.FC<Props> = ({ item, textColor, showP
   const hasError = Boolean(isNotInWallet || item.hasError || predicateFailed)
 
   if (hasError) {
-    const errorText = isNotInWallet
-      ? 'Not available in your wallet'
-      : predicateFailed
-        ? 'Predicate not satisfied'
-        : 'Missing attribute'
+    // The per-field reason only applies when the user holds the credential but this
+    // specific item is invalid. When the whole credential is missing, the card already
+    // shows a single "not in your wallet" message, so we just flag the field.
+    let errorText: string | undefined
+    if (!isNotInWallet) {
+      errorText = predicateFailed ? 'Predicate not satisfied' : 'Missing attribute'
+    }
 
     return (
       <View style={styles.cardAttributeContainer}>
@@ -44,9 +46,14 @@ export const CredentialAttributeRow: React.FC<Props> = ({ item, textColor, showP
             {item.label}
           </ThemedText>
         </View>
-        <ThemedText variant="labelSubtitle" style={[styles.textContainer, { opacity: 0.8 }]}>
-          {errorText}
-        </ThemedText>
+        {errorText && (
+          <ThemedText
+            variant="labelSubtitle"
+            style={[styles.textContainer, { opacity: 0.8, color: ColorPalette.notification.error }]}
+          >
+            {errorText}
+          </ThemedText>
+        )}
       </View>
     )
   }

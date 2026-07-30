@@ -49,7 +49,7 @@ const CredentialCardAttributeList: React.FC<Props> = ({
           hasAltCredentials={hasAltCredentials}
           onChangeAlt={onChangeAlt}
           helpActionUrl={helpActionUrl}
-          textStyle={styles.textContainer}
+          isNotInWallet={isNotInWallet}
         />
       }
     />

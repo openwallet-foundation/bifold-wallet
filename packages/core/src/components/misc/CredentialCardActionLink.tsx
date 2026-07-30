@@ -1,32 +1,31 @@
 import React from 'react'
-import { TouchableOpacity, Linking } from 'react-native'
-import { ThemedText } from '../texts/ThemedText'
+import { Linking } from 'react-native'
+import CredentialActionFooter from './CredentialCard11ActionFooter'
 
 type Props = {
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
   helpActionUrl?: string
-  textStyle: any // ideally: TextStyle | TextStyle[]
+  isNotInWallet?: boolean
 }
 
-const CredentialCardActionLink: React.FC<Props> = ({ hasAltCredentials, onChangeAlt, helpActionUrl, textStyle }) => {
+const CredentialCardActionLink: React.FC<Props> = ({
+  hasAltCredentials,
+  onChangeAlt,
+  helpActionUrl,
+  isNotInWallet,
+}) => {
   if (hasAltCredentials && onChangeAlt) {
-    return (
-      <TouchableOpacity onPress={onChangeAlt} accessibilityLabel="Change credential">
-        <ThemedText variant="bold" style={textStyle}>
-          Change credential
-        </ThemedText>
-      </TouchableOpacity>
-    )
+    return <CredentialActionFooter onPress={onChangeAlt} text="Change credential" testID="ChangeCredential" />
   }
 
-  if (helpActionUrl) {
+  if (isNotInWallet && helpActionUrl) {
     return (
-      <TouchableOpacity onPress={() => Linking.openURL(helpActionUrl)} accessibilityLabel="Get this credential">
-        <ThemedText variant="bold" style={textStyle}>
-          Get this credential
-        </ThemedText>
-      </TouchableOpacity>
+      <CredentialActionFooter
+        onPress={() => Linking.openURL(helpActionUrl)}
+        text="Get this credential"
+        testID="GetThisCredential"
+      />
     )
   }
 
