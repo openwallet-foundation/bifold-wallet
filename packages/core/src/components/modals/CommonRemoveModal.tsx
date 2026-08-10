@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -14,6 +14,7 @@ import BulletPoint from '../inputs/BulletPoint'
 import ContentGradient from '../misc/ContentGradient'
 import UnorderedList from '../misc/UnorderedList'
 import { ThemedText } from '../texts/ThemedText'
+import ScreenWrapper from '../views/ScreenWrapper'
 import SafeAreaModal from './SafeAreaModal'
 
 interface CommonRemoveModalProps {
@@ -34,7 +35,7 @@ const RemoveList: React.FC<RemoveProps> = ({ title, content }) => {
 
   return (
     <View accessibilityLabel={title} testID={testIdWithKey(testIdForAccessabilityLabel(title))}>
-      <ThemedText variant="bold" style={{ fontWeight: TextTheme.bold.fontWeight, marginBottom: 10 }}>
+      <ThemedText variant="bold" style={{ fontWeight: TextTheme.bold.fontWeight }}>
         {title}
       </ThemedText>
       <UnorderedList unorderedListItems={content} />
@@ -62,15 +63,8 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       borderTopLeftRadius: 10,
       flex: 1,
     },
-    container: {
-      paddingTop: 10,
-      paddingHorizontal: 20,
-    },
-    controlsContainer: {
-      marginTop: 'auto',
-      marginHorizontal: 20,
-      marginBottom: 10,
-      position: 'relative',
+    screenWrapper: {
+      backgroundColor: 'transparent',
     },
     overlay: {
       flex: 1,
@@ -186,7 +180,12 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
         return (
           <View style={{ marginBottom: 25 }}>
             <View style={{ marginBottom: 25 }}>
-              <ThemedText variant="modalTitle">{t('CredentialDetails.RemoveTitle')}</ThemedText>
+              <ThemedText
+                variant="modalTitle"
+                style={{ color: ColorPalette.brand.primary, fontWeight: 'bold', textAlign: 'center' }}
+              >
+                {t('CredentialDetails.RemoveTitle')}
+              </ThemedText>
             </View>
             <View>
               <ThemedText variant="modalNormal">{t('CredentialDetails.RemoveCaption')}</ThemedText>
@@ -274,35 +273,38 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               <Icon name={'close'} size={42} color={ColorPalette.brand.modalIcon} />
             </TouchableOpacity>
           </View>
-          <ScrollView style={styles.container}>
+          <ScreenWrapper
+            edges={[]}
+            style={styles.screenWrapper}
+            controls={
+              <>
+                <ContentGradient backgroundColor={ColorPalette.brand.modalPrimaryBackground} height={30} />
+                <Button
+                  title={titleForConfirmButton()}
+                  accessibilityLabel={labelForConfirmButton()}
+                  testID={testIdForConfirmButton()}
+                  onPress={onSubmit}
+                  buttonType={
+                    usage === ModalUsage.ContactRemoveWithCredentials
+                      ? ButtonType.ModalPrimary
+                      : ButtonType.ModalCritical
+                  }
+                />
+                <Button
+                  title={t('Global.Cancel')}
+                  accessibilityLabel={t('Global.Cancel')}
+                  testID={testIdForCancelButton()}
+                  onPress={onCancel}
+                  buttonType={ButtonType.ModalSecondary}
+                />
+              </>
+            }
+          >
             <>
               {headerImageForType()}
               {contentForType()}
             </>
-          </ScrollView>
-          <View style={styles.controlsContainer}>
-            <ContentGradient backgroundColor={ColorPalette.brand.modalPrimaryBackground} height={30} />
-            <View style={{ paddingTop: 10 }}>
-              <Button
-                title={titleForConfirmButton()}
-                accessibilityLabel={labelForConfirmButton()}
-                testID={testIdForConfirmButton()}
-                onPress={onSubmit}
-                buttonType={
-                  usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
-                }
-              />
-            </View>
-            <View style={{ paddingTop: 10 }}>
-              <Button
-                title={t('Global.Cancel')}
-                accessibilityLabel={t('Global.Cancel')}
-                testID={testIdForCancelButton()}
-                onPress={onCancel}
-                buttonType={ButtonType.ModalSecondary}
-              />
-            </View>
-          </View>
+          </ScreenWrapper>
         </SafeAreaView>
       </View>
     </SafeAreaModal>
