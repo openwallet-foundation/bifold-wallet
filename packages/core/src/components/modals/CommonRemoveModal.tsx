@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import Collapsible from 'react-native-collapsible'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -30,39 +29,16 @@ interface RemoveProps {
   content: string[]
 }
 
-const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
-  const { TextTheme, ColorPalette } = useTheme()
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
+const RemoveList: React.FC<RemoveProps> = ({ title, content }) => {
+  const { TextTheme } = useTheme()
 
   return (
-    <>
-      <TouchableOpacity
-        onPress={() => setIsCollapsed(!isCollapsed)}
-        accessibilityLabel={title}
-        testID={testIdWithKey(testIdForAccessabilityLabel(title))}
-        style={[
-          {
-            padding: 15,
-            backgroundColor: ColorPalette.brand.modalSecondaryBackground,
-            borderRadius: 5,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          },
-        ]}
-      >
-        <ThemedText variant="modalNormal" style={{ fontWeight: TextTheme.bold.fontWeight }}>
-          {title}
-        </ThemedText>
-        <Icon name={isCollapsed ? 'expand-more' : 'expand-less'} size={24} color={TextTheme.modalNormal.color} />
-      </TouchableOpacity>
-      <Collapsible collapsed={isCollapsed} enablePointerEvents={true}>
-        <View
-          style={{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPalette.brand.modalSecondaryBackground }}
-        >
-          <UnorderedList unorderedListItems={content} />
-        </View>
-      </Collapsible>
-    </>
+    <View accessibilityLabel={title} testID={testIdWithKey(testIdForAccessabilityLabel(title))}>
+      <ThemedText variant="bold" style={{ fontWeight: TextTheme.bold.fontWeight, marginBottom: 10 }}>
+        {title}
+      </ThemedText>
+      <UnorderedList unorderedListItems={content} />
+    </View>
   )
 }
 
@@ -182,7 +158,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       </View>
     )
   }
-
+  // TODO: move these into their own components and add them back here
   const contentForType = (): Element | null => {
     switch (usage) {
       case ModalUsage.ContactRemove:
@@ -216,7 +192,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               <ThemedText variant="modalNormal">{t('CredentialDetails.RemoveCaption')}</ThemedText>
             </View>
             <View style={{ marginTop: 25 }}>
-              <Dropdown
+              <RemoveList
                 title={t('CredentialDetails.YouWillNotLose')}
                 content={[
                   t('CredentialDetails.YouWillNotLoseListItem1'),
@@ -225,7 +201,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               />
             </View>
             <View style={{ marginTop: 25 }}>
-              <Dropdown
+              <RemoveList
                 title={t('CredentialDetails.HowToGetThisCredentialBack')}
                 content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
               />
