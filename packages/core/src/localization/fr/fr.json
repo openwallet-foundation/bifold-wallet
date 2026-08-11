@@ -794,6 +794,7 @@
     "ScanMyQR": "Scanner mon code QR",
     "Developer": "Options de développeur",
     "AutoLockTime": "Auto lock time (FR)",
+    "AutoLockTimeAccessibilityLabel": "Auto lock time {{autoLockTime}} minutes (FR)",
     "Logout": "Déconnexion",
     "ConfigureMediator": "Configurer le médiateur",
     "ChangeMediator": "Change mediator (FR)",
