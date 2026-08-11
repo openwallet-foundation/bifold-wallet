@@ -735,16 +735,12 @@ const ProofRequest: React.FC<ProofRequestProps> = ({ navigation, proofId }) => {
   const proofPageHeader = () => {
     return (
       <>
-        {isCredentialLoading && (
-          <View style={{ padding: 20 }}>
-            <InfoTextBox>{t('ProofRequest.JustAMoment')}</InfoTextBox>
-          </View>
-        )}
         {loading || isCredentialLoading ? (
           <LoadingPlaceholder
             workflowType={LoadingPlaceholderWorkflowType.ProofRequested}
             timeoutDurationInMs={10000}
             loadingProgressPercent={30}
+            isCredentialLoading={isCredentialLoading}
             onCancelTouched={async () => {
               await handleDeclineTouched()
             }}

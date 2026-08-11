@@ -87,6 +87,8 @@ export type MapOpts = {
   connectionLabel?: string
   /** Proof-only: attributes/predicates to display instead of the full credential */
   displayItems?: (Attribute | Predicate)[]
+  /** Id to use when there is no credential record (e.g. a proof request's missing credential) */
+  fallbackId?: string
 }
 
 export const isPredicate = (x: any): x is Predicate => x && (typeof x.pType === 'string' || x.pValue !== undefined)

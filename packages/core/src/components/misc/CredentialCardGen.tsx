@@ -36,6 +36,8 @@ export interface CredentialCardProps {
 
 const CredentialCardGen: React.FC<CredentialCardProps> = ({
   credential,
+  credDefId,
+  schemaId,
   proof,
   credName,
   hasAltCredentials,
@@ -56,9 +58,11 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
 
   //Generic Mapping
   useEffect(() => {
-    const resolveOverlay = async (cred: GenericCredentialExchangeRecord) => {
+    const resolveOverlay = async () => {
       const cardData = await mapCredentialTypeToCard({
-        credential: cred,
+        credential,
+        credDefId,
+        schemaId,
         bundleResolver,
         colorPalette: ColorPalette,
         unknownIssuerName: t('Contacts.UnknownContact'),
@@ -71,11 +75,14 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
       })
       setCardData(cardData)
     }
-    if (credential) {
-      resolveOverlay(credential)
+
+    if (credential || credDefId || schemaId) {
+      resolveOverlay()
     }
   }, [
     credential,
+    credDefId,
+    schemaId,
     bundleResolver,
     ColorPalette,
     brandingOverlay,
