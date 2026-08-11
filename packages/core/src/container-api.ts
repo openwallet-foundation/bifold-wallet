@@ -16,6 +16,7 @@ import { NotificationReturnType, NotificationsInputProps } from './hooks/notific
 import { AgentSetupReturnType } from './hooks/useBifoldAgentSetup'
 import { IHistoryManager } from './modules/history'
 import { IRefreshOrchestrator } from './modules/openid/refresh/types'
+import type { GetAttestationJWTData, GetAttestationJWTPayload, GetAttestationChallengeData } from './types/attestation'
 import { OnboardingStackProps } from './navigators/OnboardingStack'
 import Onboarding from './screens/Onboarding'
 import { PINExplainerProps } from './screens/PINExplainer'
@@ -33,6 +34,7 @@ import { OnboardingStackParams, OnboardingTask, ScreenLayoutConfig, ScreenOption
 import { CustomNotification } from './types/notification'
 import { State } from './types/state'
 import { IVersionCheckService } from './types/version-check'
+import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 
 export type FN_ONBOARDING_DONE = (
   dispatch: React.Dispatch<ReducerAction<unknown>>,
@@ -105,6 +107,7 @@ export const FN_TOKENS = {
   COMPONENT_CRED_LIST_HEADER_RIGHT: 'fn.credListHeaderRight',
   COMPONENT_CRED_LIST_OPTIONS: 'fn.credListOptions',
   COMPONENT_CRED_LIST_FOOTER: 'fn.credListFooter',
+  COMPONENT_CRED_SUBHEADER: 'fn.credSubHeader',
 } as const
 
 export const HISTORY_TOKENS = {
@@ -186,12 +189,8 @@ export const TOKENS = {
 
 export type FN_HISTORY_MANAGER = (agent: Agent<any>) => IHistoryManager
 export type FN_PIN_HASH_ALGORITHM = (PIN: string, salt: string) => Promise<string>
-export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<string>
-export type FN_ATTESTATION_GET_JWT = (
-  attestationResult: string | string[],
-  challenge: string,
-  keyId: string
-) => Promise<any>
+export type FN_ATTESTATION_GET_CHALLENGE = () => Promise<GetAttestationChallengeData>
+export type FN_ATTESTATION_GET_JWT = (params: GetAttestationJWTPayload) => Promise<GetAttestationJWTData>
 
 export type TokenMapping = {
   [TOKENS.CRED_HELP_ACTION_OVERRIDES]: {
@@ -241,6 +240,7 @@ export type TokenMapping = {
   [TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_OPTIONS]: React.FC
   [TOKENS.COMPONENT_CRED_LIST_FOOTER]: React.FC<CredentialListFooterProps>
+  [TOKENS.COMPONENT_CRED_SUBHEADER]: React.FC<{ credential?: DidCommCredentialExchangeRecord }>
   [TOKENS.COMPONENT_HOME_HEADER]: React.FC
   [TOKENS.COMPONENT_NOTIFICATION_BANNER]: React.FC
   [TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST]: React.FC

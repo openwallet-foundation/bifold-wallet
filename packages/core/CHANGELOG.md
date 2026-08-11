@@ -1,5 +1,37 @@
 # @bifold/core
 
+## 3.0.20
+
+### Patch Changes
+
+- b82c437: fix anoncreds proof request regressions
+- 0395522: Fix date format for mdl/mdoc credentials
+  - @bifold/react-hooks@3.0.20
+
+## 3.0.19
+
+### Patch Changes
+
+- 495c28b: Updated styling for CredentialDetails screen. Includes issuer name and title + subheader component.
+- 3dee0f8: Added custom subheader component for CredentialDetails
+  - @bifold/react-hooks@3.0.19
+
+## 3.0.18
+
+### Patch Changes
+
+- be89bdd: make env mediator authority
+- 26f1ec5: oob invitation url update
+  - @bifold/react-hooks@3.0.18
+
+## 3.0.17
+
+### Patch Changes
+
+- f8b07b0: Disabled double presses on button components. Added usePreventDoublePress hook for disabling duplicate onPress events.
+- 981a18c: App attestation upon credential issuance for OID4VC credentials
+  - @bifold/react-hooks@3.0.17
+
 ## 3.0.16
 
 ### Patch Changes

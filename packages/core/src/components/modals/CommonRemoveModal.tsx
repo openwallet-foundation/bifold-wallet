@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import Collapsible from 'react-native-collapsible'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -15,6 +14,7 @@ import BulletPoint from '../inputs/BulletPoint'
 import ContentGradient from '../misc/ContentGradient'
 import UnorderedList from '../misc/UnorderedList'
 import { ThemedText } from '../texts/ThemedText'
+import ScreenWrapper from '../views/ScreenWrapper'
 import SafeAreaModal from './SafeAreaModal'
 
 interface CommonRemoveModalProps {
@@ -30,39 +30,16 @@ interface RemoveProps {
   content: string[]
 }
 
-const Dropdown: React.FC<RemoveProps> = ({ title, content }) => {
-  const { TextTheme, ColorPalette } = useTheme()
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(true)
+const RemoveList: React.FC<RemoveProps> = ({ title, content }) => {
+  const { TextTheme } = useTheme()
 
   return (
-    <>
-      <TouchableOpacity
-        onPress={() => setIsCollapsed(!isCollapsed)}
-        accessibilityLabel={title}
-        testID={testIdWithKey(testIdForAccessabilityLabel(title))}
-        style={[
-          {
-            padding: 15,
-            backgroundColor: ColorPalette.brand.modalSecondaryBackground,
-            borderRadius: 5,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          },
-        ]}
-      >
-        <ThemedText variant="modalNormal" style={{ fontWeight: TextTheme.bold.fontWeight }}>
-          {title}
-        </ThemedText>
-        <Icon name={isCollapsed ? 'expand-more' : 'expand-less'} size={24} color={TextTheme.modalNormal.color} />
-      </TouchableOpacity>
-      <Collapsible collapsed={isCollapsed} enablePointerEvents={true}>
-        <View
-          style={{ marginTop: 10, borderLeftWidth: 2, borderLeftColor: ColorPalette.brand.modalSecondaryBackground }}
-        >
-          <UnorderedList unorderedListItems={content} />
-        </View>
-      </Collapsible>
-    </>
+    <View accessibilityLabel={title} testID={testIdWithKey(testIdForAccessabilityLabel(title))}>
+      <ThemedText variant="bold" style={{ fontWeight: TextTheme.bold.fontWeight }}>
+        {title}
+      </ThemedText>
+      <UnorderedList unorderedListItems={content} />
+    </View>
   )
 }
 
@@ -86,15 +63,8 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       borderTopLeftRadius: 10,
       flex: 1,
     },
-    container: {
-      paddingTop: 10,
-      paddingHorizontal: 20,
-    },
-    controlsContainer: {
-      marginTop: 'auto',
-      marginHorizontal: 20,
-      marginBottom: 10,
-      position: 'relative',
+    screenWrapper: {
+      backgroundColor: 'transparent',
     },
     overlay: {
       flex: 1,
@@ -182,7 +152,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
       </View>
     )
   }
-
+  // TODO: move these into their own components and add them back here
   const contentForType = (): Element | null => {
     switch (usage) {
       case ModalUsage.ContactRemove:
@@ -210,13 +180,18 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
         return (
           <View style={{ marginBottom: 25 }}>
             <View style={{ marginBottom: 25 }}>
-              <ThemedText variant="modalTitle">{t('CredentialDetails.RemoveTitle')}</ThemedText>
+              <ThemedText
+                variant="modalTitle"
+                style={{ color: ColorPalette.brand.primary, fontWeight: 'bold', textAlign: 'center' }}
+              >
+                {t('CredentialDetails.RemoveTitle')}
+              </ThemedText>
             </View>
             <View>
               <ThemedText variant="modalNormal">{t('CredentialDetails.RemoveCaption')}</ThemedText>
             </View>
             <View style={{ marginTop: 25 }}>
-              <Dropdown
+              <RemoveList
                 title={t('CredentialDetails.YouWillNotLose')}
                 content={[
                   t('CredentialDetails.YouWillNotLoseListItem1'),
@@ -225,7 +200,7 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               />
             </View>
             <View style={{ marginTop: 25 }}>
-              <Dropdown
+              <RemoveList
                 title={t('CredentialDetails.HowToGetThisCredentialBack')}
                 content={[t('CredentialDetails.HowToGetThisCredentialBackListItem1')]}
               />
@@ -298,35 +273,38 @@ const CommonRemoveModal: React.FC<CommonRemoveModalProps> = ({ usage, visible, o
               <Icon name={'close'} size={42} color={ColorPalette.brand.modalIcon} />
             </TouchableOpacity>
           </View>
-          <ScrollView style={styles.container}>
+          <ScreenWrapper
+            edges={[]}
+            style={styles.screenWrapper}
+            controls={
+              <>
+                <ContentGradient backgroundColor={ColorPalette.brand.modalPrimaryBackground} height={30} />
+                <Button
+                  title={titleForConfirmButton()}
+                  accessibilityLabel={labelForConfirmButton()}
+                  testID={testIdForConfirmButton()}
+                  onPress={onSubmit}
+                  buttonType={
+                    usage === ModalUsage.ContactRemoveWithCredentials
+                      ? ButtonType.ModalPrimary
+                      : ButtonType.ModalCritical
+                  }
+                />
+                <Button
+                  title={t('Global.Cancel')}
+                  accessibilityLabel={t('Global.Cancel')}
+                  testID={testIdForCancelButton()}
+                  onPress={onCancel}
+                  buttonType={ButtonType.ModalSecondary}
+                />
+              </>
+            }
+          >
             <>
               {headerImageForType()}
               {contentForType()}
             </>
-          </ScrollView>
-          <View style={styles.controlsContainer}>
-            <ContentGradient backgroundColor={ColorPalette.brand.modalPrimaryBackground} height={30} />
-            <View style={{ paddingTop: 10 }}>
-              <Button
-                title={titleForConfirmButton()}
-                accessibilityLabel={labelForConfirmButton()}
-                testID={testIdForConfirmButton()}
-                onPress={onSubmit}
-                buttonType={
-                  usage === ModalUsage.ContactRemoveWithCredentials ? ButtonType.ModalPrimary : ButtonType.ModalCritical
-                }
-              />
-            </View>
-            <View style={{ paddingTop: 10 }}>
-              <Button
-                title={t('Global.Cancel')}
-                accessibilityLabel={t('Global.Cancel')}
-                testID={testIdForCancelButton()}
-                onPress={onCancel}
-                buttonType={ButtonType.ModalSecondary}
-              />
-            </View>
-          </View>
+          </ScreenWrapper>
         </SafeAreaView>
       </View>
     </SafeAreaModal>

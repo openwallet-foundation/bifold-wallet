@@ -22,6 +22,7 @@ type LoadingPlaceholderProps = {
   workflowType: (typeof LoadingPlaceholderWorkflowType)[keyof typeof LoadingPlaceholderWorkflowType]
   timeoutDurationInMs?: number
   loadingProgressPercent?: number
+  isCredentialLoading?: boolean
   onCancelTouched?: () => void
   onTimeoutTriggered?: () => void
   testID?: string
@@ -34,6 +35,7 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
   workflowType,
   timeoutDurationInMs = 10000,
   loadingProgressPercent = 0,
+  isCredentialLoading = false,
   onCancelTouched,
   onTimeoutTriggered,
   testID,
@@ -125,7 +127,15 @@ const LoadingPlaceholder: React.FC<LoadingPlaceholderProps> = ({
           <ThemedText variant="label" style={{ textAlign: 'center', fontWeight: 'normal' }}>
             {textForProgressIndication()}
           </ThemedText>
-          {overtime && (
+          {isCredentialLoading && (
+            <InfoTextBox type={InfoBoxType.Info} style={{ marginTop: 20 }}>
+              <View style={styles.infoTextBoxContainer}>
+                <ThemedText testID={testIdWithKey('JustAMoment')}>{t('ProofRequest.JustAMoment')}</ThemedText>
+              </View>
+            </InfoTextBox>
+          )}
+
+          {!isCredentialLoading && overtime && (
             <InfoTextBox type={InfoBoxType.Info} style={{ marginTop: 20 }}>
               <View style={styles.infoTextBoxContainer}>
                 <ThemedText

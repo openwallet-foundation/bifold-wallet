@@ -2,6 +2,7 @@ import { DefaultOCABundleResolver } from '@bifold/oca/build/legacy'
 import { getProofRequestTemplates } from '@bifold/verifier'
 import { Agent } from '@credo-ts/core'
 import React, { createContext, useContext } from 'react'
+import RNConfig from 'react-native-config'
 import { DependencyContainer } from 'tsyringe'
 
 import * as bundle from './assets/oca-bundles.json'
@@ -166,6 +167,7 @@ export class MainContainer implements Container {
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_HEADER_RIGHT, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_OPTIONS, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_CRED_LIST_FOOTER, () => null)
+    this._container.registerInstance(TOKENS.COMPONENT_CRED_SUBHEADER, () => null)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_HEADER, HomeHeaderView)
     this._container.registerInstance(TOKENS.COMPONENT_NOTIFICATION_BANNER, Banner)
     this._container.registerInstance(TOKENS.COMPONENT_HOME_NOTIFICATIONS_EMPTY_LIST, NoNewUpdates)
@@ -219,9 +221,18 @@ export class MainContainer implements Container {
         loadState<StoreOnboardingState>(LocalStorageKeys.Onboarding, (val) => (onboarding = val)),
       ])
 
+      const preferencesState = { ...defaultState.preferences, ...preferences }
+
+      if (RNConfig.MEDIATOR_URL) {
+        preferencesState.selectedMediator = RNConfig.MEDIATOR_URL
+        if (!preferencesState.availableMediators.includes(RNConfig.MEDIATOR_URL)) {
+          preferencesState.availableMediators = [RNConfig.MEDIATOR_URL, ...preferencesState.availableMediators]
+        }
+      }
+
       const state = {
         loginAttempt: { ...defaultState.loginAttempt, ...loginAttempt },
-        preferences: { ...defaultState.preferences, ...preferences },
+        preferences: preferencesState,
         migration: { ...defaultState.migration, ...migration },
         tours: { ...defaultState.tours, ...tours },
         onboarding: { ...defaultState.onboarding, ...onboarding },

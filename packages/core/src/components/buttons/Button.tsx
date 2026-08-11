@@ -5,6 +5,7 @@ import { useTheme } from '../../contexts/theme'
 
 import { ThemedText } from '../texts/ThemedText'
 import { Button, ButtonProps, ButtonType } from './Button-api'
+import { usePreventDoublePress } from '../../hooks/usePreventDoublePress'
 
 const ButtonImpl = ({
   title,
@@ -19,6 +20,7 @@ const ButtonImpl = ({
   ref,
 }: ButtonProps) => {
   const { Buttons, heavyOpacity } = useTheme()
+  const { preventDoublePress } = usePreventDoublePress()
   const buttonStyles = {
     [ButtonType.Critical]: {
       color: Buttons.critical,
@@ -73,7 +75,7 @@ const ButtonImpl = ({
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={preventDoublePress(onPress)}
       accessible
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}

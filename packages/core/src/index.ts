@@ -78,6 +78,7 @@ import { DeepPartial, ThemeBuilder } from './theme-builder'
 import * as types from './types'
 import { CredentialListFooterProps } from './types/credential-list-footer'
 import { QrCodeScanError } from './types/error'
+import { usePreventDoublePress } from './hooks/usePreventDoublePress'
 
 export { animatedComponents } from './animated-components'
 export { EventTypes, LocalStorageKeys } from './constants'
@@ -116,6 +117,7 @@ export { migrateToAskar } from './utils/migration'
 export { buildFieldsFromAnonCredsCredential } from './utils/oca'
 export { parsedSchema } from './utils/schema'
 export { testIdForAccessabilityLabel, testIdWithKey } from './utils/testable'
+import { getCredentialDefinitionIdForRecord } from './utils/helpers'
 
 export { default as OpenIDCredentialDetails } from './modules/openid/screens/OpenIDCredentialDetails'
 export { default as CredentialDetails } from './screens/CredentialDetails'
@@ -181,6 +183,7 @@ export type { DismissiblePopupModalProps } from './components/modals/Dismissible
 export type { BannerSectionProps } from './components/views/Banner'
 export { OpenIDCredentialRefreshFlowType } from './modules/openid/refresh/types'
 export type { IRefreshOrchestrator } from './modules/openid/refresh/types'
+export type { GetAttestationJWTPayload, GetAttestationJWTData } from './types/attestation'
 
 export {
   AbstractBifoldLogger,
@@ -270,7 +273,9 @@ export {
   useDeveloperMode,
   usePreventScreenCapture,
   useTour,
+  usePreventDoublePress,
   walletTimeout,
+  getCredentialDefinitionIdForRecord,
 }
 export type { BannerMessage, DeepPartial, IButton }
 

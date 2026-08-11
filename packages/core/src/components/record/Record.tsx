@@ -14,6 +14,7 @@ import { ThemedText } from '../texts/ThemedText'
 
 export interface RecordProps {
   header?: () => React.ReactElement | null
+  subHeader?: () => React.ReactElement | null
   footer?: () => React.ReactElement | null
   fields: Field[]
   hideFieldValues?: boolean
@@ -24,6 +25,7 @@ export interface RecordProps {
 
 const Record: React.FC<RecordProps> = ({
   header,
+  subHeader,
   footer,
   fields,
   hideFieldValues = false,
@@ -40,7 +42,7 @@ const Record: React.FC<RecordProps> = ({
     linkContainer: {
       ...ListItems.recordContainer,
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       paddingHorizontal: bundleResolver.getBrandingOverlayType() === BrandingOverlayType.Branding10 ? 25 : 16,
       paddingVertical: Spacing.sm,
       paddingBottom: Spacing.lg,
@@ -48,6 +50,9 @@ const Record: React.FC<RecordProps> = ({
     link: {
       minHeight: TextTheme.normal.fontSize,
       paddingVertical: 2,
+    },
+    subHeaderContainer: {
+      backgroundColor: ListItems.recordContainer.backgroundColor,
     },
   })
 
@@ -86,6 +91,7 @@ const Record: React.FC<RecordProps> = ({
         header ? (
           <RecordHeader>
             {header()}
+            {subHeader ? <View style={styles.subHeaderContainer}>{subHeader()}</View> : null}
             {hideFieldValues ? (
               <View style={styles.linkContainer}>
                 {isProofRequest && <Text style={TextTheme.headingFour}>{t('ProofRequest.DetailsHeader')}</Text>}

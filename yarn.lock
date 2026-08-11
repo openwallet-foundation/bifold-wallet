@@ -1994,16 +1994,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bifold/core@npm:3.0.16, @bifold/core@workspace:packages/core":
+"@bifold/core@npm:3.0.20, @bifold/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@bifold/core@workspace:packages/core"
   dependencies:
     "@animo-id/expo-secure-environment": "npm:0.1.5"
     "@babel/core": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/oca": "npm:3.0.16"
-    "@bifold/react-hooks": "npm:3.0.16"
-    "@bifold/verifier": "npm:3.0.16"
+    "@bifold/oca": "npm:3.0.20"
+    "@bifold/react-hooks": "npm:3.0.20"
+    "@bifold/verifier": "npm:3.0.20"
     "@credo-ts/anoncreds": "npm:0.6.3"
     "@credo-ts/askar": "npm:0.6.3"
     "@credo-ts/core": "npm:0.6.3"
@@ -2076,7 +2076,6 @@ __metadata:
     react-native-animated-pagination-dots: "npm:~0.1.73"
     react-native-bouncy-checkbox: "npm:~3.0.7"
     react-native-builder-bob: "npm:~0.21.3"
-    react-native-collapsible: "npm:~1.6.2"
     react-native-config: "npm:~1.5.5"
     react-native-confirmation-code-field: "npm:~7.3.2"
     react-native-device-info: "npm:~8.7.1"
@@ -2112,7 +2111,7 @@ __metadata:
     zustand: "npm:~4.5.4"
   peerDependencies:
     "@animo-id/expo-secure-environment": 0.1.5
-    "@bifold/react-hooks": 3.0.16
+    "@bifold/react-hooks": 3.0.20
     "@credo-ts/anoncreds": 0.6.3
     "@credo-ts/askar": 0.6.3
     "@credo-ts/core": 0.6.3
@@ -2156,7 +2155,6 @@ __metadata:
     react-native: "*"
     react-native-animated-pagination-dots: ~0.1.73
     react-native-bouncy-checkbox: ~3.0.7
-    react-native-collapsible: ~1.6.2
     react-native-config: ~1.5.5
     react-native-confirmation-code-field: ~7.3.2
     react-native-device-info: ~8.7.1
@@ -2188,7 +2186,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/oca@npm:3.0.16, @bifold/oca@workspace:packages/oca":
+"@bifold/oca@npm:3.0.20, @bifold/oca@workspace:packages/oca":
   version: 0.0.0-use.local
   resolution: "@bifold/oca@workspace:packages/oca"
   dependencies:
@@ -2211,7 +2209,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/react-hooks@npm:3.0.16, @bifold/react-hooks@workspace:packages/react-hooks":
+"@bifold/react-hooks@npm:3.0.20, @bifold/react-hooks@workspace:packages/react-hooks":
   version: 0.0.0-use.local
   resolution: "@bifold/react-hooks@workspace:packages/react-hooks"
   dependencies:
@@ -2278,7 +2276,7 @@ __metadata:
     "@babel/preset-flow": "npm:~7.27.1"
     "@babel/preset-typescript": "npm:~7.28.5"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/core": "npm:3.0.16"
+    "@bifold/core": "npm:3.0.20"
     "@credo-ts/core": "npm:0.6.3"
     "@types/jest": "npm:~29.5.12"
     "@typescript-eslint/parser": "npm:~7.18.0"
@@ -2304,12 +2302,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@bifold/verifier@npm:3.0.16, @bifold/verifier@workspace:packages/verifier":
+"@bifold/verifier@npm:3.0.20, @bifold/verifier@workspace:packages/verifier":
   version: 0.0.0-use.local
   resolution: "@bifold/verifier@workspace:packages/verifier"
   dependencies:
     "@babel/core": "npm:~7.28.6"
-    "@bifold/react-hooks": "npm:3.0.16"
+    "@bifold/react-hooks": "npm:3.0.20"
     "@credo-ts/anoncreds": "npm:0.6.3"
     "@credo-ts/core": "npm:0.6.3"
     "@credo-ts/didcomm": "npm:0.6.3"
@@ -2325,7 +2323,7 @@ __metadata:
     rimraf: "npm:~5.0.10"
     typescript: "npm:~5.9.2"
   peerDependencies:
-    "@bifold/react-hooks": 3.0.16
+    "@bifold/react-hooks": 3.0.20
     "@credo-ts/anoncreds": 0.6.3
     "@credo-ts/core": 0.6.3
     "@hyperledger/anoncreds-shared": 0.3.4
@@ -7299,9 +7297,9 @@ __metadata:
     "@babel/core": "npm:~7.28.6"
     "@babel/preset-env": "npm:~7.28.6"
     "@babel/runtime": "npm:~7.28.6"
-    "@bifold/core": "npm:3.0.16"
-    "@bifold/oca": "npm:3.0.16"
-    "@bifold/react-hooks": "npm:3.0.16"
+    "@bifold/core": "npm:3.0.20"
+    "@bifold/oca": "npm:3.0.20"
+    "@bifold/react-hooks": "npm:3.0.20"
     "@credo-ts/anoncreds": "npm:0.6.3"
     "@credo-ts/askar": "npm:0.6.3"
     "@credo-ts/core": "npm:0.6.3"
@@ -7364,7 +7362,6 @@ __metadata:
     react-native: "npm:*"
     react-native-animated-pagination-dots: "npm:~0.1.73"
     react-native-bouncy-checkbox: "npm:~3.0.7"
-    react-native-collapsible: "npm:~1.6.2"
     react-native-config: "npm:~1.5.5"
     react-native-confirmation-code-field: "npm:~7.3.2"
     react-native-device-info: "npm:~8.7.1"
@@ -14932,16 +14929,6 @@ __metadata:
   bin:
     bob: bin/bob
   checksum: 10c0/46f026e1024814430fe7b68b5da3cf5d6f38aa72fcd1a351c2bb5590795544a8254a3cb07f47d114f253cadf9f85961901d66e664a147f8f1562a87421001089
-  languageName: node
-  linkType: hard
-
-"react-native-collapsible@npm:~1.6.2":
-  version: 1.6.2
-  resolution: "react-native-collapsible@npm:1.6.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/883066df85d11960a038661a684dba15000d685ff01628cf2a3c35ec9e80b6ba690ea13062ef0332e979219119cf9cf14a2bd5ea9e4ace750c3e5baa05d774d1
   languageName: node
   linkType: hard
 

@@ -1,5 +1,37 @@
 # Change Log
 
+## 3.0.20
+
+### Patch Changes
+
+- Updated dependencies [b82c437]
+- Updated dependencies [0395522]
+  - @bifold/core@3.0.20
+
+## 3.0.19
+
+### Patch Changes
+
+- Updated dependencies [495c28b]
+- Updated dependencies [3dee0f8]
+  - @bifold/core@3.0.19
+
+## 3.0.18
+
+### Patch Changes
+
+- Updated dependencies [be89bdd]
+- Updated dependencies [26f1ec5]
+  - @bifold/core@3.0.18
+
+## 3.0.17
+
+### Patch Changes
+
+- Updated dependencies [f8b07b0]
+- Updated dependencies [981a18c]
+  - @bifold/core@3.0.17
+
 ## 3.0.16
 
 ### Patch Changes
