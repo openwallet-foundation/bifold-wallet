@@ -22,22 +22,6 @@ export const isOpenIDCredentialRecord = (value: unknown): value is OpenIDCredent
 export const isOpenIdProofRequestRecord = (value: unknown): value is OpenId4VPRequestRecord =>
   !!value && typeof value === 'object' && 'type' in value && value.type === 'OpenId4VPRequestRecord'
 
-export const getOpenIDCredentialType = (record: OpenIDCredentialRecord): OpenIDCredentialRecordType => {
-  if (record instanceof SdJwtVcRecord) {
-    return OpenIDCredentialType.SdJwtVc
-  }
-
-  if (record instanceof MdocRecord) {
-    return OpenIDCredentialType.Mdoc
-  }
-
-  if (record instanceof W3cV2CredentialRecord) {
-    return 'W3cV2CredentialRecord'
-  }
-
-  return OpenIDCredentialType.W3cCredential
-}
-
 export const getOpenIDCredentialClaimFormat = (record: OpenIDCredentialRecord): ClaimFormat => {
   if (record instanceof SdJwtVcRecord) {
     return ClaimFormat.SdJwtW3cVc

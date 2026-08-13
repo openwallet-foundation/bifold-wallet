@@ -4,7 +4,6 @@ import {
   findOpenIDCredentialById,
   getOpenIDCredentialClaimFormat,
   getOpenIDCredentialById,
-  getOpenIDCredentialType,
   isOpenIDCredentialRecord,
   isOpenIdProofRequestRecord,
   storeOpenIDCredential,
@@ -32,18 +31,6 @@ describe('credentialRecord helpers', () => {
     expect(isOpenIdProofRequestRecord({ type: 'OpenId4VPRequestRecord' })).toBe(true)
     expect(isOpenIdProofRequestRecord({ type: 'OtherRecord' })).toBe(false)
     expect(isOpenIdProofRequestRecord(undefined)).toBe(false)
-  })
-
-  test('getOpenIDCredentialType returns the correct credential type for each record', () => {
-    const w3cRecord = createRecord(W3cCredentialRecord.prototype)
-    const w3cV2Record = createRecord(W3cV2CredentialRecord.prototype)
-    const sdJwtRecord = createRecord(SdJwtVcRecord.prototype)
-    const mdocRecord = createRecord(MdocRecord.prototype)
-
-    expect(getOpenIDCredentialType(w3cRecord)).toBe(OpenIDCredentialType.W3cCredential)
-    expect(getOpenIDCredentialType(w3cV2Record)).toBe('W3cV2CredentialRecord')
-    expect(getOpenIDCredentialType(sdJwtRecord)).toBe(OpenIDCredentialType.SdJwtVc)
-    expect(getOpenIDCredentialType(mdocRecord)).toBe(OpenIDCredentialType.Mdoc)
   })
 
   test('getOpenIDCredentialClaimFormat returns fixed formats for sd-jwt and mdoc records', () => {
