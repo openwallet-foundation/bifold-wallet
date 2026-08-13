@@ -1,11 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 import { renderHook, waitFor } from '@testing-library/react-native'
-import {
-  ClaimFormat,
-  MdocRecord,
-  SdJwtVcRecord,
-  W3cCredentialRecord,
-} from '@credo-ts/core'
+import { ClaimFormat, MdocRecord, SdJwtVcRecord, W3cCredentialRecord } from '@credo-ts/core'
 
 import {
   OpenIDCredentialRecordProvider,
@@ -20,8 +15,6 @@ import {
   getOpenIDCredentialById,
   storeOpenIDCredential,
 } from '../../../src/modules/openid/credentialRecord'
-import { getCredentialForDisplay } from '../../../src/modules/openid/display'
-import { buildFieldsFromW3cCredsCredential } from '../../../src/utils/oca'
 import { recordsAddedByType, recordsRemovedByType } from '@bifold/react-hooks/build/recordUtils'
 
 jest.mock('../../../src/utils/agent', () => ({
@@ -31,7 +24,6 @@ jest.mock('../../../src/utils/agent', () => ({
 jest.mock('../../../src/container-api', () => ({
   TOKENS: {
     UTIL_LOGGER: 'UTIL_LOGGER',
-    UTIL_OCA_RESOLVER: 'UTIL_OCA_RESOLVER',
   },
   useServices: jest.fn(),
 }))
@@ -43,23 +35,9 @@ jest.mock('../../../src/modules/openid/credentialRecord', () => ({
   deleteOpenIDCredential: jest.fn(),
 }))
 
-jest.mock('../../../src/modules/openid/display', () => ({
-  getCredentialForDisplay: jest.fn(),
-}))
-
-jest.mock('../../../src/utils/oca', () => ({
-  buildFieldsFromW3cCredsCredential: jest.fn(),
-}))
-
 jest.mock('@bifold/react-hooks/build/recordUtils', () => ({
   recordsAddedByType: jest.fn(),
   recordsRemovedByType: jest.fn(),
-}))
-
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    i18n: { language: 'en' },
-  }),
 }))
 
 const createRecord = <T extends object>(prototype: T, values: Record<string, unknown> = {}) =>
@@ -71,18 +49,12 @@ const mockGetOpenIDCredentialById = getOpenIDCredentialById as jest.Mock
 const mockFindOpenIDCredentialById = findOpenIDCredentialById as jest.Mock
 const mockStoreOpenIDCredential = storeOpenIDCredential as jest.Mock
 const mockDeleteOpenIDCredential = deleteOpenIDCredential as jest.Mock
-const mockGetCredentialForDisplay = getCredentialForDisplay as jest.Mock
-const mockBuildFieldsFromW3cCredsCredential = buildFieldsFromW3cCredsCredential as jest.Mock
 const mockRecordsAddedByType = recordsAddedByType as jest.Mock
 const mockRecordsRemovedByType = recordsRemovedByType as jest.Mock
 
 describe('OpenIDCredentialRecordProvider', () => {
   const logger = {
     error: jest.fn(),
-  }
-
-  const bundleResolver = {
-    resolveAllBundles: jest.fn(),
   }
 
   const createAgentMock = ({
@@ -111,8 +83,8 @@ describe('OpenIDCredentialRecordProvider', () => {
     jest.clearAllMocks()
 
     mockUseServices.mockImplementation((tokens) => {
-      expect(tokens).toEqual([TOKENS.UTIL_LOGGER, TOKENS.UTIL_OCA_RESOLVER])
-      return [logger, bundleResolver]
+      expect(tokens).toEqual([TOKENS.UTIL_LOGGER])
+      return [logger]
     })
 
     const createSubscription = () => ({
@@ -187,7 +159,9 @@ describe('OpenIDCredentialRecordProvider', () => {
     await expect(result.current.getW3CCredentialById('w3c-id')).resolves.toBe(w3cRecord)
     await expect(result.current.getSdJwtCredentialById('sd-jwt-id')).resolves.toBe(sdJwtRecord)
     await expect(result.current.getMdocCredentialById('mdoc-id')).resolves.toBe(mdocRecord)
-    await expect(result.current.getCredentialById('w3c-id', OpenIDCredentialType.W3cCredential)).resolves.toBe(w3cRecord)
+    await expect(result.current.getCredentialById('w3c-id', OpenIDCredentialType.W3cCredential)).resolves.toBe(
+      w3cRecord
+    )
     await expect(result.current.getCredentialById('sd-jwt-id')).resolves.toBe(sdJwtRecord)
 
     await result.current.storeCredential(w3cRecord)
@@ -199,60 +173,5 @@ describe('OpenIDCredentialRecordProvider', () => {
     expect(mockFindOpenIDCredentialById).toHaveBeenCalledWith(agent, 'sd-jwt-id')
     expect(mockStoreOpenIDCredential).toHaveBeenCalledWith(agent, w3cRecord)
     expect(mockDeleteOpenIDCredential).toHaveBeenCalledWith(agent, sdJwtRecord)
-  })
-
-  test('resolveBundleForCredential merges display branding with resolved OCA bundle', async () => {
-    const agent = createAgentMock()
-    const w3cRecord = createRecord(W3cCredentialRecord.prototype, { id: 'cred-1' })
-    const display = {
-      id: 'display-id',
-      display: {
-        issuer: { name: 'Issuer Inc.' },
-        name: 'OpenID Credential',
-        backgroundColor: '#0a7f3f',
-        backgroundImage: { uri: 'https://example.com/background.png' },
-        logo: { uri: 'https://example.com/logo.png' },
-      },
-    }
-    const fields = [{ name: 'given_name', value: 'Ada' }]
-    const resolvedBundle = {
-      presentationFields: [{ label: 'Given Name' }],
-      brandingOverlay: { type: 'original-branding' },
-    }
-
-    mockUseAppAgent.mockReturnValue({ agent })
-    mockGetCredentialForDisplay.mockReturnValue(display)
-    mockBuildFieldsFromW3cCredsCredential.mockReturnValue(fields)
-    bundleResolver.resolveAllBundles.mockResolvedValue(resolvedBundle)
-
-    const { result } = renderHook(() => useOpenIDCredentials(), { wrapper })
-
-    await waitFor(() => {
-      expect(result.current.openIdState.isLoading).toBe(false)
-    })
-
-    const bundle = await result.current.resolveBundleForCredential(w3cRecord)
-
-    expect(mockGetCredentialForDisplay).toHaveBeenCalledWith(w3cRecord)
-    expect(mockBuildFieldsFromW3cCredsCredential).toHaveBeenCalledWith(display, undefined, 'en')
-    expect(bundleResolver.resolveAllBundles).toHaveBeenCalledWith({
-      identifiers: {
-        schemaId: '',
-        credentialDefinitionId: 'display-id',
-      },
-      meta: {
-        alias: 'Issuer Inc.',
-        credConnectionId: undefined,
-        credName: 'OpenID Credential',
-      },
-      attributes: fields,
-      language: 'en',
-    })
-
-    expect(bundle.presentationFields).toEqual(resolvedBundle.presentationFields)
-    expect(bundle.brandingOverlay).toBeDefined()
-    expect(bundle.brandingOverlay?.primaryBackgroundColor).toBe('#0a7f3f')
-    expect(bundle.brandingOverlay?.backgroundImage).toBe('https://example.com/background.png')
-    expect(bundle.brandingOverlay?.logo).toBe('https://example.com/logo.png')
   })
 })
