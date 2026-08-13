@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.22
+
+### Patch Changes
+
+- 7d34e0a: Update accessibility label for credential card
+- f0db662: added support work for proof expiration configuration
+  - @bifold/react-hooks@3.0.22
+
 ## 3.0.21
 
 ### Patch Changes
