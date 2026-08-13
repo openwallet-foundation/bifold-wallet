@@ -81,7 +81,7 @@ import { QrCodeScanError } from './types/error'
 import { usePreventDoublePress } from './hooks/usePreventDoublePress'
 
 export { animatedComponents } from './animated-components'
-export { EventTypes, LocalStorageKeys } from './constants'
+export { EventTypes, LocalStorageKeys, ProofRequestExpirationTime } from './constants'
 export { AnimatedComponentsProvider, useAnimatedComponents } from './contexts/animated-components'
 export { useAuth } from './contexts/auth'
 export { useNetwork } from './contexts/network'

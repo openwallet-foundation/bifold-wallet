@@ -56,6 +56,7 @@ export const defaultState: State = {
     enableShareableLink: false,
     alternateContactNames: {},
     autoLockTime: undefined, // default wallets lockout time to 5 minutes
+    proofRequestExpirationMs: undefined, // default resolves to ProofRequestExpirationTime.FortyEightHours
     availableMediators: [Config.MEDIATOR_URL ?? ''],
     selectedMediator: Config.MEDIATOR_URL ?? '',
     bannerMessages: [],

@@ -1,5 +1,7 @@
+import { BannerMessage } from 'components/views/Banner'
+import lodash from 'lodash'
 import Config from 'react-native-config'
-import { LocalStorageKeys } from '../../constants'
+import { LocalStorageKeys, ProofRequestExpirationTime } from '../../constants'
 import { storeLoginAttempt } from '../../services/keychain'
 import { PersistentStorage } from '../../services/storage'
 import {
@@ -14,8 +16,6 @@ import {
   Tours as ToursState,
 } from '../../types/state'
 import { generateRandomWalletName } from '../../utils/helpers'
-import lodash from 'lodash'
-import { BannerMessage } from 'components/views/Banner'
 
 enum StateDispatchAction {
   STATE_DISPATCH = 'state/stateDispatch',
@@ -62,6 +62,7 @@ enum PreferencesDispatchAction {
   USE_SHAREABLE_LINK = 'preferences/useShareableLink',
   UPDATE_ALTERNATE_CONTACT_NAMES = 'preferences/updateAlternateContactNames',
   AUTO_LOCK_TIME = 'preferences/autoLockTime',
+  PROOF_REQUEST_EXPIRATION_TIME = 'preferences/proofRequestExpirationTime',
   SET_THEME = 'preferences/setTheme',
   SET_SELECTED_MEDIATOR = 'preferences/setSelectedMediator',
   ADD_AVAILABLE_MEDIATOR = 'preferences/addAvailableMediator',
@@ -94,7 +95,7 @@ enum AppStatusDispatchAction {
 }
 
 enum AttestationDispatchAction {
-  SET_ATTESTATION_COMPLETED = 'attestation/setAttestationCompleted'
+  SET_ATTESTATION_COMPLETED = 'attestation/setAttestationCompleted',
 }
 
 export type DispatchAction =
@@ -545,6 +546,19 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
         preferences,
       }
     }
+    case PreferencesDispatchAction.PROOF_REQUEST_EXPIRATION_TIME: {
+      const proofRequestExpirationMs = (action?.payload ?? []).pop() ?? ProofRequestExpirationTime.FortyEightHours
+      const preferences: Preferences = {
+        ...state.preferences,
+        proofRequestExpirationMs,
+      }
+      PersistentStorage.storeValueForKey(LocalStorageKeys.Preferences, preferences)
+
+      return {
+        ...state,
+        preferences,
+      }
+    }
     case PreferencesDispatchAction.SET_SELECTED_MEDIATOR: {
       const selectedMediator = (action?.payload ?? []).pop() ?? state.preferences.selectedMediator
       const preferences: Preferences = {
@@ -785,8 +799,8 @@ export const reducer = <S extends State>(state: S, action: ReducerAction<Dispatc
       return {
         ...state,
         attestation: {
-          isAttestationComplete
-        }
+          isAttestationComplete,
+        },
       }
     }
     default:
