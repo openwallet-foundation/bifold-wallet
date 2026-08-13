@@ -1,10 +1,10 @@
-import { Tours } from './contexts/tour/tour-context'
-import { PINValidationRules } from './types/security'
-import { homeTourSteps } from './components/tour/HomeTourSteps'
-import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
 import { credentialOfferTourSteps } from './components/tour/CredentialOfferTourSteps'
+import { credentialsTourSteps } from './components/tour/CredentialsTourSteps'
+import { homeTourSteps } from './components/tour/HomeTourSteps'
 import { proofRequestTourSteps } from './components/tour/ProofRequestTourSteps'
+import { Tours } from './contexts/tour/tour-context'
 import { AttemptLockoutConfig } from './types/attempt-lockout-config'
+import { PINValidationRules } from './types/security'
 
 const lengthOfHiddenAttributes = 10
 const unicodeForBulletCharacter = '\u2022'
@@ -27,7 +27,7 @@ export enum LocalStorageKeys {
   HistorySettingsOption = 'historySettingsOption',
   Language = 'language',
   AttestationKey = 'AttestationKey',
-  AttestationConfigured = 'AttestationConfigured'
+  AttestationConfigured = 'AttestationConfigured',
 }
 
 export enum KeychainServices {
@@ -76,6 +76,15 @@ export const attemptLockoutConfig: AttemptLockoutConfig = {
 }
 
 export const defaultAutoLockTime = 5
+// number of milliseconds before a proof request notification is auto declined
+// a value of 0 disables workflow
+export const ProofRequestExpirationTime = {
+  TwoMinutes: 2 * 60 * 1000,
+  OneHour: 60 * 60 * 1000,
+  FortyEightHours: 48 * 60 * 60 * 1000,
+  SevenDays: 7 * 24 * 60 * 60 * 1000,
+  Never: 0,
+} as const
 export const tours: Tours = {
   homeTourSteps,
   credentialsTourSteps,
@@ -100,12 +109,7 @@ export const PINRules: PINValidationRules = {
   no_even_or_odd_series_of_numbers: false,
   no_cross_pattern: false,
   most_used_pins: false,
-  unacceptable_pin_list: [
-    '123456',
-    '111111',
-    '000000',
-    '123123',
-  ]
+  unacceptable_pin_list: ['123456', '111111', '000000', '123123'],
 }
 
 export const domain = 'didcomm://invite'
