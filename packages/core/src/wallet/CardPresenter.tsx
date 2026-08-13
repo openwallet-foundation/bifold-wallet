@@ -4,6 +4,7 @@ import Card10Pure from '../components/misc/Card10Pure'
 import Card11Pure from '../components/misc/Card11Pure'
 
 type Props = {
+  cardAccessibilityLabel?: string
   data: WalletCredentialCardData
   onPress?: () => void
   hasAltCredentials?: boolean

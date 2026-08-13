@@ -14,6 +14,7 @@ import CredentialCardAttributeList from './CredentialCardAttributeList'
 import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
 
 type Props = {
+  cardAccessibilityLabel?: string
   data: WalletCredentialCardData
   onPress?: () => void
   hasAltCredentials?: boolean
@@ -21,7 +22,7 @@ type Props = {
   elevated?: boolean
 }
 
-const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
+const Card11Pure: React.FC<Props> = ({cardAccessibilityLabel, data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const { branding, proofContext, hideSlice } = data
@@ -35,7 +36,7 @@ const Card11Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   const list = data.items
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color
   const issuerAccessibilityLabel = data.issuerName ? `Issued by ${data.issuerName}` : ''
-  const accessibilityLabel =
+  const accessibilityLabel = cardAccessibilityLabel ? cardAccessibilityLabel :
     `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
     list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
 

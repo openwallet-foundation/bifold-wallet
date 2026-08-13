@@ -506,7 +506,8 @@
     "EmptyList": "Sua carteira está vazia. Suas credenciais aceitas serão adicionadas aqui.",
     "IssuedBy": "Emitida por",
     "Issued": "Issued (PT-BR)",
-    "Credential": "credencial"
+    "Credential": "credencial",
+    "CredentialCardAccessibilityLabel": "{{cardName}} from {{issuerName}} (PT-BR)"
   },
   "PushNotifications": {
     "EnableNotifications": "Enable Notifications to get instant alerts (PT-BR)",
