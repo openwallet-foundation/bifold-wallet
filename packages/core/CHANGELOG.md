@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.0.21
+
+### Patch Changes
+
+- 41c2c54: Update autolock timer accessibility label in settings
+- a98a6d6: updated remove credential UI
+  - @bifold/react-hooks@3.0.21
+
 ## 3.0.20
 
 ### Patch Changes
