@@ -1,5 +1,4 @@
 import { getDomainFromUrl } from '@credo-ts/core'
-import { Attribute, Field } from '@bifold/oca/build/legacy'
 import { OpenId4VciResolvedCredentialOffer } from '@credo-ts/openid4vc'
 
 /**
@@ -24,21 +23,6 @@ export function getHostNameFromUrl(url: string) {
   } catch (error) {
     throw new Error(`Error getting hostname from url: ${error}`)
   }
-}
-
-export const buildFieldsFromOpenIDTemplate = (data: { [key: string]: unknown }): Array<Field> => {
-  const fields = []
-  for (const key of Object.keys(data)) {
-    // omit id and type
-    if (key === 'id' || key === 'type') continue
-
-    let pushedVal: string | number | null = null
-    if (typeof data[key] === 'string' || typeof data[key] === 'number') {
-      pushedVal = data[key] as string | number | null
-    }
-    fields.push(new Attribute({ name: key, value: pushedVal }))
-  }
-  return fields
 }
 
 export function formatDate(input: string | Date): string {
@@ -105,20 +89,6 @@ export function isDateString(value: string) {
   return value.length === 'yyyy-mm-dd'.length && value.match(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/)
 }
 
-export function isW3CProofRequest(type: string): boolean {
-  if (type === 'jwt_vc') {
-    return true
-  }
-  return false
-}
-
-export function isSdJwtProofRequest(type: string): boolean {
-  if (type === 'vc+sd-jwt') {
-    return true
-  }
-  return false
-}
-
 export function getCredentialConfigurationIds(resolved: OpenId4VciResolvedCredentialOffer): string[] {
   const fromOffered = (resolved.credentialOfferPayload.credential_configuration_ids ?? []).filter((x): x is string => !!x)
 
@@ -131,58 +101,3 @@ export function getCredentialConfigurationIds(resolved: OpenId4VciResolvedCreden
 
   return []
 }
-
-// TODO: This is pretty broken and seemingly not used anywhere, do we actually still need this?
-
-/*
-export function buildResolvedOfferFromMeta(meta: RefreshCredentialMetadata): OpenId4VciResolvedCredentialOffer {
-  
-  
-  const { credentialIssuer, credentialConfigurationId, tokenEndpoint, authServer, issuerMetadataCache } = meta
-
-  const supported = issuerMetadataCache.credential_configurations_supported?.[credentialConfigurationId]
-  if (!supported) {
-    throw new Error(`No cached supported config for "${credentialConfigurationId}"`)
-  }
-
-  // Derive an "offeredCredential" object from the supported config.
-  // (Keys differ slightly between the two sections, so we map minimally.)
-  const offered = {
-    id: credentialConfigurationId,
-    format: supported.format,
-    cryptographic_binding_methods_supported: supported.cryptographic_binding_methods_supported,
-    // These two are optional; include them if present in your issuer’s metadata
-    credentialSubject: supported.credential_definition?.credentialSubject,
-    types: supported.credential_definition?.type,
-    // If you want, you can also map signing algs:
-    cryptographic_suites_supported: supported.credential_signing_alg_values_supported,
-    // display omitted per your preference
-  }
-
-  const credentialOffer: OpenId4VciResolvedCredentialOffer = {
-    metadata: {
-      issuer: credentialIssuer,
-      token_endpoint: tokenEndpoint ?? issuerMetadataCache.token_endpoint, // top-level field
-      credential_endpoint: issuerMetadataCache.credential_endpoint, // top-level field
-      authorization_server: authServer, // singular string
-      // keep full issuer metadata (with its own authorization_servers array)
-      credentialIssuerMetadata: {
-        ...issuerMetadataCache,
-        // make sure credential_configurations_supported at least contains our chosen one
-        credential_configurations_supported: {
-          [credentialConfigurationId]: supported,
-        },
-      },
-    },
-    // Offered credential “instances”
-    offeredCredentials: [offered],
-    // Optional but nice to include to mirror your resolver’s output
-    offeredCredentialConfigurations: {
-      [credentialConfigurationId]: supported,
-    },
-    version: 1011, // optional; include if your types expect it
-  }
-
-  return credentialOffer
-}
-*/

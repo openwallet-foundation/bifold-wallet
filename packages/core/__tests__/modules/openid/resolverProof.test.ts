@@ -1,9 +1,5 @@
 import { Linking } from 'react-native'
-import {
-  fetchInvitationDataUrl,
-  getCredentialsForProofRequest,
-  shareProof,
-} from '../../../src/modules/openid/resolverProof'
+import { getCredentialsForProofRequest, shareProof } from '../../../src/modules/openid/resolverProof'
 
 jest.mock('react-native', () => ({
   Linking: {
@@ -14,7 +10,6 @@ jest.mock('react-native', () => ({
 describe('getCredentialsForProofRequest', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    global.fetch = jest.fn() as jest.Mock
   })
 
   test('forwards a raw authorization request string unchanged', async () => {
@@ -55,70 +50,6 @@ describe('getCredentialsForProofRequest', () => {
     })
 
     expect(resolveOpenId4VpAuthorizationRequest).toHaveBeenCalledWith(request)
-  })
-
-  test('parses a fetched didcomm invitation from json', async () => {
-    const fetchMock = global.fetch as jest.Mock
-
-    fetchMock.mockResolvedValue({
-      ok: true,
-      headers: {
-        get: jest.fn().mockReturnValue('application/json'),
-      },
-      json: jest.fn().mockResolvedValue({
-        '@type': 'https://didcomm.org/out-of-band/2.0/invitation',
-        id: 'invitation-id',
-      }),
-    })
-
-    await expect(fetchInvitationDataUrl('https://example.com/invitation')).resolves.toEqual({
-      success: true,
-      result: {
-        format: 'parsed',
-        type: 'didcomm',
-        data: {
-          '@type': 'https://didcomm.org/out-of-band/2.0/invitation',
-          id: 'invitation-id',
-        },
-      },
-    })
-  })
-
-  test('parses a fetched authorization request from text', async () => {
-    const jwt = 'eyJhbGciOiJFZERTQSJ9.payload.signature'
-    const fetchMock = global.fetch as jest.Mock
-
-    fetchMock.mockResolvedValue({
-      ok: true,
-      headers: {
-        get: jest.fn().mockReturnValue('text/plain'),
-      },
-      text: jest.fn().mockResolvedValue(jwt),
-    })
-
-    await expect(fetchInvitationDataUrl('https://example.com/request')).resolves.toEqual({
-      success: true,
-      result: {
-        format: 'parsed',
-        type: 'openid-authorization-request',
-        data: jwt,
-      },
-    })
-  })
-
-  test('wraps invitation fetch failures with a retrieval error', async () => {
-    const fetchMock = global.fetch as jest.Mock
-
-    fetchMock.mockResolvedValue({
-      ok: false,
-      headers: {
-        get: jest.fn(),
-      },
-    })
-
-    await expect(fetchInvitationDataUrl('https://example.com/fail')).rejects.toThrow(
-      '[retrieve_invitation_error] Unable to retrieve invitation'
-    )
   })
 
   test('returns a request record with verifier hostname extracted from response_uri', async () => {

@@ -213,12 +213,6 @@ export function setRefreshCredentialMetadata(
   credentialRecord.metadata.set(refreshCredentialMetadataKey, metadata)
 }
 
-export function deleteRefreshCredentialMetadata(
-  credentialRecord: OpenIDCredentialRecord
-) {
-  credentialRecord.metadata.delete(refreshCredentialMetadataKey)
-}
-
 export async function persistCredentialRecord(
   agentContext: AgentContext,
   record: OpenIDCredentialRecord
