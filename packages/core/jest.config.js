@@ -1,5 +1,6 @@
 module.exports = {
-  preset: 'react-native',
+  preset: '@react-native/jest-preset',
+  resolver: '<rootDir>/node_modules/react-native-worklets/jest/resolver.js',
   testTimeout: 12000,
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   setupFiles: [],
@@ -10,18 +11,17 @@ module.exports = {
       '<rootDir>/__mocks__/file.js',
     '\\.(css|less)$': '<rootDir>/__mocks__/style.js',
     axios: require.resolve('axios'),
+    '^@verifiables/request-converter$': '<rootDir>/node_modules/@verifiables/request-converter/dist/index.js',
     'react-i18next': '<rootDir>/__mocks__/react-i18next.ts',
     '^uuid$': require.resolve('uuid'),
     '^@bifold/oca$': '<rootDir>/../oca/src/index.ts',
     '^@bifold/verifier$': '<rootDir>/../verifier/src/index.ts',
-    'expo-crypto': '<rootDir>/__mocks__/@expo/expo-crypto.js',
-    '@expo/app-integrity': '<rootDir>/__mocks__/@expo/app-integrity.js'
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(.*react-native.*|@credo-ts|@openid4vc|@noble|@stablelib|@digitalcredentials|dcql|valibot|query-string|decode-uri-component|filter-obj|split-on-first|uuid|@bifold|expo(nent)?|@expo(nent)?/.*)/)',
+    'node_modules/(?!(.*react-native.*|@credo-ts|@openid4vc|@scure|@verifiables|@owf|cbor-x|cbor-extract|@noble|@stablelib|@digitalcredentials|dcql|valibot|query-string|decode-uri-component|filter-obj|split-on-first|uuid|@bifold)/)',
   ],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$',
   testPathIgnorePatterns: [

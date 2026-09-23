@@ -3,7 +3,7 @@ import { BaseLogger, LogLevel } from '@credo-ts/core'
 import { BifoldError } from '../types/error'
 
 export abstract class AbstractBifoldLogger extends BaseLogger {
-  public logLevel: LogLevel = LogLevel.debug
+  public logLevel: LogLevel = LogLevel.Debug
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected _log: any
   protected _config = {

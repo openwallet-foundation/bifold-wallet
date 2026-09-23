@@ -1,0 +1,49 @@
+{
+  "name": "@bifold/expo-attestation",
+  "version": "3.0.22",
+  "description": "Expo-backed AttestationProvider for @bifold/core",
+  "main": "build/commonjs/index.js",
+  "module": "build/module/index.js",
+  "types": "build/typescript/index.d.ts",
+  "files": [
+    "build",
+    "src"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "directory": "packages/expo-attestation"
+  },
+  "scripts": {
+    "build": "echo 'building expo-attestation 🏗️' && yarn run clean && yarn run bob build && echo 'expo-attestation built ✅'",
+    "clean": "rimraf ./build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@expo/app-integrity": "~57.0.1",
+    "expo-crypto": "~57.0.1",
+    "react-native": "*",
+    "react-native-uuid": "~2.0.4"
+  },
+  "devDependencies": {
+    "@expo/app-integrity": "~57.0.1",
+    "@types/react": "~19.2.18",
+    "expo-crypto": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-builder-bob": "~0.40.13",
+    "react-native-uuid": "~2.0.4",
+    "rimraf": "~5.0.10",
+    "typescript": "~5.9.2"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "build",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  }
+}

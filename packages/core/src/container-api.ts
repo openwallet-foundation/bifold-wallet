@@ -24,7 +24,7 @@ import { SplashProps } from './screens/Splash'
 import UpdateAvailable from './screens/UpdateAvailable'
 import { AgentBridge } from './services/AgentBridge'
 import { BifoldLogger } from './services/logger'
-import { AttestationMonitor } from './types/attestation'
+import { AttestationMonitor, AttestationProvider } from './types/attestation'
 import { CredentialProvisioningMonitor } from './types/auto-credential'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { CredentialListFooterProps } from './types/credential-list-footer'
@@ -164,6 +164,7 @@ export const ATTESTATION_TOKENS = {
   ATTESTATION_FUNCTIONS: 'attestation.functions',
   FN_ATTESTATION_GET_CHALLENGE: 'attestation.get-challenge',
   FN_ATTESTATION_GET_JWT: 'attestation.get-jwt',
+  ATTESTATION_PROVIDER: 'attestation.provider',
 } as const
 
 export const TOKENS = {
@@ -257,6 +258,7 @@ export type TokenMapping = {
   [TOKENS.FN_PIN_HASH_ALGORITHM]: FN_PIN_HASH_ALGORITHM
   [TOKENS.FN_ATTESTATION_GET_CHALLENGE]: FN_ATTESTATION_GET_CHALLENGE
   [TOKENS.FN_ATTESTATION_GET_JWT]: FN_ATTESTATION_GET_JWT
+  [TOKENS.ATTESTATION_PROVIDER]: AttestationProvider
 }
 
 export interface Container {

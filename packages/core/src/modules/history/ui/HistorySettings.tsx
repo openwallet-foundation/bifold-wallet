@@ -100,7 +100,7 @@ const HistorySettings: React.FC<HistorySettingsProps> = () => {
     } catch {
       //TODO: Impliment Alert
       // console.log('Error:', e)
-      //   log(`[${SettingsActivityHistory.name}]: Handle history save: ${e}`, LogLevel.error)
+      //   log(`[${SettingsActivityHistory.name}]: Handle history save: ${e}`, LogLevel.Error)
       //   Toast.show({
       //     type: 'error',
       //     text1: (e as Error)?.message || t('Global.Failure'),

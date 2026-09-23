@@ -36,7 +36,7 @@ export class RemoteLogger extends AbstractBifoldLogger {
   private lokiLabels: Record<string, string>
   private remoteLoggingAutoDisableTimer: ReturnType<typeof setTimeout> | undefined
   private eventListener: EmitterSubscription | undefined
-  private _baseLogLevel: LogLevel = LogLevel.debug
+  private _baseLogLevel: LogLevel = LogLevel.Debug
 
   constructor(options: RemoteLoggerOptions) {
     super()
@@ -83,7 +83,7 @@ export class RemoteLogger extends AbstractBifoldLogger {
         )
       }
       // Override to most verbose when remote logging active
-      this.logLevel = LogLevel.debug
+      this.logLevel = LogLevel.Debug
     } else {
       this._sessionId = undefined
       if (this.remoteLoggingAutoDisableTimer) {
@@ -184,43 +184,43 @@ export class RemoteLogger extends AbstractBifoldLogger {
 
   // Standardized logging methods with consistent overloads
   public test: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
-    if (!this.isEnabled(LogLevel.debug)) return
+    if (!this.isEnabled(LogLevel.Debug)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.test?.({ message, data, error: actualError })
   }
 
   public trace: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
-    if (!this.isEnabled(LogLevel.debug)) return
+    if (!this.isEnabled(LogLevel.Debug)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.trace?.({ message, data, error: actualError })
   }
 
   public debug: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
-    if (!this.isEnabled(LogLevel.debug)) return
+    if (!this.isEnabled(LogLevel.Debug)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.debug?.({ message, data, error: actualError })
   }
 
   public info: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
-    if (!this.isEnabled(LogLevel.info)) return
+    if (!this.isEnabled(LogLevel.Info)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.info?.({ message, data, error: actualError })
   }
 
   public warn: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
-    if (!this.isEnabled(LogLevel.warn)) return
+    if (!this.isEnabled(LogLevel.Warn)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.warn?.({ message, data, error: actualError })
   }
 
   public error: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
-    if (!this.isEnabled(LogLevel.error)) return
+    if (!this.isEnabled(LogLevel.Error)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.error?.({ message, data, error: actualError })
   }
 
   public fatal: LogMethod = (message: string, dataOrError?: Record<string, unknown> | Error, error?: Error): void => {
-    if (!this.isEnabled(LogLevel.fatal)) return
+    if (!this.isEnabled(LogLevel.Fatal)) return
     const { data, actualError } = this.parseLogArguments(dataOrError, error)
     this._log?.fatal?.({ message, data, error: actualError })
   }

@@ -31,21 +31,21 @@
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
-    "@credo-ts/core": "0.6.3",
-    "@credo-ts/didcomm": "0.6.3",
-    "@credo-ts/question-answer": "0.6.3",
+    "@credo-ts/core": "0.7.0",
+    "@credo-ts/didcomm": "0.7.0",
+    "@credo-ts/question-answer": "0.7.0",
     "@jest/types": "^29.6.3",
     "@types/jest": "^29.5.12",
-    "@types/react": "^18.2.14",
+    "@types/react": "~19.2.18",
     "jest": "^29.7.0",
     "rimraf": "^6.1.2",
     "ts-jest": "^29.2.5",
     "typescript": "~5.3.3"
   },
   "peerDependencies": {
-    "@credo-ts/core": "0.6.3",
-    "@credo-ts/didcomm": "0.6.3",
-    "@credo-ts/question-answer": "0.6.3",
-    "react": ">=17.0.0 <19.0.0"
+    "@credo-ts/core": "0.7.0",
+    "@credo-ts/didcomm": "0.7.0",
+    "@credo-ts/question-answer": "0.7.0",
+    "react": "19.2.3"
   }
 }

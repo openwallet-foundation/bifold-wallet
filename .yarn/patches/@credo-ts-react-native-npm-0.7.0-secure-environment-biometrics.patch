@@ -1,8 +1,8 @@
 diff --git a/build/kms/SecureEnvironmentKeyManagementService.d.mts b/build/kms/SecureEnvironmentKeyManagementService.d.mts
-index a24147575a9e37473c63d112d7bb64c79dceaa54..7ff91e5712fed3d4ae4da49d6d7fe54c338e8ba9 100644
+index 8a6a1c23ccc3668900332ed3dffdccdc5a28e55b..e870f4a029bb80f5180e3b0bb4240a3681eb625e 100644
 --- a/build/kms/SecureEnvironmentKeyManagementService.d.mts
 +++ b/build/kms/SecureEnvironmentKeyManagementService.d.mts
-@@ -1,22 +1,27 @@
+@@ -1,9 +1,14 @@
  import { AgentContext, Kms } from "@credo-ts/core";
  
  //#region src/kms/SecureEnvironmentKeyManagementService.d.ts
@@ -17,25 +17,19 @@ index a24147575a9e37473c63d112d7bb64c79dceaa54..7ff91e5712fed3d4ae4da49d6d7fe54c
    isOperationSupported(_agentContext: AgentContext, operation: Kms.KmsOperation): boolean;
    randomBytes(_agentContext: AgentContext, _options: Kms.KmsRandomBytesOptions): Kms.KmsRandomBytesReturn;
    getPublicKey(_agentContext: AgentContext, keyId: string): Promise<Kms.KmsJwkPublic | null>;
-   importKey(): Promise<Kms.KmsImportKeyReturn<Kms.KmsJwkPrivate>>;
-   deleteKey(_agentContext: AgentContext, options: Kms.KmsDeleteKeyOptions): Promise<boolean>;
-   encrypt(): Promise<Kms.KmsEncryptReturn>;
-   decrypt(): Promise<Kms.KmsDecryptReturn>;
-   createKey(_agentContext: AgentContext, options: Kms.KmsCreateKeyOptions): Promise<Kms.KmsCreateKeyReturn>;
-   sign(_agentContext: AgentContext, options: Kms.KmsSignOptions): Promise<Kms.KmsSignReturn>;
-   verify(): Promise<Kms.KmsVerifyReturn>;
-   private publicJwkFromPublicKeyBytes;
+@@ -18,5 +23,5 @@ declare class SecureEnvironmentKeyManagementService implements Kms.KeyManagement
    private getKeyAsserted;
  }
  //#endregion
 -export { SecureEnvironmentKeyManagementService };
 +export { SecureEnvironmentKeyManagementService, type SecureEnvironmentKeyManagementServiceOptions };
  //# sourceMappingURL=SecureEnvironmentKeyManagementService.d.mts.map
+\ No newline at end of file
 diff --git a/build/kms/SecureEnvironmentKeyManagementService.mjs b/build/kms/SecureEnvironmentKeyManagementService.mjs
-index 45aa862698d9d3e164c36d5b61b5977282981983..23d58743281711002c2425d39f0ab1d976d5d911 100644
+index d5b5208665f1a1715a4e5f13b7cc11d8fcf4ee56..63d06cb212d0029eca2ee32affd1bb1750f021df 100644
 --- a/build/kms/SecureEnvironmentKeyManagementService.mjs
 +++ b/build/kms/SecureEnvironmentKeyManagementService.mjs
-@@ -3,10 +3,11 @@ import { Kms, utils } from "@credo-ts/core";
+@@ -3,9 +3,10 @@ import { Kms, utils } from "@credo-ts/core";
  
  //#region src/kms/SecureEnvironmentKeyManagementService.ts
  var SecureEnvironmentKeyManagementService = class {
@@ -47,7 +41,6 @@ index 45aa862698d9d3e164c36d5b61b5977282981983..23d58743281711002c2425d39f0ab1d9
  	}
  	isOperationSupported(_agentContext, operation) {
  		if (operation.operation === "createKey") return operation.type.kty === "EC" && operation.type.crv === "P-256";
- 		if (operation.operation === "sign") return operation.algorithm === "ES256";
 @@ -49,7 +50,7 @@ var SecureEnvironmentKeyManagementService = class {
  		const keyId = options.keyId ?? utils.uuid();
  		const secureEnvironment = await this.secureEnvironment;

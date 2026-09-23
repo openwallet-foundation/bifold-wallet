@@ -43,10 +43,10 @@
     "typescript": "~5.9.2"
   },
   "dependencies": {
-    "@credo-ts/anoncreds": "0.6.3",
-    "@credo-ts/core": "0.6.3",
-    "@credo-ts/didcomm": "0.6.3",
-    "axios": "~1.13.2",
+    "@credo-ts/anoncreds": "0.7.0",
+    "@credo-ts/core": "0.7.0",
+    "@credo-ts/didcomm": "0.7.0",
+    "axios": "~1.15.0",
     "lodash.startcase": "~4.4.0",
     "react-native-fs": "~2.20.0"
   }

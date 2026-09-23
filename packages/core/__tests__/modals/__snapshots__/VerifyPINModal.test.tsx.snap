@@ -636,6 +636,7 @@ exports[`VerifyPINModal Component Renders correctly 1`] = `
                           accessibilityRole="text"
                           accessible={true}
                           autoCapitalize="characters"
+                          autoComplete="off"
                           autoCorrect={false}
                           autoFocus={true}
                           blurOnSubmit={false}

@@ -14,7 +14,9 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-platform :ios, min_ios_version_supported
+# Expo SDK 57 requires iOS 16.4 (raised in SDK 56); RN 0.86's min_ios_version_supported
+# is still 15.1, which is below Expo's floor.
+platform :ios, '16.4'
 prepare_react_native_project!
 
 # uncomment wanted permissions (also from RNP docs linked above)

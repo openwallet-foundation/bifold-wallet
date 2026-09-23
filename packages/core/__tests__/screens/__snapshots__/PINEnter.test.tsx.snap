@@ -525,6 +525,7 @@ exports[`PINEnter Screen PIN Enter renders correctly 1`] = `
                       accessibilityRole="text"
                       accessible={true}
                       autoCapitalize="characters"
+                      autoComplete="off"
                       autoCorrect={false}
                       autoFocus={true}
                       blurOnSubmit={false}
@@ -1300,6 +1301,7 @@ exports[`PINEnter Screen PIN Enter renders correctly when logged out message is 
                       accessibilityRole="text"
                       accessible={true}
                       autoCapitalize="characters"
+                      autoComplete="off"
                       autoCorrect={false}
                       autoFocus={true}
                       blurOnSubmit={false}

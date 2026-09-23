@@ -46,14 +46,6 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
       }
     >
       <Camera
-        codeScanner={
-          Object {
-            "codeTypes": Array [
-              "qr",
-            ],
-            "onCodeScanned": [Function],
-          }
-        }
         device={
           Object {
             "id": "mock-camera",
@@ -61,8 +53,15 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
             "supportsFocus": true,
           }
         }
-        format={Object {}}
         isActive={true}
+        onError={[Function]}
+        onStarted={[Function]}
+        onStopped={[Function]}
+        outputs={
+          Array [
+            Object {},
+          ]
+        }
         ref={
           Object {
             "current": null,
@@ -77,7 +76,6 @@ exports[`QRScanner Component Focus animation does not render before tapping 1`] 
             "top": 0,
           }
         }
-        torch="off"
       />
       <View
         accessibilityState={
@@ -647,14 +645,6 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
       }
     >
       <Camera
-        codeScanner={
-          Object {
-            "codeTypes": Array [
-              "qr",
-            ],
-            "onCodeScanned": [Function],
-          }
-        }
         device={
           Object {
             "id": "mock-camera",
@@ -662,8 +652,15 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
             "supportsFocus": true,
           }
         }
-        format={Object {}}
         isActive={true}
+        onError={[Function]}
+        onStarted={[Function]}
+        onStopped={[Function]}
+        outputs={
+          Array [
+            Object {},
+          ]
+        }
         ref={
           Object {
             "current": null,
@@ -678,7 +675,6 @@ exports[`QRScanner Component Renders correctly on first tab 1`] = `
             "top": 0,
           }
         }
-        torch="off"
       />
       <View
         accessibilityState={
@@ -1802,14 +1798,6 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
       }
     >
       <Camera
-        codeScanner={
-          Object {
-            "codeTypes": Array [
-              "qr",
-            ],
-            "onCodeScanned": [Function],
-          }
-        }
         device={
           Object {
             "id": "mock-camera",
@@ -1817,8 +1805,15 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
             "supportsFocus": true,
           }
         }
-        format={Object {}}
         isActive={true}
+        onError={[Function]}
+        onStarted={[Function]}
+        onStopped={[Function]}
+        outputs={
+          Array [
+            Object {},
+          ]
+        }
         ref={
           Object {
             "current": null,
@@ -1833,7 +1828,6 @@ exports[`QRScanner Component Scanner with no tabs renders correctly 1`] = `
             "top": 0,
           }
         }
-        torch="off"
       />
       <View
         accessibilityState={

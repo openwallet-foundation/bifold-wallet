@@ -66,6 +66,7 @@ export default [
       'packages/oca/build/',
       'packages/remote-logs/build/',
       'packages/react-native-attestation/build/',
+      'packages/expo-attestation/build/',
       'packages/core/lib/',
       'packages/legacy/core/lib',
       'packages/react-hooks/build/',

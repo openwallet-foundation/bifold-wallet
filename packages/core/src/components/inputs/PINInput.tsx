@@ -84,7 +84,7 @@ const PINInput = ({
         onPINChanged && onPINChanged(newPIN)
       }
     },
-    [PIN, displayValue, onPINChanged],
+    [PIN, displayValue, onPINChanged]
   )
 
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -134,6 +134,7 @@ const PINInput = ({
           cellCount={PINScreensConfig.useNewPINDesign ? separatedPINCellCount : cellCount}
           keyboardType="number-pad"
           textContentType="password"
+          autoComplete="off"
           renderCell={({ index, symbol, isFocused }) => {
             let child: React.ReactNode | string = ''
             // skip spaces
@@ -142,7 +143,10 @@ const PINInput = ({
                 child = showPIN ? (
                   symbol
                 ) : (
-                  <MaskSymbol maskSymbol="●" isLastFilledCell={isLastFilledCell({ index, value: PINScreensConfig.useNewPINDesign ? PIN : displayValue })}>
+                  <MaskSymbol
+                    maskSymbol="●"
+                    isLastFilledCell={isLastFilledCell(PINScreensConfig.useNewPINDesign ? PIN : displayValue, index)}
+                  >
                     {symbol}
                   </MaskSymbol>
                 )

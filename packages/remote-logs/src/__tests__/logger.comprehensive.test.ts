@@ -41,7 +41,7 @@ jest.mock(
   () => ({
   BifoldLogger: class BifoldLogger {},
   AbstractBifoldLogger: class AbstractBifoldLogger {
-    public logLevel = 2 // LogLevel.debug
+    public logLevel = 2 // LogLevel.Debug
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected _log: any
     protected _config = {

@@ -1,12 +1,6 @@
 import { jest, describe, expect, it, beforeEach } from "@jest/globals"
 import { renderHook, act } from '@testing-library/react-native'
 import { Platform } from 'react-native'
-import {
-  attestKeyAsync,
-  generateKeyAsync,
-  generateHardwareAttestedKeyAsync,
-  getAttestationCertificateChainAsync,
-} from '@expo/app-integrity'
 import { Kms } from '@credo-ts/core'
 import { encodeToBase64Url } from '@openid4vc/utils'
 
@@ -17,24 +11,9 @@ import { useServices } from '../../src/container-api'
 import { useStore } from '../../src/contexts/store'
 import { DispatchAction } from '../../src/contexts/reducers/store'
 import { withRetry } from '../../src/utils/network'
+import { AttestationResult } from '../../src/types/attestation'
 
 // ─── Mocks ────────────────────────────────────────────────────────────────────
-
-jest.mock('@expo/app-integrity', () => ({
-  attestKeyAsync: jest.fn(),
-  generateKeyAsync: jest.fn(),
-  generateHardwareAttestedKeyAsync: jest.fn(),
-  getAttestationCertificateChainAsync: jest.fn(),
-  isSupported: true,
-  isHardwareAttestationSupportedAsync: true,
-}))
-
-jest.mock('react-native-uuid', () => ({
-  __esModule: true,
-  default: {
-    v4: jest.fn().mockReturnValue('123456789')
-  }
-}))
 
 jest.mock('@openid4vc/utils', () => ({
   encodeToBase64Url: jest.fn()
@@ -55,6 +34,7 @@ jest.mock('../../src/container-api', () => ({
     CONFIG: 'CONFIG',
     UTIL_LOGGER: 'UTIL_LOGGER',
     UTIL_AGENT_BRIDGE: 'UTIL_AGENT_BRIDGE',
+    ATTESTATION_PROVIDER: 'ATTESTATION_PROVIDER',
   },
 }))
 
@@ -94,11 +74,21 @@ jest.mock('@credo-ts/core', () => {
 
 const mockChallenge = 'test-challenge'
 const mockKeyID = 'test-key-id'
-const mockAttestationResult = 'attestation-result'
 const mockAttestationJWT = { signedAttestation: 'attestation-jwt' }
 const mockJWTThumbprint = 'jwt-thumbprint'
 const mockEncodedThumbprint = 'encoded-thumbprint'
-const mockEncodedChallenge = `Mocked ${mockChallenge + mockEncodedThumbprint} encoded as SHA-256`
+const boundChallenge = mockChallenge + mockEncodedThumbprint
+
+const appleResult: AttestationResult = {
+  kind: 'apple-app-attest',
+  keyId: mockKeyID,
+  attestation: 'apple-attestation-blob',
+}
+const androidKeyResult: AttestationResult = {
+  kind: 'android-key-attestation',
+  keyId: mockKeyID,
+  certificateChain: ['cert-leaf', 'cert-root'],
+}
 
 const mockGetJwkThumbprint = jest.fn().mockReturnValue(mockJWTThumbprint)
 const mockGetChallenge = jest.fn().mockResolvedValue(mockChallenge as never)
@@ -111,8 +101,10 @@ const mockAgentBridge = {
   onReady: jest.fn((cb: (agent: typeof mockAgent) => Promise<void>) => cb(mockAgent)),
 }
 
-const mockGenerateKeyAsync = generateKeyAsync as jest.MockedFunction<typeof generateKeyAsync>
-const mockGenerateHardwareAttestedKeyAsync = generateHardwareAttestedKeyAsync as jest.MockedFunction<typeof generateHardwareAttestedKeyAsync>
+const mockIsSupported = jest.fn()
+const mockAttest = jest.fn()
+const mockProvider = { isSupported: mockIsSupported, attest: mockAttest }
+
 const mockWithRetry = withRetry as jest.MockedFunction<typeof withRetry>
 const encodeToBase64UrlMock = encodeToBase64Url as jest.MockedFunction<typeof encodeToBase64Url>
 const fromPublicJwkMock = Kms.PublicJwk.fromPublicJwk as jest.MockedFunction<typeof Kms.PublicJwk.fromPublicJwk>
@@ -125,12 +117,16 @@ function setupDefaultMocks(overrides: Partial<{
   getAttestationChallenge: jest.Mock | null
   getAttestationJWT: jest.Mock | null
   isAttestationConfigured: boolean
+  attestationResult: AttestationResult
+  isSupported: boolean
 }> = {}) {
   const {
     enableAttestation = true,
     getAttestationChallenge = mockGetChallenge,
     getAttestationJWT = mockGetJWT,
     isAttestationConfigured = false,
+    attestationResult = appleResult,
+    isSupported = true,
   } = overrides;
 
   (useServices as jest.Mock).mockReturnValue([
@@ -139,18 +135,23 @@ function setupDefaultMocks(overrides: Partial<{
     { enableAttestation },
     mockLogger,
     mockAgentBridge,
+    mockProvider,
   ]);
   useStoreMock.mockReturnValue([{} as any, mockDispatch]);
   fetchValueForKeyMock.mockImplementation(() => Promise.resolve(isAttestationConfigured as any));
   storeValueForKeyMock.mockImplementation(() => Promise.resolve(undefined));
   fromPublicJwkMock.mockReturnValue(mockSigningKey)
   encodeToBase64UrlMock.mockReturnValue(mockEncodedThumbprint)
-  mockGenerateKeyAsync.mockResolvedValue(mockKeyID)
+  mockIsSupported.mockImplementation(() => Promise.resolve(isSupported) as any)
+  mockAttest.mockImplementation(() => Promise.resolve(attestationResult) as any)
+  // Run the real function so the binding in the hook is exercised.
+  mockWithRetry.mockImplementation((fn: any, args: any) => fn(...args))
 }
 
 describe('useAttestation', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true })
     setupDefaultMocks()
   })
 
@@ -173,6 +174,7 @@ describe('useAttestation', () => {
         payload: [true],
       })
       expect(mockGetChallenge).not.toHaveBeenCalled()
+      expect(mockAttest).not.toHaveBeenCalled()
     })
 
     it('marks attestation completed and returns when already configured', async () => {
@@ -200,38 +202,103 @@ describe('useAttestation', () => {
     })
   })
 
-  // ── iOS flow ─────────────────────────────────────────────────────────────────
+  // ── Provider delegation ──────────────────────────────────────────────────────
 
-  describe('iOS attestation flow', () => {
-    beforeEach(() => {
-      Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true });
-      (withRetry as jest.Mock).mockImplementation(() => Promise.resolve(mockAttestationResult));
-    })
-
-    it('generates a key and attests it', async () => {
+  describe('provider delegation', () => {
+    it('checks support before attesting', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
-      expect(generateKeyAsync).toHaveBeenCalled()
-      expect(withRetry).toHaveBeenCalledWith(attestKeyAsync, [mockKeyID, mockChallenge + mockEncodedThumbprint])
+      expect(mockIsSupported).toHaveBeenCalled()
+      expect(mockAttest).toHaveBeenCalled()
     })
 
-    it('fetches an attestation JWT using the correct params', async () => {
+    it('attests over the challenge concatenated with the key thumbprint, via withRetry', async () => {
+      const { result } = renderHook(() => useAttestation())
+      await act(() => result.current.initAttestation())
+
+      expect(withRetry).toHaveBeenCalledWith(expect.any(Function), [boundChallenge])
+      expect(mockAttest).toHaveBeenCalledWith(boundChallenge)
+    })
+
+    it('throws when the provider reports the device is unsupported', async () => {
+      setupDefaultMocks({ isSupported: false })
+      const { result } = renderHook(() => useAttestation())
+
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
+        'Error initializing attestation'
+      )
+      expect(mockAttest).not.toHaveBeenCalled()
+    })
+
+    it('throws when the provider fails to attest', async () => {
+      mockAttest.mockImplementationOnce(() => Promise.reject(new Error('attest failed')) as any)
+      const { result } = renderHook(() => useAttestation())
+
+      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
+        'Error initializing attestation'
+      )
+    })
+
+    it('preserves `this` for providers implemented as classes', async () => {
+      class ClassProvider {
+        private secret = 'bound'
+        async isSupported() { return true }
+        async attest(): Promise<AttestationResult> {
+          // Throws a TypeError if `this` was lost when the method was passed to withRetry.
+          return { kind: 'apple-app-attest', keyId: this.secret, attestation: 'blob' }
+        }
+      }
+      setupDefaultMocks();
+      (useServices as jest.Mock).mockReturnValue([
+        mockGetChallenge, mockGetJWT, { enableAttestation: true },
+        mockLogger, mockAgentBridge, new ClassProvider(),
+      ])
+
+      const { result } = renderHook(() => useAttestation())
+      await act(() => result.current.initAttestation())
+
+      expect(mockGetJWT).toHaveBeenCalledWith(expect.objectContaining({ keyId: 'bound' }))
+    })
+  })
+
+  // ── Result mapping per attestation kind ──────────────────────────────────────
+
+  describe('result mapping', () => {
+    it('sends the raw attestation for apple-app-attest', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
       expect(mockGetJWT).toHaveBeenCalledWith({
-        attestation: mockAttestationResult,
+        attestation: appleResult.attestation,
+        attestationKind: 'apple-app-attest',
         challenge: mockChallenge,
         keyId: mockKeyID,
         platform: 'ios',
-        signingKey: mockSigningKey
+        signingKey: mockSigningKey,
+      })
+    })
+
+    it('sends the certificate chain for android-key-attestation', async () => {
+      Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true })
+      setupDefaultMocks({ attestationResult: androidKeyResult })
+      const { result } = renderHook(() => useAttestation())
+      await act(() => result.current.initAttestation())
+
+      expect(mockGetJWT).toHaveBeenCalledWith({
+        attestation: androidKeyResult.certificateChain,
+        attestationKind: 'android-key-attestation',
+        challenge: mockChallenge,
+        keyId: mockKeyID,
+        platform: 'android',
+        signingKey: mockSigningKey,
       })
     })
 
     it('stores the attestation JWT and marks the attestation process as completed', async () => {
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
+
       expect(mockAgent.genericRecords.save).toHaveBeenCalledWith(
         { content: { attestationJwt: mockAttestationJWT.signedAttestation }, id: 'walletAttestStorage' }
       )
@@ -243,22 +310,6 @@ describe('useAttestation', () => {
         type: DispatchAction.SET_ATTESTATION_COMPLETED,
         payload: [true],
       })
-    })
-
-    it('throws an error when generateKeyAsync fails', async () => {
-      mockGenerateKeyAsync.mockImplementationOnce(() => Promise.reject(new Error('generateKeyAsync failed')))
-      const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
-        'Error initializing attestation'
-      )
-    })
-
-    it('throws an error when attestKeyAsync fails', async () => {
-      mockGenerateKeyAsync.mockImplementationOnce(() => Promise.reject(new Error('generateKeyAsync failed')))
-      const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
-        'Error initializing attestation'
-      )
     })
 
     it('throws an error when getAttestationJWT fails', async () => {
@@ -270,98 +321,9 @@ describe('useAttestation', () => {
     })
   })
 
-  // ── Android flow ─────────────────────────────────────────────────────────────
-
-  describe('Android attestation flow', () => {
-    const androidKeyID = '123456789'
-
-    beforeEach(() => {
-      Object.defineProperty(Platform, 'OS', { value: 'android', configurable: true });
-      mockGenerateHardwareAttestedKeyAsync.mockImplementation(() => Promise.resolve(undefined));
-    })
-
-    it('generates a hardware attested key with the correct key ID', async () => {
-      const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.initAttestation())
-
-      expect(generateHardwareAttestedKeyAsync).toHaveBeenCalledWith(androidKeyID, mockEncodedChallenge)
-    })
-
-    it('retrieves the certificate chain via withRetry', async () => {
-      const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.initAttestation())
-
-      expect(withRetry).toHaveBeenCalledWith(getAttestationCertificateChainAsync, [androidKeyID])
-    })
-
-    it('fetches an attestation JWT using the certificate chain', async () => {
-      const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.initAttestation())
-
-      expect(mockGetJWT).toHaveBeenCalledWith({
-        attestation: mockAttestationResult,
-        challenge: mockChallenge,
-        keyId: androidKeyID,
-        platform: 'android',
-        signingKey: mockSigningKey
-      })
-    })
-
-    it('saves the attestation JWT and marks attestation completed', async () => {
-      const { result } = renderHook(() => useAttestation())
-      await act(() => result.current.initAttestation())
-      expect(mockAgent.genericRecords.save).toHaveBeenCalledWith(
-        { content: { attestationJwt: mockAttestationJWT.signedAttestation }, id: 'walletAttestStorage' }
-      )
-      expect(PersistentStorage.storeValueForKey).toHaveBeenCalledWith(
-        LocalStorageKeys.AttestationConfigured,
-        true
-      )
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: DispatchAction.SET_ATTESTATION_COMPLETED,
-        payload: [true],
-      })
-    })
-
-    it('throws an error when generateHardwareAttestedKeyAsync fails', async () => {
-      mockGenerateHardwareAttestedKeyAsync.mockRejectedValueOnce(new Error('hw key gen failed'))
-      const { result } = renderHook(() => useAttestation())
-
-      await expect(result.current.initAttestation()).rejects.toThrow('Error initializing attestation')
-    })
-
-    it('throws an error when getCertificateChain fails', async () => {
-      mockWithRetry.mockRejectedValueOnce(new Error('cert chain failed'))
-
-      const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
-        'Error initializing attestation'
-      )
-    })
-  })
-
-  // ── Unsupported platform ─────────────────────────────────────────────────────
-
-  describe('unsupported platform', () => {
-    it('throws when Platform.OS is not ios or android', async () => {
-      Object.defineProperty(Platform, 'OS', { value: 'web', configurable: true })
-
-      const { result } = renderHook(() => useAttestation())
-      await expect(act(() => result.current.initAttestation())).rejects.toThrow(
-        'Error initializing attestation'
-      )
-    })
-  })
-
   // ── storeAttestationJWT ──────────────────────────────────────────────────────
 
   describe('storeAttestationJWT', () => {
-    beforeEach(() => {
-      Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true })
-      mockGenerateKeyAsync.mockResolvedValue(mockKeyID)
-      mockWithRetry.mockResolvedValue(mockAttestationResult)
-    })
-
     it('wraps agent bridge errors as "Error storing attestation result"', async () => {
       mockAgentBridge.onReady.mockImplementationOnce(() => {
         throw new Error('bridge not available')
@@ -373,33 +335,27 @@ describe('useAttestation', () => {
         'Error initializing attestation'
       )
     })
-
   })
 
   // ── Challenge fetching ───────────────────────────────────────────────────────
 
   describe('challenge fetching', () => {
-    beforeEach(() => {
-      Object.defineProperty(Platform, 'OS', { value: 'ios', configurable: true })
-      mockWithRetry.mockResolvedValue(mockAttestationResult)
-    })
-
-    it('fetches a challenge before any key operations', async () => {
+    it('fetches a challenge before any attestation operations', async () => {
       const callOrder: string[] = []
       mockGetChallenge.mockImplementationOnce(async () => {
         callOrder.push('challenge')
         return mockChallenge
       })
-      mockGenerateKeyAsync.mockImplementationOnce(async () => {
-        callOrder.push('generateKey')
-        return mockKeyID
-      })
+      mockAttest.mockImplementationOnce((() => {
+        callOrder.push('attest')
+        return Promise.resolve(appleResult)
+      }) as any)
 
       const { result } = renderHook(() => useAttestation())
       await act(() => result.current.initAttestation())
 
       expect(callOrder[0]).toBe('challenge')
-      expect(callOrder[1]).toBe('generateKey')
+      expect(callOrder[1]).toBe('attest')
     })
 
     it('logs and rethrows when challenge fetch fails', async () => {

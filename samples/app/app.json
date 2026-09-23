@@ -1,4 +1,12 @@
 {
   "name": "Aries-Bifold",
-  "displayName": "Aries Bifold"
+  "displayName": "Aries Bifold",
+  "ios": {
+    "infoPlist": {
+      "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera to capture photos and videos."
+    }
+  },
+  "android": {
+    "permissions": ["android.permission.CAMERA"]
+  }
 }

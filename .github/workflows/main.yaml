@@ -1,7 +1,7 @@
 name: Native Build
 
 env:
-  cacheId: '11' # increment to expire the cache
+  cacheId: '12' # increment to expire the cache
 
 on:
   pull_request:
@@ -20,7 +20,7 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
@@ -41,7 +41,7 @@ jobs:
       - name: What XCode are we using?
         run: |
           find /Applications -type d -maxdepth 1 -iname 'xcode*.app'
-          sudo xcode-select --switch /Applications/Xcode_16.2.app
+          sudo xcode-select --switch /Applications/Xcode_26.6.app
           sudo xcode-select -p
 
       - name: Cache pod dependencies

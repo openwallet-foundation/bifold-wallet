@@ -1,4 +1,4 @@
-import 'fast-text-encoding' // polyfill for TextEncoder and TextDecoder
+import './polyfills/text-encoding' // spec-compliant TextEncoder/TextDecoder (must be first)
 import 'react-native-gesture-handler'
 import '@formatjs/intl-getcanonicallocales/polyfill'
 import '@formatjs/intl-locale/polyfill'

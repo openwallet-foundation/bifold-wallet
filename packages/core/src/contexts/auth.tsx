@@ -111,7 +111,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
         const validationAgent = new Agent({
           config: {
-            logger: new ConsoleLogger(LogLevel.off),
+            logger: new ConsoleLogger(LogLevel.Off),
             autoUpdateStorageOnStartup: false,
           },
           modules: {

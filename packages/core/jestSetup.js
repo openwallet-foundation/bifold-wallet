@@ -42,6 +42,9 @@ jest.mock('react-native-orientation-locker', () => require('./__mocks__/custom/r
 jest.mock('react-native-vision-camera', () => {
   return require('./__mocks__/custom/react-native-camera')
 })
+jest.mock('react-native-vision-camera-barcode-scanner', () => {
+  return require('./__mocks__/custom/react-native-vision-camera-barcode-scanner')
+})
 
 /* -------------------------------------------------------------------------- */
 /* MOCK REFRESH ORCHESTRATOR (AVOID TIMERS / LOGS DURING TESTS)            */

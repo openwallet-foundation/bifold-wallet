@@ -50,6 +50,7 @@ import { bifoldLoggerInstance } from './services/bifoldLogger'
 import { loadLoginAttempt } from './services/keychain'
 import { BifoldLogger } from './services/logger'
 import { PersistentStorage } from './services/storage'
+import { unregisteredAttestationProvider } from './types/attestation'
 import { Config, HistoryEventsLoggerConfig } from './types/config'
 import { InlineErrorPosition } from './types/error'
 import {
@@ -276,6 +277,7 @@ export class MainContainer implements Container {
 
     this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_CHALLENGE, () => {})
     this._container.registerInstance(TOKENS.FN_ATTESTATION_GET_JWT, () => {})
+    this._container.registerInstance(TOKENS.ATTESTATION_PROVIDER, unregisteredAttestationProvider)
 
     return this
   }

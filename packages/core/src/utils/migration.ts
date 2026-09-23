@@ -19,7 +19,7 @@ export const migrateToAskar = async (walletId: string, key: string, agent?: Agen
         //   id: walletId,
         //   key,
         // },
-        logger: new ConsoleLogger(LogLevel.trace),
+        logger: new ConsoleLogger(LogLevel.Trace),
         autoUpdateStorageOnStartup: false,
       },
       modules: {

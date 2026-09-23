@@ -1,15 +1,5 @@
 import { useCallback } from 'react'
 import { Platform } from 'react-native'
-import {
-  attestKeyAsync,
-  generateKeyAsync,
-  generateHardwareAttestedKeyAsync,
-  getAttestationCertificateChainAsync,
-  isSupported as isAttestationSupportediOS,
-  isHardwareAttestationSupportedAsync as isAttestationSupportedAndroid,
-} from '@expo/app-integrity'
-import uuid from 'react-native-uuid'
-import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto'
 
 import { PersistentStorage } from '../services/storage'
 import { LocalStorageKeys } from '../constants'
@@ -32,12 +22,14 @@ export const useAttestation = () => {
     { enableAttestation },
     logger,
     agentBridge,
+    attestationProvider,
   ] = useServices([
     TOKENS.FN_ATTESTATION_GET_CHALLENGE,
     TOKENS.FN_ATTESTATION_GET_JWT,
     TOKENS.CONFIG,
     TOKENS.UTIL_LOGGER,
     TOKENS.UTIL_AGENT_BRIDGE,
+    TOKENS.ATTESTATION_PROVIDER,
   ])
 
   const storeAttestationJWT = useCallback(async (attestationJwt: string, agent: Agent): Promise<void> => {
@@ -98,43 +90,22 @@ export const useAttestation = () => {
         const signingKey = Kms.PublicJwk.fromPublicJwk(secondaryKey.publicJwk)
         const thumbprint = encodeToBase64Url(signingKey.getJwkThumbprint())
 
-        if (Platform.OS === 'ios') {
+        if (!(await attestationProvider.isSupported()))
+          throw new Error(`${Platform.OS} device not supported`)
 
-          if (!isAttestationSupportediOS) throw new Error('iOS device not supported')
+        // Bound so providers implemented as classes keep their `this`.
+        const result = await withRetry(attestationProvider.attest.bind(attestationProvider), [challenge + thumbprint])
 
-          const keyId = await generateKeyAsync()
-          // No need to SHA256 encode the challenge on iOS as that is handled by the OS
-          const attestation = await withRetry(attestKeyAsync, [keyId, challenge + thumbprint])
-          const getAttestationJwtParams: GetAttestationJWTPayload = {
-            attestation,
-            challenge,
-            keyId,
-            signingKey,
-            platform: Platform.OS,
-          }
-          const attestationJWT = await getAttestationJWT(getAttestationJwtParams)
-          await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
-
-        } else if (Platform.OS === 'android') {
-
-          if (!isAttestationSupportedAndroid) throw new Error('Android device not supported')
-
-          const keyId = uuid.v4().toString()
-          // To ensure that the string is kept at a reasonable size (< 128 bytes) and consistency with the native iOS implementation
-          const boundChallenge = await digestStringAsync(CryptoDigestAlgorithm.SHA256, challenge + thumbprint)
-          await generateHardwareAttestedKeyAsync(keyId, boundChallenge)
-          const attestation = await withRetry(getAttestationCertificateChainAsync, [keyId])
-          const getAttestationJwtParams: GetAttestationJWTPayload = {
-            attestation,
-            challenge,
-            keyId,
-            signingKey,
-            platform: Platform.OS,
-          }
-          const attestationJWT = await getAttestationJWT(getAttestationJwtParams)
-          await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
-
-        } else throw new Error('Platform not supported')
+        const getAttestationJwtParams: GetAttestationJWTPayload = {
+          attestation: result.kind === 'android-key-attestation' ? result.certificateChain : result.attestation,
+          challenge,
+          keyId: result.keyId,
+          signingKey,
+          platform: Platform.OS,
+          attestationKind: result.kind,
+        }
+        const attestationJWT = await getAttestationJWT(getAttestationJwtParams)
+        await storeAttestationJWT(attestationJWT?.signedAttestation, agent)
 
       })
 
@@ -142,7 +113,7 @@ export const useAttestation = () => {
       logger.error(err?.message ?? 'Error initializing attestation')
       throw new Error('Error initializing attestation')
     }
-  }, [enableAttestation, getAttestationChallenge, getAttestationJWT, dispatch, logger, storeAttestationJWT, agentBridge])
+  }, [enableAttestation, getAttestationChallenge, getAttestationJWT, dispatch, logger, storeAttestationJWT, agentBridge, attestationProvider])
 
   return {
     initAttestation,
