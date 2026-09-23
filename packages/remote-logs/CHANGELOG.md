@@ -1,5 +1,16 @@
 # Change Log
 
+## 3.1.0
+
+### Minor Changes
+
+- e4a2375: Upgrade to New Arch and RN 86, move expo attestation into its own pacakge
+
+### Patch Changes
+
+- Updated dependencies [e4a2375]
+  - @bifold/core@3.1.0
+
 ## 3.0.22
 
 ### Patch Changes
