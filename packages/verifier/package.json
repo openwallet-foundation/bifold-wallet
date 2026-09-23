@@ -41,7 +41,7 @@
     "typescript": "~5.9.2"
   },
   "peerDependencies": {
-    "@bifold/react-hooks": "3.0.22",
+    "@bifold/react-hooks": "^3.0.22",
     "@credo-ts/anoncreds": "0.7.0",
     "@credo-ts/core": "0.7.0",
     "@hyperledger/anoncreds-shared": "0.4.1-alpha-20260609124337",

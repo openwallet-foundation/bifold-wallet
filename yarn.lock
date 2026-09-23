@@ -3453,7 +3453,7 @@ __metadata:
     uuid: "npm:~9.0.1"
     zustand: "npm:~4.5.4"
   peerDependencies:
-    "@bifold/react-hooks": 3.0.22
+    "@bifold/react-hooks": ^3.0.22
     "@credo-ts/anoncreds": 0.7.0
     "@credo-ts/askar": 0.7.0
     "@credo-ts/core": 0.7.0
@@ -3684,7 +3684,7 @@ __metadata:
     rimraf: "npm:~5.0.10"
     typescript: "npm:~5.9.2"
   peerDependencies:
-    "@bifold/react-hooks": 3.0.22
+    "@bifold/react-hooks": ^3.0.22
     "@credo-ts/anoncreds": 0.7.0
     "@credo-ts/core": 0.7.0
     "@hyperledger/anoncreds-shared": 0.4.1-alpha-20260609124337
