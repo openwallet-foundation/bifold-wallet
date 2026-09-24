@@ -1,6 +1,6 @@
 {
   "name": "@bifold/expo-attestation",
-  "version": "3.0.22",
+  "version": "3.1.0",
   "description": "Expo-backed AttestationProvider for @bifold/core",
   "main": "build/commonjs/index.js",
   "module": "build/module/index.js",
