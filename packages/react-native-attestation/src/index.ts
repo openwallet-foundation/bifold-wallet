@@ -77,12 +77,26 @@ export const appleAttestation = async (
   return Buffer.from(bytes);
 };
 
-export const googleAttestation = async (nonce: string): Promise<string> => {
+/**
+ * Requests a Play Integrity verdict.
+ *
+ * @param nonce a cryptographic nonce used to associate the request with the response
+ * @param cloudProjectNumber the Google Cloud project to mint the token for, or null to let
+ *   Play resolve the project linked to the app
+ * @returns a promise that resolves to the integrity token as a string
+ */
+export const googleAttestation = async (
+  nonce: string,
+  cloudProjectNumber?: string
+): Promise<string> => {
   if (Platform.OS !== 'android') {
     throw new Error('googleAttestation is only available on Android');
   }
 
-  const token: string = await Attestation.googleAttestation(nonce);
+  const token: string = await Attestation.googleAttestation(
+    nonce,
+    cloudProjectNumber ?? null
+  );
   return token;
 };
 

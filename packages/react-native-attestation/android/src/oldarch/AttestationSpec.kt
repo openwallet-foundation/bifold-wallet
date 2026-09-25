@@ -8,5 +8,5 @@ abstract class AttestationSpec internal constructor(context: ReactApplicationCon
   ReactContextBaseJavaModule(context) {
 
   abstract fun isPlayIntegrityAvailable(promise: Promise)
-  abstract fun googleAttestation(nonce: String, promise: Promise)
+  abstract fun googleAttestation(nonce: String, cloudProjectNumber: String?, promise: Promise)
 }

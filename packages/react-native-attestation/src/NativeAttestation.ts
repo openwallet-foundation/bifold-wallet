@@ -7,7 +7,10 @@ export interface Spec extends TurboModule {
   appleAttestation(keyId: string, challenge: string): Promise<Buffer>;
   appleKeyAttestation(keyId: string, challenge: string): Promise<Buffer>;
   isPlayIntegrityAvailable(): Promise<boolean>;
-  googleAttestation(nonce: string): Promise<string>;
+  googleAttestation(
+    nonce: string,
+    cloudProjectNumber: string | null
+  ): Promise<string>;
   getAppStoreReceipt(): Promise<string>;
 }
 

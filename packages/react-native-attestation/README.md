@@ -32,6 +32,9 @@ if (Platform.OS === 'ios') {
   const available = await isPlayIntegrityAvailable();
   if (available) {
     const integrityToken = await googleAttestation(nonce);
+
+    // Or, to mint the token for a specific Google Cloud project:
+    const tokenForProject = await googleAttestation(nonce, '270607296846');
   }
 }
 ```

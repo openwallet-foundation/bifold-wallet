@@ -28,6 +28,7 @@ class AttestationModule : AttestationSpec {
 
   companion object {
     const val NAME = "Attestation"
+    const val INVALID_CLOUD_PROJECT_NUMBER = "E_INVALID_CLOUD_PROJECT_NUMBER"
   }
 
   /**
@@ -51,21 +52,36 @@ class AttestationModule : AttestationSpec {
    * See https://developer.android.com/google/play/integrity/verdict#request
    *
    * @param nonce
+   * @param cloudProjectNumber the Cloud project to mint the token for, or null to let
+   *   Play resolve the project linked to the app
    * @param promise
    */
   @ReactMethod
-  override fun googleAttestation(nonce: String, promise: Promise) {
+  override fun googleAttestation(nonce: String, cloudProjectNumber: String?, promise: Promise) {
     try {
       // Create an instance of a manager
       val integrityManager: IntegrityManager =
               IntegrityManagerFactory.create(baseContext)
 
       // Request the integrity token by providing a nonce
+      val requestBuilder: IntegrityTokenRequest.Builder =
+              IntegrityTokenRequest.builder().setNonce(nonce)
+
+      if (cloudProjectNumber != null) {
+        val projectNumber: Long? = cloudProjectNumber.toLongOrNull()
+
+        if (projectNumber == null) {
+          promise.reject(
+                  INVALID_CLOUD_PROJECT_NUMBER,
+                  "Cloud project number '$cloudProjectNumber' is not a valid number")
+          return
+        }
+
+        requestBuilder.setCloudProjectNumber(projectNumber)
+      }
+
       val integrityTokenResponse: Task<IntegrityTokenResponse> =
-              integrityManager.requestIntegrityToken(
-                      IntegrityTokenRequest.builder()
-                              .setNonce(nonce)
-                              .build())
+              integrityManager.requestIntegrityToken(requestBuilder.build())
 
       // Success listener
       integrityTokenResponse.addOnSuccessListener { response: IntegrityTokenResponse -> promise.resolve(response.token()) };
