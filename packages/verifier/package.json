@@ -1,6 +1,6 @@
 {
   "name": "@bifold/verifier",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "build/commonjs/index.js",
   "types": "build/typescript/index.d.ts",
   "module": "build/module/index.js",
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.28.6",
-    "@bifold/react-hooks": "3.1.0",
+    "@bifold/react-hooks": "3.1.1",
     "@credo-ts/anoncreds": "0.7.0",
     "@credo-ts/core": "0.7.0",
     "@credo-ts/didcomm": "0.7.0",
