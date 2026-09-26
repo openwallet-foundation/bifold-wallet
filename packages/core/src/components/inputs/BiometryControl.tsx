@@ -10,11 +10,19 @@ import DismissiblePopupModal from '../modals/DismissiblePopupModal'
 import { ThemedText } from '../texts/ThemedText'
 import { useAuth } from '../../contexts/auth'
 import { useTheme } from '../../contexts/theme'
+import { openDeviceBiometricSettings } from '../../utils/biometrics'
 import { testIdWithKey } from '../../utils/testable'
 import { BifoldError } from '../../types/error'
 import { EventTypes } from '../../constants'
 
 const BIOMETRY_PERMISSION = PERMISSIONS.IOS.FACE_ID
+
+type BiometrySettingsTarget = 'enroll' | 'app'
+type BiometrySettingsPopupConfig = {
+  title: string
+  description: string
+  target: BiometrySettingsTarget
+}
 
 export interface BiometryControlProps {
   biometryEnabled: boolean
@@ -26,7 +34,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   const { t } = useTranslation()
   const { isBiometricsActive } = useAuth()
   const [biometryAvailable, setBiometryAvailable] = useState(false)
-  const [settingsPopupConfig, setSettingsPopupConfig] = useState<null | { title: string; description: string }>(null)
+  const [settingsPopupConfig, setSettingsPopupConfig] = useState<BiometrySettingsPopupConfig | null>(null)
   const { ColorPalette, Assets, Spacing } = useTheme()
 
   const styles = StyleSheet.create({
@@ -79,7 +87,11 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
   }, [isBiometricsActive, setBiometryAvailable, t])
 
   const onOpenSettingsTouched = async () => {
-    await Linking.openSettings()
+    if (settingsPopupConfig?.target === 'enroll') {
+      await openDeviceBiometricSettings()
+    } else {
+      await Linking.openSettings()
+    }
     onOpenSettingsDismissed()
   }
 
@@ -146,6 +158,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
           setSettingsPopupConfig({
             title: t('Biometry.SetupBiometricsTitle'),
             description: t('Biometry.SetupBiometricsDesc'),
+            target: 'enroll',
           })
         }
         break
@@ -154,6 +167,7 @@ const BiometryControl: React.FC<BiometryControlProps> = ({ biometryEnabled, onBi
         setSettingsPopupConfig({
           title: t('Biometry.AllowBiometricsTitle'),
           description: t('Biometry.AllowBiometricsDesc'),
+          target: 'app',
         })
         break
       case RESULTS.DENIED:

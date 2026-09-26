@@ -5,17 +5,23 @@ import Biometry from '../../src/screens/Biometry'
 import { testIdWithKey } from '../../src/utils/testable'
 import authContext from '../contexts/auth'
 import { BasicAppContext } from '../helpers/app'
-import { Linking } from 'react-native'
+import { Linking, Platform } from 'react-native'
 import { testDefaultState } from '../contexts/store'
 import { StoreProvider } from '../../src/contexts/store'
 import { RESULTS, check, request } from 'react-native-permissions'
 import { getSupportedBiometryType } from 'react-native-keychain'
+import {
+  ANDROID_BIOMETRIC_ENROLL_ACTION,
+  ANDROID_BIOMETRIC_STRONG,
+  ANDROID_EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+} from '../../src/utils/biometrics'
 
 jest.mock('react-native-permissions', () => require('react-native-permissions/mock'))
 const mockedCheck = check as jest.MockedFunction<typeof check>
 const mockedRequest = request as jest.MockedFunction<typeof request>
 
 jest.spyOn(Linking, 'openSettings').mockImplementation(() => Promise.resolve())
+jest.spyOn(Linking, 'sendIntent').mockImplementation(() => Promise.resolve())
 jest.mock('react-native-keychain', () => ({
   getSupportedBiometryType: jest.fn().mockResolvedValue('FaceID'),
   BIOMETRY_TYPE: {
@@ -47,17 +53,28 @@ const customStore = {
 }
 
 describe('Biometry Screen', () => {
+  const originalOS = Platform.OS
+
   beforeAll(() => {
     jest.spyOn(global.console, 'error').mockImplementation(() => null)
   })
 
   beforeEach(() => {
+    Platform.OS = originalOS
     authContext.isBiometricsActive = jest.fn().mockResolvedValue(true)
     customStore.preferences.useBiometry = false
     mockedCheck.mockClear()
     mockedRequest.mockClear()
     mockedCheck.mockResolvedValue(RESULTS.DENIED) // DENIED essentially means available but user decision has not been made
     mockedRequest.mockResolvedValue(RESULTS.BLOCKED) // BLOCKED means user has actively rejected biometry use
+    ;(Linking.openSettings as jest.Mock).mockClear()
+    ;(Linking.sendIntent as jest.Mock).mockClear()
+    ;(Linking.openSettings as jest.Mock).mockResolvedValue(undefined)
+    ;(Linking.sendIntent as jest.Mock).mockResolvedValue(undefined)
+  })
+
+  afterEach(() => {
+    Platform.OS = originalOS
   })
 
   test('renders correctly when biometry available', async () => {
@@ -236,7 +253,69 @@ describe('Biometry Screen', () => {
     const openSettingsButton = await findByText('Biometry.OpenSettings')
 
     fireEvent(openSettingsButton, 'press')
-    expect(Linking.openSettings).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(Linking.openSettings).toHaveBeenCalledTimes(1)
+    })
+    expect(Linking.sendIntent).not.toHaveBeenCalled()
+  })
+
+  test('opens device biometric settings when biometrics are not enrolled on Android', async () => {
+    Platform.OS = 'android'
+    authContext.isBiometricsActive = jest.fn().mockResolvedValue(false)
+
+    const { findByTestId, findByText } = render(
+      <StoreProvider initialState={customStore}>
+        <BasicAppContext>
+          <AuthContext.Provider value={authContext}>
+            <Biometry />
+          </AuthContext.Provider>
+        </BasicAppContext>
+      </StoreProvider>
+    )
+
+    await findByText('Biometry.NotEnabledText1')
+    const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
+
+    await waitFor(async () => {
+      fireEvent(toggleButton, 'press')
+    })
+    const openSettingsButton = await findByText('Biometry.OpenSettings')
+
+    fireEvent(openSettingsButton, 'press')
+    await waitFor(() => {
+      expect(Linking.sendIntent).toHaveBeenCalledWith(ANDROID_BIOMETRIC_ENROLL_ACTION, [
+        { key: ANDROID_EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, value: ANDROID_BIOMETRIC_STRONG },
+      ])
+    })
+    expect(Linking.openSettings).not.toHaveBeenCalled()
+  })
+
+  test('opens app settings when biometrics are not enrolled on iOS', async () => {
+    mockedCheck.mockResolvedValue(RESULTS.UNAVAILABLE)
+    ;(getSupportedBiometryType as jest.Mock).mockResolvedValueOnce(null)
+
+    const { findByTestId, findByText } = render(
+      <StoreProvider initialState={customStore}>
+        <BasicAppContext>
+          <AuthContext.Provider value={authContext}>
+            <Biometry />
+          </AuthContext.Provider>
+        </BasicAppContext>
+      </StoreProvider>
+    )
+
+    const toggleButton = await findByTestId(testIdWithKey('ToggleBiometrics'))
+
+    await waitFor(async () => {
+      fireEvent(toggleButton, 'press')
+    })
+    const openSettingsButton = await findByText('Biometry.OpenSettings')
+
+    fireEvent(openSettingsButton, 'press')
+    await waitFor(() => {
+      expect(Linking.openSettings).toHaveBeenCalledTimes(1)
+    })
+    expect(Linking.sendIntent).not.toHaveBeenCalled()
   })
 
   test('requests permission when biometrics is available but permission is DENIED and toggles on when permission becomes GRANTED', async () => {
