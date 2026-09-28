@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { View, ImageBackground, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import { WalletCredentialCardData } from '../../wallet/ui-types'
+import { CardAttribute, WalletCredentialCardData } from '../../wallet/ui-types'
 import { ThemedText } from '../texts/ThemedText'
 import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
@@ -33,7 +33,17 @@ const Card11Pure: React.FC<Props> = ({cardAccessibilityLabel, data, onPress, ele
     !!proofContext
   )
 
-  const list = data.items
+  // Outside of proofs, only the OCA primary/secondary attributes are elevated onto the card
+  const list = useMemo(() => {
+    if (proofContext) return data.items
+    const byKey = new Map(data.items.map((i) => [i.key, i]))
+    const primary = data.primaryAttributeKey ? byKey.get(data.primaryAttributeKey) : undefined
+    const secondary =
+      data.secondaryAttributeKey && data.secondaryAttributeKey !== data.primaryAttributeKey
+        ? byKey.get(data.secondaryAttributeKey)
+        : undefined
+    return [primary, secondary].filter(Boolean) as CardAttribute[]
+  }, [proofContext, data.items, data.primaryAttributeKey, data.secondaryAttributeKey])
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color
   const issuerAccessibilityLabel = data.issuerName ? `Issued by ${data.issuerName}` : ''
   const accessibilityLabel = cardAccessibilityLabel ? cardAccessibilityLabel :
@@ -103,7 +113,7 @@ const Card11Pure: React.FC<Props> = ({cardAccessibilityLabel, data, onPress, ele
           )}
         </View>
 
-        {proofContext && (
+        {(proofContext || list.length > 0) && (
           <CredentialCardAttributeList
             list={list}
             textColor={textColor}
