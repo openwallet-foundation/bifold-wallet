@@ -1027,7 +1027,7 @@ export const pTypeToText = (
   item: Predicate,
   t: TFunction<'translation', undefined>,
   attributeTypes?: Record<string, string>
-) => {
+): Predicate => {
   const itemCopy = { ...item }
   const pTypeMap: { [key: string]: string | undefined } = {
     '>=': t('ProofRequest.PredicateGe'),
