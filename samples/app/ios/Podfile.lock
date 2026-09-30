@@ -3,7 +3,7 @@ PODS:
     - React
     - React-callinvoker
     - React-Core
-  - askar (0.6.1-alpha-20260720140434):
+  - askar (0.6.1):
     - React
     - React-callinvoker
     - React-Core
@@ -3059,7 +3059,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   anoncreds: 44708d3b11aac8edabf814e4e20778f4b3b093f7
-  askar: 7251a41080ee698f73c244eb0c4ae56eb4fd5141
+  askar: 6f739013054775244f341e3e50b5c49046a25957
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   EXApplication: bbd517d50878ca1d121fb3843392beb210181e28
   EXConstants: 1b9bb962f72de86540a5314f4bec2eb3fdeff515
