@@ -59,9 +59,9 @@ const Card11Pure: React.FC<Props> = ({
 
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color
   const issuerAccessibilityLabel = data.issuerName ? `Issued by ${data.issuerName}` : ''
-  const accessibilityLabel = cardAccessibilityLabel
-    ? cardAccessibilityLabel
-    : `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
+  const accessibilityLabel =
+    cardAccessibilityLabel ||
+    `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
       list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
 
   const PrimaryBody = () => {
