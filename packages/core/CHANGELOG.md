@@ -1,5 +1,13 @@
 # @bifold/core
 
+## 3.1.2
+
+### Patch Changes
+
+- 65b56c8: Upgrade `@openwallet-foundation/askar-react-native` and `@openwallet-foundation/askar-shared` from `0.6.1-alpha-20260720140434` to the stable `0.6.1` release
+- dda9059: fixed logic on oca displays
+- 979b57d: Open device biometric enrollment settings instead of App Info when biometrics are not configured
+
 ## 3.1.1
 
 ## 3.1.0

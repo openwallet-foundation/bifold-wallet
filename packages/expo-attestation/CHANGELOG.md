@@ -1,5 +1,11 @@
 # @bifold/expo-attestation
 
+## 3.1.2
+
+### Patch Changes
+
+- dda9059: fixed logic on oca displays
+
 ## 3.1.1
 
 ## 3.1.0

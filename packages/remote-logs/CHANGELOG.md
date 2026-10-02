@@ -1,5 +1,15 @@
 # Change Log
 
+## 3.1.2
+
+### Patch Changes
+
+- dda9059: fixed logic on oca displays
+- Updated dependencies [65b56c8]
+- Updated dependencies [dda9059]
+- Updated dependencies [979b57d]
+  - @bifold/core@3.1.2
+
 ## 3.1.1
 
 ### Patch Changes
