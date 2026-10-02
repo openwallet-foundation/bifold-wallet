@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { View, ImageBackground, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import { WalletCredentialCardData } from '../../wallet/ui-types'
-import { ThemedText } from '../texts/ThemedText'
-import { testIdWithKey } from '../../utils/testable'
-import useCredentialCardStyles from '../../hooks/credential-card-styles'
-import CardWatermark from './CardWatermark'
-import CredentialCardGenLogo from './CredentialCardGenLogo'
 import startCase from 'lodash.startcase'
+import React, { useMemo, useState } from 'react'
+import { ImageBackground, TouchableOpacity, View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import { toImageSource } from '../../utils/credential'
-import CredentialCardStatusBadge from './CredentialCardStatusBadge'
+import { testIdWithKey } from '../../utils/testable'
+import { CardAttribute, WalletCredentialCardData } from '../../wallet/ui-types'
+import { ThemedText } from '../texts/ThemedText'
+import CardWatermark from './CardWatermark'
 import CredentialCardAttributeList from './CredentialCardAttributeList'
+import CredentialCardGenLogo from './CredentialCardGenLogo'
 import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
+import CredentialCardStatusBadge from './CredentialCardStatusBadge'
 
 type Props = {
   cardAccessibilityLabel?: string
@@ -22,7 +22,14 @@ type Props = {
   elevated?: boolean
 }
 
-const Card11Pure: React.FC<Props> = ({cardAccessibilityLabel, data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
+const Card11Pure: React.FC<Props> = ({
+  cardAccessibilityLabel,
+  data,
+  onPress,
+  elevated,
+  hasAltCredentials,
+  onChangeAlt,
+}) => {
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const { branding, proofContext, hideSlice } = data
@@ -33,12 +40,29 @@ const Card11Pure: React.FC<Props> = ({cardAccessibilityLabel, data, onPress, ele
     !!proofContext
   )
 
-  const list = data.items
+  // Outside of proofs, only the OCA primary/secondary attributes are elevated onto the card
+  const list = useMemo(() => {
+    // is a proof, show request attributes
+    if (proofContext) {
+      return data.items
+    }
+    // not a proof, build a credential preview card
+    // find primary and secondary attributes if available
+    const byKey = new Map(data.items.map((i) => [i.key, i]))
+    const primary = data.primaryAttributeKey ? byKey.get(data.primaryAttributeKey) : undefined
+    const secondary =
+      data.secondaryAttributeKey && data.secondaryAttributeKey !== data.primaryAttributeKey
+        ? byKey.get(data.secondaryAttributeKey)
+        : undefined
+    return [primary, secondary].filter(Boolean) as CardAttribute[]
+  }, [proofContext, data.items, data.primaryAttributeKey, data.secondaryAttributeKey])
+
   const textColor = data.branding.preferredTextColor ?? styles.textContainer.color
   const issuerAccessibilityLabel = data.issuerName ? `Issued by ${data.issuerName}` : ''
-  const accessibilityLabel = cardAccessibilityLabel ? cardAccessibilityLabel :
+  const accessibilityLabel =
+    cardAccessibilityLabel ||
     `${issuerAccessibilityLabel}, ${data.credentialName}, ` +
-    list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
+      list.map((f) => `${f.label}, ${String(f.value ?? '')}`).join(', ')
 
   const PrimaryBody = () => {
     return (
@@ -103,7 +127,7 @@ const Card11Pure: React.FC<Props> = ({cardAccessibilityLabel, data, onPress, ele
           )}
         </View>
 
-        {proofContext && (
+        {list.length > 0 && (
           <CredentialCardAttributeList
             list={list}
             textColor={textColor}
