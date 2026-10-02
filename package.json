@@ -52,7 +52,7 @@
   "resolutions": {
     "@unimodules/react-native-adapter": "./noop",
     "@unimodules/core": "./noop",
-    "@openwallet-foundation/askar-shared": "0.6.1-alpha-20260720140434",
+    "@openwallet-foundation/askar-shared": "0.6.1",
     "tsyringe": "4.8.0",
     "expo": "~57.0.15",
     "expo-crypto": "~57.0.1",
