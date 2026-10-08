@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { useTheme } from '../../contexts/theme'
 
 import { ThemedText } from '../texts/ThemedText'
 import { Button, ButtonProps, ButtonType } from './Button-api'
+import { ButtonLabelColorContext } from './ButtonLabelColorContext'
 import { usePreventDoublePress } from '../../hooks/usePreventDoublePress'
 
 const ButtonImpl = ({
@@ -19,7 +20,7 @@ const ButtonImpl = ({
   children,
   ref,
 }: ButtonProps) => {
-  const { Buttons, heavyOpacity } = useTheme()
+  const { Buttons, TextTheme, heavyOpacity } = useTheme()
   const { preventDoublePress } = usePreventDoublePress()
   const buttonStyles = {
     [ButtonType.Critical]: {
@@ -71,6 +72,11 @@ const ButtonImpl = ({
       textDisabled: Buttons.modalTertiaryTextDisabled,
     },
   }
+  const labelColor = StyleSheet.flatten([
+    TextTheme.normal,
+    buttonStyles[buttonType].text,
+    disabled && buttonStyles[buttonType].textDisabled,
+  ]).color
   const [isActive, setIsActive] = useState<boolean>(false)
 
   return (
@@ -95,7 +101,9 @@ const ButtonImpl = ({
           alignItems: 'center',
         }}
       >
-        {children}
+        <ButtonLabelColorContext.Provider value={typeof labelColor === 'string' ? labelColor : undefined}>
+          {children}
+        </ButtonLabelColorContext.Provider>
         <ThemedText
           maxFontSizeMultiplier={maxfontSizeMultiplier}
           style={[
