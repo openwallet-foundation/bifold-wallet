@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 3.1.3
+
+### Patch Changes
+
+- 6a916a3: fix: match button loading spinner to the label colour and add spacing between spinner and label
+
 ## 3.1.2
 
 ### Patch Changes
