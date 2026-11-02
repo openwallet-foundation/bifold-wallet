@@ -12,9 +12,12 @@ import { useCallback, useMemo, useRef, useState } from 'react'
  *   return <Button onPress={preventDoublePress(handlePress)} title="Press me" />;
  * }
  * ```
+ * @param options.trackPressing Set to `false` when the caller never reads `isPressing`. The guard still
+ * works, but no state update runs after the callback settles, which saves a re-render and avoids
+ * `act()` warnings in consumer tests. `isPressing` then stays `false`. Defaults to `true`.
  * @returns An object containing the `preventDoublePress` function.
  */
-export const usePreventDoublePress = () => {
+export const usePreventDoublePress = ({ trackPressing = true }: { trackPressing?: boolean } = {}) => {
   // Note: Using a ref to prevent double presses on the same tick
   const isPressingRef = useRef(false)
   const [isPressing, setIsPressing] = useState(false)
@@ -39,18 +42,22 @@ export const usePreventDoublePress = () => {
           return
         }
 
-        setIsPressing(true)
+        if (trackPressing) {
+          setIsPressing(true)
+        }
         isPressingRef.current = true
 
         try {
           await callback?.(...args)
         } finally {
-          setIsPressing(false)
+          if (trackPressing) {
+            setIsPressing(false)
+          }
           isPressingRef.current = false
         }
       }
     },
-    []
+    [trackPressing]
   )
 
   return useMemo(() => ({ isPressing, preventDoublePress }), [isPressing, preventDoublePress])

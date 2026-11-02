@@ -114,4 +114,44 @@ describe('usePreventDoublePress', () => {
 
     expect(secondCallback).toHaveBeenCalledTimes(1)
   })
+
+  describe('with trackPressing: false', () => {
+    it('still ignores a second press while the first callback is running', async () => {
+      const { result } = renderHook(() => usePreventDoublePress({ trackPressing: false }))
+      let resolveCallback!: () => void
+      const callback = jest.fn().mockResolvedValue(undefined)
+      callback.mockImplementationOnce(
+        () =>
+          new Promise<void>((resolve) => {
+            resolveCallback = resolve
+          })
+      )
+      const wrapped = result.current.preventDoublePress(callback)
+
+      const firstPress = wrapped()
+      wrapped()
+
+      expect(callback).toHaveBeenCalledTimes(1)
+
+      resolveCallback()
+      await firstPress
+
+      await wrapped()
+      expect(callback).toHaveBeenCalledTimes(2)
+    })
+
+    it('never updates isPressing, so a press outside act() does not re-render', async () => {
+      let renders = 0
+      const { result } = renderHook(() => {
+        renders++
+        return usePreventDoublePress({ trackPressing: false })
+      })
+      const rendersBefore = renders
+
+      await result.current.preventDoublePress(jest.fn().mockResolvedValue(undefined))()
+
+      expect(result.current.isPressing).toBe(false)
+      expect(renders).toBe(rendersBefore)
+    })
+  })
 })

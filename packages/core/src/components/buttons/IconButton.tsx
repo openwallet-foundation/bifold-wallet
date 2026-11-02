@@ -36,7 +36,7 @@ const IconButton: React.FC<IconButtonProps> = ({
 }) => {
   const { ColorPalette } = useTheme()
   const [logger] = useServices([TOKENS.UTIL_LOGGER])
-  const { preventDoublePress } = usePreventDoublePress()
+  const { preventDoublePress } = usePreventDoublePress({ trackPressing: false })
 
   const style = StyleSheet.create({
     container: {

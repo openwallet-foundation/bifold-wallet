@@ -21,7 +21,7 @@ const ButtonImpl = ({
   ref,
 }: ButtonProps) => {
   const { Buttons, TextTheme, heavyOpacity } = useTheme()
-  const { preventDoublePress } = usePreventDoublePress()
+  const { preventDoublePress } = usePreventDoublePress({ trackPressing: false })
   const buttonStyles = {
     [ButtonType.Critical]: {
       color: Buttons.critical,
