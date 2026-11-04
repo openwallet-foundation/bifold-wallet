@@ -27,7 +27,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
   const { ColorPalette } = useTheme()
   const [toggleAnim] = useState(new Animated.Value(isEnabled ? 1 : 0))
   const { t } = useTranslation()
-  const { preventDoublePress } = usePreventDoublePress()
+  const { preventDoublePress } = usePreventDoublePress({ trackPressing: false })
 
   useEffect(() => {
     Animated.timing(toggleAnim, {
