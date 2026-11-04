@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 3.1.4
+
+### Patch Changes
+
+- 5be301f: fix: add `trackPressing` option to `usePreventDoublePress` so built-in buttons skip an unused state update, removing act() warnings in consumer tests
+
 ## 3.1.3
 
 ### Patch Changes
