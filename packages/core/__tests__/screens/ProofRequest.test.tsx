@@ -396,7 +396,7 @@ describe('displays a proof request screen', () => {
         expect(getByText(testEmail)).toBeTruthy()
       })
 
-      const changeCredButton = getByText(/change credential/i)
+      const changeCredButton = getByText('ProofRequest.ChangeCredential')
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })

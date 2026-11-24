@@ -1,6 +1,6 @@
 import startCase from 'lodash.startcase'
 import React, { useMemo, useState } from 'react'
-import { ImageBackground, TouchableOpacity, View } from 'react-native'
+import { AccessibilityRole, AccessibilityState, ImageBackground, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import { toImageSource } from '../../utils/credential'
@@ -8,6 +8,7 @@ import { testIdWithKey } from '../../utils/testable'
 import { CardAttribute, WalletCredentialCardData } from '../../wallet/ui-types'
 import { ThemedText } from '../texts/ThemedText'
 import CardWatermark from './CardWatermark'
+import { useChangeCredentialAccessibilityActions } from './CredentialCardActionLink'
 import CredentialCardAttributeList from './CredentialCardAttributeList'
 import CredentialCardGenLogo from './CredentialCardGenLogo'
 import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
@@ -20,6 +21,8 @@ type Props = {
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
   elevated?: boolean
+  accessibilityRole?: AccessibilityRole
+  accessibilityState?: AccessibilityState
 }
 
 const Card11Pure: React.FC<Props> = ({
@@ -29,7 +32,10 @@ const Card11Pure: React.FC<Props> = ({
   elevated,
   hasAltCredentials,
   onChangeAlt,
+  accessibilityRole,
+  accessibilityState,
 }) => {
+  const changeCredentialAccessibility = useChangeCredentialAccessibilityActions(hasAltCredentials, onChangeAlt)
   const [dimensions, setDimensions] = useState({ cardWidth: 0, cardHeight: 0 })
 
   const { branding, proofContext, hideSlice } = data
@@ -144,7 +150,14 @@ const Card11Pure: React.FC<Props> = ({
   }
 
   const Main = () => (
-    <View style={styles.cardContainer} accessible accessibilityLabel={accessibilityLabel}>
+    <View
+      style={styles.cardContainer}
+      accessible
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={accessibilityRole}
+      accessibilityState={accessibilityState}
+      {...changeCredentialAccessibility}
+    >
       <CredentialCardSecondaryBody
         hideSlice={hideSlice}
         secondaryBg={branding.secondaryBg}

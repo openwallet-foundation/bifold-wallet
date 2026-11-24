@@ -310,7 +310,7 @@ describe('displays a proof request screen', () => {
       // Wait for the change credential option to appear, indicating data has loaded
       await findByTestId(testIdWithKey('ShowCredentialDetails'))
 
-      const changeCredButton = getByText(/change credential/i)
+      const changeCredButton = getByText('ProofRequest.ChangeCredential')
       const contact = getByText('ContactDetails.AContact', { exact: false })
       const missingInfo = queryByText('ProofRequest.IsRequestingSomethingYouDontHaveAvailable', { exact: false })
       const missingClaim = queryByText('ProofRequest.NotAvailableInYourWallet', { exact: false })

@@ -287,5 +287,44 @@ describe('ProofChangeCredential Screen', () => {
       expect(navigation.goBack).toBeCalledTimes(1)
       expect(onCredChange).toBeCalledTimes(1)
     })
+
+    test('announces each credential as a button that says whether it is selected', async () => {
+      const { agent } = useAgent()
+
+      // @ts-expect-error this method will be replaced with a mock which does have this method
+      agent?.proofs.getFormatData.mockResolvedValue(testProofFormatData)
+
+      // @ts-expect-error this method will be replaced with a mock which does have this method
+      agent?.proofs.getCredentialsForRequest.mockResolvedValue(testRetrievedCredentials2)
+
+      const navigation = useNavigation()
+
+      const tree = render(
+        <BasicAppContext>
+          <ProofChangeCredential
+            navigation={navigation as any}
+            route={
+              {
+                params: {
+                  proofId: testProofRequest.id,
+                  selectedCred: credentialId,
+                  altCredentials: [credentialId, credentialId2],
+                  onCredChange: jest.fn(),
+                },
+              } as any
+            }
+          />
+        </BasicAppContext>
+      )
+
+      await waitFor(() => {
+        timeTravel(1000)
+      })
+
+      // The card inside names the credential, so the touchable around it is not a stop of its own.
+      expect(tree.getByTestId(testIdWithKey(`select:${credentialId}`)).props.accessible).toBe(false)
+      expect(tree.getAllByRole('button', { selected: true })).toHaveLength(1)
+      expect(tree.getAllByRole('button', { selected: false })).toHaveLength(1)
+    })
   })
 })
