@@ -149,9 +149,10 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
           !hasSatisfiedPredicates(getCredentialsFields(), item.credId) && errors.push(CredentialErrors.PredicateError)
           return (
             <View style={styles.pageMargin}>
+              {/* The card names the credential for screen readers, so it carries the button role and
+                  selected state; this touchable only handles the tap. */}
               <TouchableOpacity
-                accessibilityRole="button"
-                accessibilityLabel={t('ProofRequest.SelectCredential')}
+                accessible={false}
                 testID={testIdWithKey(`select:${item.credId}`)}
                 onPress={() => changeCred(item.credId ?? '')}
                 hitSlop={hitSlop}
@@ -168,6 +169,8 @@ const ProofChangeCredential: React.FC<ProofChangeProps> = ({ route, navigation }
                   credName={item.credName}
                   proof
                   credentialErrors={errors}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: item.credId === selectedCred }}
                 ></CredentialCardGen>
               </TouchableOpacity>
             </View>

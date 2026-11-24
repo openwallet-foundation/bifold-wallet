@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react'
-import { View, Image, ImageBackground, TouchableOpacity } from 'react-native'
+import { AccessibilityRole, AccessibilityState, View, Image, ImageBackground, TouchableOpacity } from 'react-native'
 import { WalletCredentialCardData, CardAttribute } from '../../wallet/ui-types'
 import { ThemedText } from '../texts/ThemedText'
 import { testIdWithKey } from '../../utils/testable'
 import useCredentialCardStyles from '../../hooks/credential-card-styles'
 import CardWatermark from '../misc/CardWatermark'
 import CredentialCardStatusBadge from './CredentialCardStatusBadge'
+import { useChangeCredentialAccessibilityActions } from './CredentialCardActionLink'
 import CredentialCardAttributeList from './CredentialCardAttributeList'
 import CredentialCardSecondaryBody from './CredentialCardSecondaryBody'
 
@@ -15,6 +16,8 @@ type Props = {
   hasAltCredentials?: boolean
   onChangeAlt?: () => void
   elevated?: boolean
+  accessibilityRole?: AccessibilityRole
+  accessibilityState?: AccessibilityState
 }
 
 /**
@@ -22,7 +25,16 @@ type Props = {
  * - Passes 'Branding10' to the style hook for layout differences.
  * - No OCA resolution or overlay usage at render time.
  */
-const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredentials, onChangeAlt }) => {
+const Card10Pure: React.FC<Props> = ({
+  data,
+  onPress,
+  elevated,
+  hasAltCredentials,
+  onChangeAlt,
+  accessibilityRole,
+  accessibilityState,
+}) => {
+  const changeCredentialAccessibility = useChangeCredentialAccessibilityActions(hasAltCredentials, onChangeAlt)
   const { branding, hideSlice } = data
   const { styles, borderRadius, logoHeight } = useCredentialCardStyles(
     { primaryBackgroundColor: branding.primaryBg, secondaryBackgroundColor: branding.secondaryBg },
@@ -86,7 +98,14 @@ const Card10Pure: React.FC<Props> = ({ data, onPress, elevated, hasAltCredential
   )
 
   const Main = () => (
-    <View style={styles.cardContainer} accessible accessibilityLabel={accessibilityLabel}>
+    <View
+      style={styles.cardContainer}
+      accessible
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={accessibilityRole}
+      accessibilityState={accessibilityState}
+      {...changeCredentialAccessibility}
+    >
       <CredentialCardSecondaryBody
         hideSlice={hideSlice}
         secondaryBg={branding.secondaryBg}

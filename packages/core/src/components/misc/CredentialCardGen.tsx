@@ -1,6 +1,6 @@
 // packages/core/src/components/misc/CredentialCard.tsx
 import React, { useEffect, useState } from 'react'
-import type { ViewStyle } from 'react-native'
+import type { AccessibilityRole, AccessibilityState, ViewStyle } from 'react-native'
 import { DidCommCredentialExchangeRecord } from '@credo-ts/didcomm'
 import { BrandingOverlay } from '@bifold/oca'
 import { Attribute, BrandingOverlayType, CredentialOverlay, Predicate } from '@bifold/oca/build/legacy'
@@ -32,6 +32,8 @@ export interface CredentialCardProps {
   credentialErrors?: CredentialErrors[]
   handleAltCredChange?: () => void
   brandingOverlay?: CredentialOverlay<BrandingOverlay>
+  accessibilityRole?: AccessibilityRole
+  accessibilityState?: AccessibilityState
 }
 
 const CredentialCardGen: React.FC<CredentialCardProps> = ({
@@ -46,6 +48,8 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
   credentialErrors,
   brandingOverlay,
   displayItems,
+  accessibilityRole,
+  accessibilityState,
 }) => {
   const [bundleResolver] = useServices([TOKENS.UTIL_OCA_RESOLVER])
   const { ColorPalette } = useTheme()
@@ -116,6 +120,8 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
         hasAltCredentials={hasAltCredentials}
         onChangeAlt={handleAltCredChange}
         elevated={!!proof}
+        accessibilityRole={accessibilityRole}
+        accessibilityState={accessibilityState}
       />
     )
   }
@@ -128,6 +134,8 @@ const CredentialCardGen: React.FC<CredentialCardProps> = ({
       hasAltCredentials={hasAltCredentials}
       onChangeAlt={handleAltCredChange}
       elevated={cardData.brandingType === 'Branding10' || !!proof}
+      accessibilityRole={accessibilityRole}
+      accessibilityState={accessibilityState}
     />
   )
 }
