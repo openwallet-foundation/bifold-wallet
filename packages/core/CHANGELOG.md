@@ -1,5 +1,11 @@
 # @bifold/core
 
+## 3.1.5
+
+### Patch Changes
+
+- ddcb645: fix: make "Change credential" reachable and translated for screen readers, and announce which option is selected in the credential picker
+
 ## 3.1.4
 
 ### Patch Changes
