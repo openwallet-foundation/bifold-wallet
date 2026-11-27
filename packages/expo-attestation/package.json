@@ -12,7 +12,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "url": "git+https://github.com/digital-credential-frameworks/bifold-wallet.git",
     "directory": "packages/expo-attestation"
   },
   "scripts": {

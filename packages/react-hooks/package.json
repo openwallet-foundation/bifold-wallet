@@ -13,7 +13,7 @@
   "description": "Exposes useful React hooks that allow easy interaction with Credo.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openwallet-foundation/bifold-wallet.git",
+    "url": "git+https://github.com/digital-credential-frameworks/bifold-wallet.git",
     "directory": "packages/react-hooks"
   },
   "homepage": "https://github.com/openwallet-foundation/bifold-wallet/",
