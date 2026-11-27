@@ -62,7 +62,7 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: samples/app/ios/xbuild/Build
-          key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('**/dd-cache-key.txt') }}
+          key: ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-${{ hashFiles('dd-cache-key.txt') }}
           restore-keys: |
             ${{ runner.os }}-dd-xcode-${{ env.cacheId }}-
 
