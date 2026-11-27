@@ -1,5 +1,12 @@
 # Change Log
 
+## 3.1.5
+
+### Patch Changes
+
+- Updated dependencies [ddcb645]
+  - @bifold/core@3.1.5
+
 ## 3.1.4
 
 ### Patch Changes
